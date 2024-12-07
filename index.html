@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şampiyonlar Ligi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #ff4500;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        h1 span {
+            color: #0078d7;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .pin-container, #admin-panel {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-container input, .pin-container button, #admin-panel input, #admin-panel button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #0078d7;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .table-container {
+            max-width: 90%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+            display: none;
+        }
+
+        .table-container:hover {
+            transform: scale(1.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(to right, #0078d7, #005bb5);
+            color: white;
+        }
+
+        th.actions, td.actions {
+            display: none;
+        }
+
+        .edit-mode-enabled th.actions, .edit-mode-enabled td.actions {
+            display: table-cell;
+        }
+
+        td img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        td button {
+            margin: 5px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .button-red {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .button-green {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .button-update {
+            background-color: #ffa500;
+            color: white;
+        }
+
+        .edit-mode-enabled td button {
+            display: inline-block;
+        }
+
+        #save-changes {
+            display: none;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        #save-changes:hover {
+            background-color: #218838;
+        }
+
+        #class-selection {
+            margin-bottom: 20px;
+        }
+
+        @keyframes wave {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .top-1 {
+            background: linear-gradient(135deg, 
+                #FFD700 0%, 
+                #FFE033 20%, 
+                #FFD700 40%, 
+                #FFE033 60%, 
+                #FFD700 80%, 
+                #FFE033 100%
+            );
+            background-size: 400% 400%;
+            animation: wave 5s linear infinite;
+        }
+
+        .top-2 {
+            background: linear-gradient(135deg, 
+                #FFE033 0%, 
+                #FFF1A8 20%, 
+                #FFE033 40%, 
+                #FFF1A8 60%, 
+                #FFE033 80%, 
+                #FFF1A8 100%
+            );
+            background-size: 400% 400%;
+            animation: wave 5s linear infinite;
+        }
+
+        .top-3 {
+            background: linear-gradient(135deg, 
+                #FFF1A8 0%, 
+                #FFF9C4 20%, 
+                #FFF1A8 40%, 
+                #FFF9C4 60%, 
+                #FFF1A8 80%, 
+                #FFF9C4 100%
+            );
+            background-size: 400% 400%;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Şanslı Öğrenci Bölümü */
+        #lucky-student-btn {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            padding: 12px 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        #lucky-student-result {
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 2em;
+            color: #0078d7;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .score-display {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .score-display::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4caf50;
+            font-weight: bold;
+            animation: plusBlink 1s infinite alternate;
+        }
+
+        @keyframes plusBlink {
+            0% { opacity: 1; transform: translateY(-50%) scale(1); }
+            100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
+        }
+
+        /* Yenile butonu */
+        #reset-lucky {
+            margin-left: 10px;
+            padding: 12px 15px;
+            font-size: 1.2em;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #reset-lucky::before {
+            content: "↻";
+            display: inline-block;
+            font-size: 1.4em;
+            transform: rotate(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        #reset-lucky:hover::before {
+            transform: rotate(360deg);
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Şampiyonlar <span>+</span> Ligi</h1>
+    <div id="class-selection">
+        <label for="class-select">Sınıf Seçin:</label>
+        <select id="class-select">
+            <option value="">--Sınıf Seçin--</option>
+        </select>
+    </div>
+
+    <button id="lucky-student-btn" style="display:none;">Şanslı Öğrenci Seç</button>
+    <button id="reset-lucky" style="display:none;" title="Şanslı seçimleri sıfırla"></button>
+    <div id="lucky-student-result"></div>
+
+    <button id="edit-mode" style="display:none;">Düzenle</button>
+    <div class="pin-container" id="pin-check" style="display: none;">
+        <input type="password" id="pin" placeholder="PIN Girin">
+        <button id="pin-submit">Doğrula</button>
+    </div>
+    <div id="admin-panel" style="display: none;">
+        <h2>Öğrenci Ekle</h2>
+        <input type="text" id="student-name" placeholder="Öğrenci Adı">
+        <input type="text" id="photo-url" placeholder="Fotoğraf URL'si (Opsiyonel)">
+        <button id="add-student">Öğrenci Ekle</button>
+    </div>
+    <button id="save-changes">Kaydet</button>
+    <div class="table-container" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fotoğraf</th>
+                    <th>İsim</th>
+                    <th>Genel Puan</th>
+                    <th class="actions">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="student-table">
+                <!-- Dinamik olarak doldurulacak -->
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, update, set, get } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "API_KEY",
+            authDomain: "sampiyonlar-ligi.firebaseapp.com",
+            databaseURL: "https://sampiyonlar-ligi-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "sampiyonlar-ligi",
+            storageBucket: "sampiyonlar-ligi.appspot.com",
+            messagingSenderId: "248285384149",
+            appId: "1:248285384149:web:39116a8e31ef61d16f815c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const classSelect = document.getElementById("class-select");
+        const editModeButton = document.getElementById("edit-mode");
+        const pinCheck = document.getElementById("pin-check");
+        const adminPanel = document.getElementById("admin-panel");
+        const saveChangesButton = document.getElementById("save-changes");
+        const studentTable = document.getElementById("student-table");
+        const tableContainer = document.querySelector(".table-container");
+
+        const pinInput = document.getElementById("pin");
+        const pinSubmit = document.getElementById("pin-submit");
+        const addStudentButton = document.getElementById("add-student");
+        const studentNameInput = document.getElementById("student-name");
+        const photoUrlInput = document.getElementById("photo-url");
+
+        const luckyStudentBtn = document.getElementById("lucky-student-btn");
+        const luckyStudentResult = document.getElementById("lucky-student-result");
+        const resetLuckyBtn = document.getElementById("reset-lucky");
+
+        let currentClass = "";
+        let currentClassPin = "";
+        let currentData = {};
+        let pendingChanges = {}; 
+        const defaultPhotoURL = "https://cdn.pixabay.com/photo/2013/07/13/13/42/tux-161406_1280.png";
+
+        let availableStudents = [];
+
+        async function loadClasses() {
+            const classesRef = ref(db, 'classes');
+            const snapshot = await get(classesRef);
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+
+                for (let i = classSelect.options.length - 1; i > 0; i--) {
+                    classSelect.remove(i);
+                }
+
+                for (let classKey in data) {
+                    const option = document.createElement("option");
+                    option.value = classKey;
+                    option.textContent = classKey;
+                    classSelect.appendChild(option);
+                }
+
+            } else {
+                console.log("Hiç sınıf yok");
+            }
+        }
+
+        loadClasses();
+
+        classSelect.addEventListener("change", async () => {
+            currentClass = classSelect.value;
+            if (currentClass) {
+                const pinRef = ref(db, `classes/${currentClass}/pin`);
+                const pinSnap = await get(pinRef);
+                if (pinSnap.exists()) {
+                    currentClassPin = pinSnap.val();
+                } else {
+                    alert("Seçtiğiniz sınıf veritabanında yok!");
+                    return;
+                }
+
+                loadClassData(currentClass);
+                tableContainer.style.display = "block";
+                editModeButton.style.display = "inline-block";
+                luckyStudentBtn.style.display = "inline-block";
+                resetLuckyBtn.style.display = "inline-block";
+                exitEditMode();
+            } else {
+                tableContainer.style.display = "none";
+                editModeButton.style.display = "none";
+                adminPanel.style.display = "none";
+                saveChangesButton.style.display = "none";
+                luckyStudentBtn.style.display = "none";
+                resetLuckyBtn.style.display = "none";
+                luckyStudentResult.textContent = "";
+            }
+        });
+
+        function loadClassData(cls) {
+            const classDataRef = ref(db, `classes/${cls}/students`);
+            onValue(classDataRef, (snapshot) => {
+                const data = snapshot.val() || {};
+                currentData = data;
+                populateTable(currentData);
+                availableStudents = Object.keys(currentData);
+            });
+        }
+
+        editModeButton.addEventListener("click", () => {
+            pinCheck.style.display = "block";
+        });
+
+        pinSubmit.addEventListener("click", () => {
+            const enteredPin = pinInput.value;
+            if (enteredPin === currentClassPin) {
+                pinCheck.style.display = "none";
+                adminPanel.style.display = "block";
+                saveChangesButton.style.display = "inline-block";
+                document.querySelector("table").classList.add("edit-mode-enabled");
+            } else {
+                alert("Hatalı PIN!");
+            }
+        });
+
+        function populateTable(data) {
+            studentTable.innerHTML = "";
+            const sortedData = Object.entries(data).sort((a,b) => b[1].totalScore - a[1].totalScore);
+
+            sortedData.forEach(([id, student], index) => {
+                const row = document.createElement("tr");
+
+                if (index === 0) row.classList.add("top-1");
+                if (index === 1) row.classList.add("top-2");
+                if (index === 2) row.classList.add("top-3");
+
+                const studentPhoto = student.photo || defaultPhotoURL;
+
+                row.innerHTML = `
+                    <td>
+                        <img src="${studentPhoto}" alt="Fotoğraf">
+                        <button class="button-update" data-id="${id}">Güncelle</button>
+                    </td>
+                    <td>${student.name}</td>
+                    <td>
+                        <button class="button-red" data-id="${id}" data-type="total">-</button>
+                        <span class="score-display">${student.totalScore}</span>
+                        <button class="button-green" data-id="${id}" data-type="total">+</button>
+                    </td>
+                    <td class="actions">
+                        <button class="button-red" data-id="${id}" data-action="delete">X</button>
+                    </td>
+                `;
+                studentTable.appendChild(row);
+            });
+
+            addEventListeners(sortedData);
+        }
+
+        function addEventListeners(dataArray) {
+            document.querySelectorAll("[data-type='total']").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const id = button.dataset.id;
+                    const action = button.classList.contains("button-green") ? 1 : -1;
+                    const newScore = Math.max(0, (currentData[id].totalScore || 0) + action);
+                    currentData[id].totalScore = newScore;
+
+                    if (!pendingChanges[id]) {
+                        pendingChanges[id] = {};
+                    }
+                    pendingChanges[id].totalScore = newScore;
+
+                    const span = button.parentElement.querySelector("span.score-display");
+                    span.textContent = newScore;
+                });
+            });
+
+            document.querySelectorAll(".button-update").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const id = button.dataset.id;
+                    const newPhoto = prompt("Yeni Fotoğraf URL'si girin:");
+                    if (newPhoto) {
+                        currentData[id].photo = newPhoto;
+                        if (!pendingChanges[id]) {
+                            pendingChanges[id] = {};
+                        }
+                        pendingChanges[id].photo = newPhoto;
+                        const img = button.parentElement.querySelector("img");
+                        img.src = newPhoto;
+                    }
+                });
+            });
+
+            document.querySelectorAll("[data-action='delete']").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const id = button.dataset.id;
+                    pendingChanges[id] = { delete: true };
+                    button.parentElement.parentElement.remove();
+                    delete currentData[id]; 
+                    availableStudents = availableStudents.filter(sId => sId !== id);
+                });
+            });
+        }
+
+        addStudentButton.addEventListener("click", () => {
+            const name = studentNameInput.value.trim();
+            let photo = photoUrlInput.value.trim();
+
+            if (!name) {
+                alert("Lütfen öğrenci adını girin!");
+                return;
+            }
+
+            if (!photo) {
+                photo = defaultPhotoURL;
+            }
+
+            const tempId = "temp_"+Date.now();
+            currentData[tempId] = {
+                name,
+                photo,
+                totalScore: 0
+            };
+
+            pendingChanges[tempId] = {
+                name,
+                photo,
+                totalScore: 0,
+                isNew: true
+            };
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>
+                    <img src="${photo}" alt="Fotoğraf">
+                    <button class="button-update" data-id="${tempId}">Güncelle</button>
+                </td>
+                <td>${name}</td>
+                <td>
+                    <button class="button-red" data-id="${tempId}" data-type="total">-</button>
+                    <span class="score-display">0</span>
+                    <button class="button-green" data-id="${tempId}" data-type="total">+</button>
+                </td>
+                <td class="actions">
+                    <button class="button-red" data-id="${tempId}" data-action="delete">X</button>
+                </td>
+            `;
+            studentTable.appendChild(row);
+            addEventListeners([[tempId, currentData[tempId]]]);
+
+            studentNameInput.value = "";
+            photoUrlInput.value = "";
+
+            availableStudents.push(tempId);
+        });
+
+        saveChangesButton.addEventListener("click", async () => {
+            await commitChanges();
+            exitEditMode();
+            alert("Değişiklikler kaydedildi!");
+        });
+
+        async function commitChanges() {
+            const studentsRef = ref(db, `classes/${currentClass}/students`);
+            for (const id in pendingChanges) {
+                const changes = pendingChanges[id];
+                if (changes.delete) {
+                    if (!id.startsWith("temp_")) {
+                        await set(ref(db, `classes/${currentClass}/students/${id}`), null);
+                    }
+                } else if (changes.isNew) {
+                    const newRef = push(studentsRef);
+                    await set(newRef, {
+                        name: changes.name,
+                        photo: changes.photo,
+                        totalScore: changes.totalScore
+                    });
+                } else {
+                    if (!id.startsWith("temp_")) {
+                        const updates = {};
+                        if (changes.totalScore !== undefined) updates.totalScore = changes.totalScore;
+                        if (changes.photo !== undefined) updates.photo = changes.photo;
+                        await update(ref(db, `classes/${currentClass}/students/${id}`), updates);
+                    } else {
+                        const newRef = push(studentsRef);
+                        await set(newRef, currentData[id]);
+                    }
+                }
+            }
+            pendingChanges = {};
+        }
+
+        function exitEditMode() {
+            adminPanel.style.display = "none";
+            saveChangesButton.style.display = "none";
+            document.querySelector("table").classList.remove("edit-mode-enabled");
+            pinInput.value = "";
+            pinCheck.style.display = "none";
+        }
+
+        // Şanslı öğrenci seçimi
+        luckyStudentBtn.addEventListener("click", () => {
+            if (availableStudents.length === 0) {
+                luckyStudentResult.textContent = "Seçilebilecek öğrenci kalmadı!";
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * availableStudents.length);
+            const chosenId = availableStudents[randomIndex];
+            const chosenName = currentData[chosenId].name;
+
+            luckyStudentResult.textContent = "Şanslı Öğrenci: " + chosenName;
+
+            availableStudents.splice(randomIndex, 1);
+        });
+
+        // Yenile butonuna tıklayınca tüm öğrenciler tekrar seçilebilir olsun
+        resetLuckyBtn.addEventListener("click", () => {
+            // availableStudents dizisini tüm öğrencilerle tekrar doldur
+            availableStudents = Object.keys(currentData);
+            luckyStudentResult.textContent = "";
+        });
+    </script>
+</body>
+</html>
