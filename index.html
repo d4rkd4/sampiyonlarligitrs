@@ -272,6 +272,59 @@
             transform: rotate(360deg);
         }
 
+        /* Modal Styles */
+        dialog {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        #modal-content p {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        #modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #modal-buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #modal-buttons .ok-btn {
+            background-color: #0078d7;
+            color: white;
+        }
+
+        #modal-buttons .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        #modal-buttons .confirm-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #modal-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -315,6 +368,19 @@
         </table>
     </div>
 
+    <!-- Modal Dialog -->
+    <dialog id="modal">
+        <div id="modal-content">
+            <p id="modal-message"></p>
+            <input type="text" id="modal-input" style="display:none;" />
+            <div id="modal-buttons">
+                <button class="ok-btn">OK</button>
+                <button class="cancel-btn" style="display:none;">Cancel</button>
+                <button class="confirm-btn" style="display:none;">Confirm</button>
+            </div>
+        </div>
+    </dialog>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, update, set, get } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
@@ -350,6 +416,15 @@
         const luckyStudentResult = document.getElementById("lucky-student-result");
         const resetLuckyBtn = document.getElementById("reset-lucky");
 
+        // Modal Elements
+        const modal = document.getElementById("modal");
+        const modalMessage = document.getElementById("modal-message");
+        const modalButtons = document.getElementById("modal-buttons");
+        const modalInput = document.getElementById("modal-input");
+        const okBtn = document.querySelector(".ok-btn");
+        const cancelBtn = document.querySelector(".cancel-btn");
+        const confirmBtn = document.querySelector(".confirm-btn");
+
         let currentClass = "";
         let currentClassPin = "";
         let currentData = {};
@@ -358,6 +433,73 @@
 
         let availableStudents = [];
 
+        // Function to show alert modal
+        function showAlert(message) {
+            return new Promise((resolve) => {
+                modalMessage.textContent = message;
+                modalInput.style.display = "none";
+                cancelBtn.style.display = "none";
+                confirmBtn.style.display = "none";
+                okBtn.style.display = "inline-block";
+                modal.showModal();
+
+                okBtn.onclick = () => {
+                    modal.close();
+                    resolve();
+                };
+            });
+        }
+
+        // Function to show prompt modal
+        function showPrompt(message) {
+            return new Promise((resolve) => {
+                modalMessage.textContent = message;
+                modalInput.style.display = "block";
+                modalInput.value = "";
+                cancelBtn.style.display = "inline-block";
+                confirmBtn.style.display = "none";
+                okBtn.style.display = "inline-block";
+                modal.showModal();
+
+                okBtn.onclick = () => {
+                    const inputValue = modalInput.value;
+                    modal.close();
+                    resolve(inputValue);
+                };
+
+                cancelBtn.onclick = () => {
+                    modal.close();
+                    resolve(null);
+                };
+            });
+        }
+
+        // Function to show confirm modal
+        function showConfirm(message) {
+            return new Promise((resolve) => {
+                modalMessage.textContent = message;
+                modalInput.style.display = "none";
+                cancelBtn.style.display = "inline-block";
+                confirmBtn.style.display = "none";
+                okBtn.style.display = "inline-block";
+                modal.showModal();
+
+                okBtn.textContent = "OK";
+                cancelBtn.textContent = "Cancel";
+
+                okBtn.onclick = () => {
+                    modal.close();
+                    resolve(true);
+                };
+
+                cancelBtn.onclick = () => {
+                    modal.close();
+                    resolve(false);
+                };
+            });
+        }
+
+        // Load classes from Firebase
         async function loadClasses() {
             const classesRef = ref(db, 'classes');
             const snapshot = await get(classesRef);
@@ -376,7 +518,7 @@
                 }
 
             } else {
-                console.log("Hiç sınıf yok");
+                await showAlert("Hiç sınıf yok");
             }
         }
 
@@ -390,7 +532,7 @@
                 if (pinSnap.exists()) {
                     currentClassPin = pinSnap.val();
                 } else {
-                    alert("Seçtiğiniz sınıf veritabanında yok!");
+                    await showAlert("Seçtiğiniz sınıf veritabanında yok!");
                     return;
                 }
 
@@ -425,7 +567,7 @@
             pinCheck.style.display = "block";
         });
 
-        pinSubmit.addEventListener("click", () => {
+        pinSubmit.addEventListener("click", async () => {
             const enteredPin = pinInput.value;
             if (enteredPin === currentClassPin) {
                 pinCheck.style.display = "none";
@@ -433,7 +575,7 @@
                 saveChangesButton.style.display = "inline-block";
                 document.querySelector("table").classList.add("edit-mode-enabled");
             } else {
-                alert("Hatalı PIN!");
+                await showAlert("Hatalı PIN!");
             }
         });
 
@@ -490,9 +632,9 @@
             });
 
             document.querySelectorAll(".button-update").forEach((button) => {
-                button.addEventListener("click", () => {
+                button.addEventListener("click", async () => {
                     const id = button.dataset.id;
-                    const newPhoto = prompt("Yeni Fotoğraf URL'si girin:");
+                    const newPhoto = await showPrompt("Yeni Fotoğraf URL'si girin:");
                     if (newPhoto) {
                         currentData[id].photo = newPhoto;
                         if (!pendingChanges[id]) {
@@ -506,22 +648,25 @@
             });
 
             document.querySelectorAll("[data-action='delete']").forEach((button) => {
-                button.addEventListener("click", () => {
+                button.addEventListener("click", async () => {
                     const id = button.dataset.id;
-                    pendingChanges[id] = { delete: true };
-                    button.parentElement.parentElement.remove();
-                    delete currentData[id]; 
-                    availableStudents = availableStudents.filter(sId => sId !== id);
+                    const confirmDelete = await showConfirm("Bu öğrenciyi silmek istediğinize emin misiniz?");
+                    if (confirmDelete) {
+                        pendingChanges[id] = { delete: true };
+                        button.parentElement.parentElement.remove();
+                        delete currentData[id]; 
+                        availableStudents = availableStudents.filter(sId => sId !== id);
+                    }
                 });
             });
         }
 
-        addStudentButton.addEventListener("click", () => {
+        addStudentButton.addEventListener("click", async () => {
             const name = studentNameInput.value.trim();
             let photo = photoUrlInput.value.trim();
 
             if (!name) {
-                alert("Lütfen öğrenci adını girin!");
+                await showAlert("Lütfen öğrenci adını girin!");
                 return;
             }
 
@@ -571,7 +716,7 @@
         saveChangesButton.addEventListener("click", async () => {
             await commitChanges();
             exitEditMode();
-            alert("Değişiklikler kaydedildi!");
+            await showAlert("Değişiklikler kaydedildi!");
         });
 
         async function commitChanges() {
