@@ -536,7 +536,7 @@
             <tbody>
                 <!-- Haftanın Başkanı Satırı -->
                 <tr id="head-of-week-row" class="highlighted">
-                    <td>Haftanın Başkanı</td>
+                    <td>Sınıf Başkanı</td>
                     <td id="head-of-week">Belirlenmedi</td>
                     <td class="actions">
                         <button class="edit-button" id="edit-head">Düzenle</button>
@@ -664,12 +664,6 @@
         let currentData = {};
         let pendingChanges = {}; 
         const defaultPhotoURL = "https://cdn.pixabay.com/photo/2013/07/13/13/42/tux-161406_1280.png";
-
-        // Her görev için ayrı 'available' listeleri
-        let availableRoles = {
-            headOfWeek: [],
-            dutyStudents: []
-        };
 
         let availableStudents = [];
 
@@ -833,7 +827,6 @@
                 currentData = data;
                 populateTable(currentData);
                 availableStudents = Object.keys(currentData);
-                await initializeAvailableRoles(cls);
                 await loadRoles(cls);
                 populateTaskTable(); // Görevleri yükle
                 observeTasks(cls); // Görevleri izle
@@ -841,27 +834,6 @@
             }, {
                 onlyOnce: false
             });
-        }
-
-        // 'availableRoles' Listelemesini Başlatma Fonksiyonu
-        async function initializeAvailableRoles(cls) {
-            const roles = Object.keys(availableRoles);
-            for (let role of roles) {
-                const availableRef = ref(db, `classes/${cls}/rolesAvailable/${role}`);
-                try {
-                    const availableSnap = await get(availableRef);
-                    if (!availableSnap.exists()) {
-                        // Mevcut öğrencilerle initialize et
-                        const studentIDs = Object.keys(currentData);
-                        await set(availableRef, studentIDs);
-                        availableRoles[role] = [...studentIDs];
-                    } else {
-                        availableRoles[role] = availableSnap.val();
-                    }
-                } catch (error) {
-                    console.error(`Error initializing availableRoles for ${role}:`, error);
-                }
-            }
         }
 
         // Roller Yükleme Fonksiyonu
@@ -905,9 +877,6 @@
                 tableContainer.querySelector("table").classList.add("edit-mode-enabled");
                 taskTableContainer.classList.add("edit-mode-enabled"); // Görev tablosuna edit modu ekle
                 addTaskBtnDisplay(true); // Görev ekleme butonunu göster
-
-                // "İşlemler" sütununu göster
-                // .actions sütunu CSS ile kontrol edildi, bu nedenle JavaScript'te ekleme yapmaya gerek yok
             } else {
                 await showAlert("Hatalı PIN!");
             }
@@ -1001,14 +970,6 @@
                         newButton.parentElement.parentElement.remove();
                         delete currentData[id]; 
                         availableStudents = availableStudents.filter(sId => sId !== id);
-
-                        // Güncel availableRoles listelerinde varsa, geri ekle
-                        for (let role in availableRoles) {
-                            if (!availableRoles[role].includes(id)) {
-                                availableRoles[role].push(id);
-                                set(ref(db, `classes/${currentClass}/rolesAvailable/${role}`), availableRoles[role]);
-                            }
-                        }
                     }
                 });
             });
@@ -1122,9 +1083,6 @@
             taskTableContainer.classList.remove("edit-mode-enabled"); // Görev tablosundan edit modu kaldır
             addTaskBtnDisplay(false); // Görev ekleme butonunu gizle
 
-            // "İşlemler" sütununu gizle
-            // .actions sütunu CSS ile kontrol edildi, bu nedenle JavaScript'te ekleme yapmaya gerek yok
-
             pinInput.value = "";
             pinCheck.style.display = "none";
         }
@@ -1146,23 +1104,12 @@
                 return;
             }
 
-            // Roller için available listesi kontrolü
-            const availableRef = ref(db, `classes/${currentClass}/rolesAvailable/headOfWeek`);
             try {
-                const availableSnap = await get(availableRef);
-                let availableList = availableSnap.exists() ? availableSnap.val() : Object.keys(currentData);
-                if (availableList.length === 0) {
-                    // Eğer available listesi boşsa, resetle
-                    availableList = Object.keys(currentData);
-                    await set(availableRef, availableList);
-                    availableRoles.headOfWeek = availableList;
-                }
-
-                // Seçilebilecek öğrenciler
-                const selectableStudents = availableList.map(id => `<option value="${id}">${currentData[id].name}</option>`).join('');
+                // Seçilebilecek tüm öğrenciler listesi
+                const selectableStudents = students.map(id => `<option value="${id}">${currentData[id].name}</option>`).join('');
 
                 // Modal'ı güncelle
-                modalMessage.innerHTML = `Yeni Haftanın Başkanını seçin:<br><select id="head-select">${selectableStudents}</select>`;
+                modalMessage.innerHTML = `Yeni Sınıf Başkanını seçin:<br><select id="head-select">${selectableStudents}</select>`;
                 modalInput.style.display = "none";
                 checkboxContainer.style.display = "none";
                 cancelBtn.style.display = "inline-block";
@@ -1175,11 +1122,6 @@
                     const selectedId = headSelect.value;
                     await set(ref(db, `classes/${currentClass}/roles/headOfWeek`), selectedId);
                     headOfWeekCell.innerHTML = `🏆 ${currentData[selectedId]?.name || "Belirlenmedi"}`;
-
-                    // Güncelleme sonrası available listeden çıkar
-                    availableRoles.headOfWeek = availableRoles.headOfWeek.filter(id => id !== selectedId);
-                    await set(ref(db, `classes/${currentClass}/rolesAvailable/headOfWeek`), availableRoles.headOfWeek);
-
                     modal.close();
                 };
 
@@ -1200,23 +1142,12 @@
                 return;
             }
 
-            // Roller için available listesi kontrolü
-            const availableRef = ref(db, `classes/${currentClass}/rolesAvailable/dutyStudents`);
             try {
-                const availableSnap = await get(availableRef);
-                let availableList = availableSnap.exists() ? availableSnap.val() : Object.keys(currentData);
-                if (availableList.length < 2) {
-                    // Eğer available listesi azsa, resetle
-                    availableList = Object.keys(currentData);
-                    await set(availableRef, availableList);
-                    availableRoles.dutyStudents = availableList;
-                }
-
-                // Seçilebilecek öğrenciler - Checkboxlarla
-                const selectableStudents = availableList.map(id => `
+                // Seçilebilecek tüm öğrenciler listesi
+                const selectableStudents = students.map(id => `
                     <div class="checkbox-item">
-                        <input type="checkbox" id="student-${id}" name="task-students" value="${id}">
-                        <label for="student-${id}">${currentData[id].name}</label>
+                        <input type="checkbox" id="duty-${id}" name="duty-students" value="${id}">
+                        <label for="duty-${id}">${currentData[id].name}</label>
                     </div>
                 `).join('');
 
@@ -1231,16 +1162,11 @@
                 modal.showModal();
 
                 confirmBtn.onclick = async () => {
-                    const selectedCheckboxes = document.querySelectorAll('input[name="task-students"]:checked');
+                    const selectedCheckboxes = document.querySelectorAll('input[name="duty-students"]:checked');
                     if (selectedCheckboxes.length === 2) {
                         const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
                         await set(ref(db, `classes/${currentClass}/roles/dutyStudents`), selectedIds);
                         dutyStudentsCell.textContent = selectedIds.map(id => currentData[id]?.name).join(", ");
-
-                        // Remove from available list
-                        availableRoles.dutyStudents = availableRoles.dutyStudents.filter(id => !selectedIds.includes(id));
-                        await set(ref(db, `classes/${currentClass}/rolesAvailable/dutyStudents`), availableRoles.dutyStudents);
-
                         modal.close();
                     } else {
                         await showAlert("Lütfen iki öğrenci seçin.");
@@ -1430,17 +1356,6 @@
                 }
             });
         }
-
-        // Roller Yükleme Fonksiyonu
-        // Bu fonksiyon artık sınıf seçildiğinde zaten çağrılıyor
-        // Bu nedenle, aşağıdaki duplicate 'change' listener'ı kaldırıldı
-        // classSelect.addEventListener("change", async () => {
-        //     if (currentClass) {
-        //         await populateTaskTable();
-        //         observeTasks();
-        //         observeDutyStudents();
-        //     }
-        // });
 
         // Haftanın Başkanını ve Nöbetçi Öğrencileri Güncelleme Fonksiyonu
         // Bu kısım zaten yukarıda handle edildi
