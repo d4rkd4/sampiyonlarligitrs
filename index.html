@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Şampiyonlar Ligi</title>
     <style>
+        /* Genel Stil */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
@@ -31,6 +32,7 @@
             50% { opacity: 0; }
         }
 
+        /* PIN ve Admin Paneli */
         .pin-container, #admin-panel {
             max-width: 400px;
             margin: 20px auto;
@@ -45,8 +47,11 @@
             margin: 5px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            width: calc(100% - 30px);
+            box-sizing: border-box;
         }
 
+        /* Genel Buton Stilleri */
         button {
             background-color: #0078d7;
             color: white;
@@ -54,13 +59,33 @@
             border: none;
             border-radius: 5px;
             transition: background 0.3s ease;
+            padding: 10px 20px;
+            font-size: 1em;
         }
 
         button:hover {
             background-color: #005bb5;
         }
 
-        .table-container {
+        /* Görevli Tablosu Butonu */
+        #task-table-btn {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            padding: 12px 20px;
+            font-weight: bold;
+            display: inline-block;
+            background-color: #28a745; /* Yeşil renk */
+            transition: background 0.3s ease;
+            border: none;
+            color: white;
+        }
+
+        #task-table-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Tablo Container ve Görevli Tablosu */
+        .table-container, #task-table-container {
             max-width: 90%;
             margin: 20px auto;
             background-color: #ffffff;
@@ -71,7 +96,7 @@
             display: none;
         }
 
-        .table-container:hover {
+        .table-container:hover, #task-table-container:hover {
             transform: scale(1.02);
         }
 
@@ -92,14 +117,22 @@
             color: white;
         }
 
-        th.actions, td.actions {
-            display: none;
+        /* Görevli Tablosu İçin Başlık */
+        #task-table th {
+            background: linear-gradient(to right, #28a745, #218838);
+            color: white;
         }
 
-        .edit-mode-enabled th.actions, .edit-mode-enabled td.actions {
-            display: table-cell;
+        /* "İşlemler" Sütunu */
+        .actions {
+            display: none; /* Sütunu tamamen gizle */
         }
 
+        .edit-mode-enabled .actions {
+            display: table-cell; /* Edit modunda göster */
+        }
+
+        /* Öğrenci Fotoğrafı */
         td img {
             width: 65px;
             height: 65px;
@@ -108,12 +141,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
+        /* Puan Butonları */
         td button {
             margin: 5px;
             padding: 5px 10px;
             font-size: 0.9em;
             border-radius: 5px;
-            display: none;
         }
 
         .button-red {
@@ -131,10 +164,7 @@
             color: white;
         }
 
-        .edit-mode-enabled td button {
-            display: inline-block;
-        }
-
+        /* Kaydet Butonu */
         #save-changes {
             display: none;
             margin: 20px auto;
@@ -151,10 +181,12 @@
             background-color: #218838;
         }
 
+        /* Sınıf Seçimi */
         #class-selection {
             margin-bottom: 20px;
         }
 
+        /* Üst Üç Sıranın Efekti */
         @keyframes wave {
             0% {
                 background-position: 0% 0%;
@@ -250,7 +282,7 @@
             100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
         }
 
-        /* Yenile butonu */
+        /* Yenile Butonu */
         #reset-lucky {
             margin-left: 10px;
             padding: 12px 15px;
@@ -258,6 +290,12 @@
             display: inline-block;
             position: relative;
             overflow: hidden;
+            background-color: #0078d7;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         #reset-lucky::before {
@@ -268,11 +306,15 @@
             transition: transform 0.5s ease;
         }
 
+        #reset-lucky:hover {
+            background-color: #005bb5;
+        }
+
         #reset-lucky:hover::before {
             transform: rotate(360deg);
         }
 
-        /* Modal Styles */
+        /* Modal Stilleri */
         dialog {
             border: none;
             border-radius: 8px;
@@ -324,6 +366,150 @@
             font-size: 1em;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Görevli Tablosu Eklemeleri */
+        #task-table-container {
+            max-width: 90%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 3px solid #28a745; /* Yeşil çerçeve */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+            display: none;
+        }
+
+        #task-table-container:hover {
+            transform: scale(1.02);
+        }
+
+        #task-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        #task-table th, #task-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #task-table th {
+            background: linear-gradient(to right, #28a745, #218838);
+            color: white;
+        }
+
+        /* Görevli Tablosu İçin actions sütunu */
+        #task-table th.actions, #task-table td.actions {
+            display: none; /* Sütunu gizle */
+        }
+
+        .edit-mode-enabled #task-table th.actions, .edit-mode-enabled #task-table td.actions {
+            display: table-cell; /* Edit modunda göster */
+        }
+
+        /* Dinamik Çerçeve Efekti */
+        .highlighted {
+            position: relative;
+            animation: glow 2s infinite;
+            border: 2px solid #FFD700; /* Çerçeveyi inceltildi */
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+            }
+            50% {
+                box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+            }
+            100% {
+                box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+            }
+        }
+
+        .edit-button {
+            background-color: #0078d7;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Yeni Görev Ekleme Butonu */
+        #add-task-btn {
+            background-color: #17a2b8;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #add-task-btn:hover {
+            background-color: #138496;
+        }
+
+        /* Görev Silme Butonları */
+        .delete-task-btn {
+            background-color: #dc3545;
+        }
+
+        .delete-task-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Düzenle Butonuna Ekstra Stil */
+        .edit-task-btn {
+            background-color: #ffc107;
+            margin-right: 5px;
+        }
+
+        .edit-task-btn:hover {
+            background-color: #e0a800;
+        }
+
+        /* Modal Checkbox Düzenlemesi */
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            width: 45%; /* İki sütun oluştur */
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-item label {
+            flex: 1;
+            text-align: left;
+        }
+
+        /* Düzenleme Modu Butonlarının Görünürlüğü */
+        .editable-button {
+            display: none;
+        }
+
+        .edit-mode-enabled .editable-button {
+            display: inline-block;
         }
     </style>
 </head>
@@ -334,6 +520,40 @@
         <select id="class-select">
             <option value="">--Sınıf Seçin--</option>
         </select>
+    </div>
+
+    <!-- Görevli Tablosu Butonu -->
+    <button id="task-table-btn" style="display:none;">Görevli Tablosu</button>
+    <div id="task-table-container">
+        <table id="task-table">
+            <thead>
+                <tr>
+                    <th>Görev</th>
+                    <th>Öğrenci</th>
+                    <th class="actions">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Haftanın Başkanı Satırı -->
+                <tr id="head-of-week-row" class="highlighted">
+                    <td>Haftanın Başkanı</td>
+                    <td id="head-of-week">Belirlenmedi</td>
+                    <td class="actions">
+                        <button class="edit-button" id="edit-head">Düzenle</button>
+                    </td>
+                </tr>
+                <!-- Nöbetçi Öğrenciler Satırı -->
+                <tr id="duty-students-row">
+                    <td>Nöbetçi Öğrenciler</td>
+                    <td id="duty-students">Belirlenmedi</td>
+                    <td class="actions">
+                        <button class="edit-button" id="edit-duty-students">Düzenle</button>
+                    </td>
+                </tr>
+                <!-- Diğer Görevler Satırı (Düzenleme Modunda Eklenecek) -->
+            </tbody>
+        </table>
+        <button id="add-task-btn">Görev Ekle</button>
     </div>
 
     <button id="lucky-student-btn" style="display:none;">Şanslı Öğrenci Seç</button>
@@ -372,6 +592,9 @@
     <dialog id="modal">
         <div id="modal-content">
             <p id="modal-message"></p>
+            <div id="checkbox-container" class="checkbox-container" style="display: none;">
+                <!-- Checkboxlar burada oluşturulacak -->
+            </div>
             <input type="text" id="modal-input" style="display:none;" />
             <div id="modal-buttons">
                 <button class="ok-btn">OK</button>
@@ -383,10 +606,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update, set, get } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, update, set, get, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "API_KEY",
+            apiKey: "YOUR_API_KEY",
             authDomain: "sampiyonlar-ligi.firebaseapp.com",
             databaseURL: "https://sampiyonlar-ligi-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "sampiyonlar-ligi",
@@ -395,9 +618,11 @@
             appId: "1:248285384149:web:39116a8e31ef61d16f815c"
         };
 
+        // Firebase'i Başlatma
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // DOM Elementlerini Almak
         const classSelect = document.getElementById("class-select");
         const editModeButton = document.getElementById("edit-mode");
         const pinCheck = document.getElementById("pin-check");
@@ -416,7 +641,15 @@
         const luckyStudentResult = document.getElementById("lucky-student-result");
         const resetLuckyBtn = document.getElementById("reset-lucky");
 
-        // Modal Elements
+        // Görevli Tablosu Elementleri
+        const taskTableBtn = document.getElementById("task-table-btn");
+        const taskTableContainer = document.getElementById("task-table-container");
+        const headOfWeekCell = document.getElementById("head-of-week");
+        const editHeadButton = document.getElementById("edit-head");
+        const dutyStudentsCell = document.getElementById("duty-students");
+        const editDutyStudentsButton = document.getElementById("edit-duty-students"); // Yeni eklenen buton
+
+        // Modal Elementleri
         const modal = document.getElementById("modal");
         const modalMessage = document.getElementById("modal-message");
         const modalButtons = document.getElementById("modal-buttons");
@@ -424,6 +657,7 @@
         const okBtn = document.querySelector(".ok-btn");
         const cancelBtn = document.querySelector(".cancel-btn");
         const confirmBtn = document.querySelector(".confirm-btn");
+        const checkboxContainer = document.getElementById("checkbox-container");
 
         let currentClass = "";
         let currentClassPin = "";
@@ -431,16 +665,24 @@
         let pendingChanges = {}; 
         const defaultPhotoURL = "https://cdn.pixabay.com/photo/2013/07/13/13/42/tux-161406_1280.png";
 
+        // Her görev için ayrı 'available' listeleri
+        let availableRoles = {
+            headOfWeek: [],
+            dutyStudents: []
+        };
+
         let availableStudents = [];
 
-        // Function to show alert modal
+        // Uyarı Modalı Gösterme Fonksiyonu
         function showAlert(message) {
             return new Promise((resolve) => {
                 modalMessage.textContent = message;
                 modalInput.style.display = "none";
+                checkboxContainer.style.display = "none";
                 cancelBtn.style.display = "none";
                 confirmBtn.style.display = "none";
                 okBtn.style.display = "inline-block";
+                okBtn.textContent = "OK";
                 modal.showModal();
 
                 okBtn.onclick = () => {
@@ -450,15 +692,17 @@
             });
         }
 
-        // Function to show prompt modal
+        // Prompt Modalı Gösterme Fonksiyonu
         function showPrompt(message) {
             return new Promise((resolve) => {
                 modalMessage.textContent = message;
                 modalInput.style.display = "block";
                 modalInput.value = "";
+                checkboxContainer.style.display = "none";
                 cancelBtn.style.display = "inline-block";
                 confirmBtn.style.display = "none";
                 okBtn.style.display = "inline-block";
+                okBtn.textContent = "OK";
                 modal.showModal();
 
                 okBtn.onclick = () => {
@@ -474,20 +718,18 @@
             });
         }
 
-        // Function to show confirm modal
+        // Confirm Modalı Gösterme Fonksiyonu
         function showConfirm(message) {
             return new Promise((resolve) => {
                 modalMessage.textContent = message;
                 modalInput.style.display = "none";
+                checkboxContainer.style.display = "none";
                 cancelBtn.style.display = "inline-block";
-                confirmBtn.style.display = "none";
-                okBtn.style.display = "inline-block";
+                confirmBtn.style.display = "inline-block";
+                okBtn.style.display = "none";
                 modal.showModal();
 
-                okBtn.textContent = "OK";
-                cancelBtn.textContent = "Cancel";
-
-                okBtn.onclick = () => {
+                confirmBtn.onclick = () => {
                     modal.close();
                     resolve(true);
                 };
@@ -499,89 +741,182 @@
             });
         }
 
-        // Load classes from Firebase
+        // Sınıfları Firebase'den Yükleme Fonksiyonu
         async function loadClasses() {
-            const classesRef = ref(db, 'classes');
-            const snapshot = await get(classesRef);
-            if (snapshot.exists()) {
-                const data = snapshot.val();
+            try {
+                const classesRef = ref(db, 'classes');
+                const snapshot = await get(classesRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
 
-                for (let i = classSelect.options.length - 1; i > 0; i--) {
-                    classSelect.remove(i);
+                    // Mevcut seçenekleri temizleme (ilk seçenek hariç)
+                    while (classSelect.options.length > 1) {
+                        classSelect.remove(1);
+                    }
+
+                    for (let classKey in data) {
+                        const option = document.createElement("option");
+                        option.value = classKey;
+                        option.textContent = classKey;
+                        classSelect.appendChild(option);
+                    }
+
+                } else {
+                    await showAlert("Hiç sınıf yok.");
                 }
-
-                for (let classKey in data) {
-                    const option = document.createElement("option");
-                    option.value = classKey;
-                    option.textContent = classKey;
-                    classSelect.appendChild(option);
-                }
-
-            } else {
-                await showAlert("Hiç sınıf yok");
+            } catch (error) {
+                console.error("Error loading classes:", error);
+                await showAlert("Sınıflar yüklenirken bir hata oluştu.");
             }
         }
 
+        // Sınıfları Yükleme
         loadClasses();
 
+        // Sınıf Seçildiğinde Yapılacaklar
         classSelect.addEventListener("change", async () => {
             currentClass = classSelect.value;
             if (currentClass) {
-                const pinRef = ref(db, `classes/${currentClass}/pin`);
-                const pinSnap = await get(pinRef);
-                if (pinSnap.exists()) {
-                    currentClassPin = pinSnap.val();
-                } else {
-                    await showAlert("Seçtiğiniz sınıf veritabanında yok!");
-                    return;
-                }
+                try {
+                    const pinRef = ref(db, `classes/${currentClass}/pin`);
+                    const pinSnap = await get(pinRef);
+                    if (pinSnap.exists()) {
+                        currentClassPin = pinSnap.val();
+                    } else {
+                        await showAlert("Seçtiğiniz sınıf veritabanında PIN ile yok!");
+                        return;
+                    }
 
-                loadClassData(currentClass);
-                tableContainer.style.display = "block";
-                editModeButton.style.display = "inline-block";
-                luckyStudentBtn.style.display = "inline-block";
-                resetLuckyBtn.style.display = "inline-block";
-                exitEditMode();
+                    loadClassData(currentClass);
+                    tableContainer.style.display = "block";
+                    editModeButton.style.display = "inline-block";
+                    luckyStudentBtn.style.display = "inline-block";
+                    resetLuckyBtn.style.display = "inline-block";
+                    taskTableBtn.style.display = "inline-block"; // Görevli Tablosu Butonu gösterildi
+                    taskTableContainer.style.display = "none"; // Görev tablosu başlangıçta gizli
+                    addTaskBtnDisplay(false);
+                    exitEditMode();
+                } catch (error) {
+                    console.error("Error selecting class:", error);
+                    await showAlert("Sınıf seçimi sırasında bir hata oluştu.");
+                }
             } else {
+                // Sınıf seçilmediğinde her şeyi gizle
                 tableContainer.style.display = "none";
                 editModeButton.style.display = "none";
                 adminPanel.style.display = "none";
                 saveChangesButton.style.display = "none";
                 luckyStudentBtn.style.display = "none";
                 resetLuckyBtn.style.display = "none";
+                taskTableBtn.style.display = "none"; // Görevli Tablosu Butonu gizlendi
+                taskTableContainer.style.display = "none"; // Görevli Tablosu gizlendi
+                addTaskBtnDisplay(false);
                 luckyStudentResult.textContent = "";
             }
         });
 
+        // Görev Ekleme Butonunun Görünürlüğünü Ayarlama Fonksiyonu
+        function addTaskBtnDisplay(show) {
+            const addTaskBtn = document.getElementById("add-task-btn");
+            if (show) {
+                addTaskBtn.style.display = "inline-block";
+            } else {
+                addTaskBtn.style.display = "none";
+            }
+        }
+
+        // Sınıf Verilerini Yükleme Fonksiyonu
         function loadClassData(cls) {
             const classDataRef = ref(db, `classes/${cls}/students`);
-            onValue(classDataRef, (snapshot) => {
+            onValue(classDataRef, async (snapshot) => {
                 const data = snapshot.val() || {};
                 currentData = data;
                 populateTable(currentData);
                 availableStudents = Object.keys(currentData);
+                await initializeAvailableRoles(cls);
+                await loadRoles(cls);
+                populateTaskTable(); // Görevleri yükle
+                observeTasks(cls); // Görevleri izle
+                observeDutyStudents();
+            }, {
+                onlyOnce: false
             });
         }
 
+        // 'availableRoles' Listelemesini Başlatma Fonksiyonu
+        async function initializeAvailableRoles(cls) {
+            const roles = Object.keys(availableRoles);
+            for (let role of roles) {
+                const availableRef = ref(db, `classes/${cls}/rolesAvailable/${role}`);
+                try {
+                    const availableSnap = await get(availableRef);
+                    if (!availableSnap.exists()) {
+                        // Mevcut öğrencilerle initialize et
+                        const studentIDs = Object.keys(currentData);
+                        await set(availableRef, studentIDs);
+                        availableRoles[role] = [...studentIDs];
+                    } else {
+                        availableRoles[role] = availableSnap.val();
+                    }
+                } catch (error) {
+                    console.error(`Error initializing availableRoles for ${role}:`, error);
+                }
+            }
+        }
+
+        // Roller Yükleme Fonksiyonu
+        async function loadRoles(cls) {
+            const rolesRef = ref(db, `classes/${cls}/roles`);
+            try {
+                const snapshot = await get(rolesRef);
+                if (snapshot.exists()) {
+                    const roles = snapshot.val();
+                    // Haftanın Başkanı
+                    const presidentId = roles.headOfWeek;
+                    const presidentName = currentData[presidentId]?.name || "Belirlenmedi";
+                    headOfWeekCell.innerHTML = presidentId ? `🏆 ${presidentName}` : "Belirlenmedi";
+
+                    // Nöbetçi Öğrenciler
+                    dutyStudentsCell.textContent = roles.dutyStudents ? roles.dutyStudents.map(id => currentData[id]?.name).join(", ") : "Belirlenmedi";
+                } else {
+                    // Eğer roller yoksa, rol atamaları yapma
+                    // Rolleri manuel olarak atamanız gerekecek
+                    headOfWeekCell.innerHTML = "Belirlenmedi";
+                    dutyStudentsCell.textContent = "Belirlenmedi";
+                }
+            } catch (error) {
+                console.error("Error loading roles:", error);
+            }
+        }
+
+        // Edit Moduna Geçiş Butonu
         editModeButton.addEventListener("click", () => {
             pinCheck.style.display = "block";
         });
 
+        // PIN Doğrulama Butonu
         pinSubmit.addEventListener("click", async () => {
             const enteredPin = pinInput.value;
             if (enteredPin === currentClassPin) {
                 pinCheck.style.display = "none";
                 adminPanel.style.display = "block";
                 saveChangesButton.style.display = "inline-block";
-                document.querySelector("table").classList.add("edit-mode-enabled");
+                // Edit modunu etkinleştir
+                tableContainer.querySelector("table").classList.add("edit-mode-enabled");
+                taskTableContainer.classList.add("edit-mode-enabled"); // Görev tablosuna edit modu ekle
+                addTaskBtnDisplay(true); // Görev ekleme butonunu göster
+
+                // "İşlemler" sütununu göster
+                // .actions sütunu CSS ile kontrol edildi, bu nedenle JavaScript'te ekleme yapmaya gerek yok
             } else {
                 await showAlert("Hatalı PIN!");
             }
         });
 
+        // Öğrenci Tablosunu Doldurma Fonksiyonu
         function populateTable(data) {
             studentTable.innerHTML = "";
-            const sortedData = Object.entries(data).sort((a,b) => b[1].totalScore - a[1].totalScore);
+            const sortedData = Object.entries(data).sort((a,b) => (b[1].totalScore || 0) - (a[1].totalScore || 0));
 
             sortedData.forEach(([id, student], index) => {
                 const row = document.createElement("tr");
@@ -595,13 +930,13 @@
                 row.innerHTML = `
                     <td>
                         <img src="${studentPhoto}" alt="Fotoğraf">
-                        <button class="button-update" data-id="${id}">Güncelle</button>
+                        <button class="button-update editable-button" data-id="${id}">Güncelle</button>
                     </td>
                     <td>${student.name}</td>
                     <td>
-                        <button class="button-red" data-id="${id}" data-type="total">-</button>
-                        <span class="score-display">${student.totalScore}</span>
-                        <button class="button-green" data-id="${id}" data-type="total">+</button>
+                        <button class="button-red editable-button" data-id="${id}" data-type="total">-</button>
+                        <span class="score-display">${student.totalScore || 0}</span>
+                        <button class="button-green editable-button" data-id="${id}" data-type="total">+</button>
                     </td>
                     <td class="actions">
                         <button class="button-red" data-id="${id}" data-action="delete">X</button>
@@ -610,14 +945,18 @@
                 studentTable.appendChild(row);
             });
 
-            addEventListeners(sortedData);
+            addEventListeners();
         }
 
-        function addEventListeners(dataArray) {
+        // Event Listener'ları Ekleyen Fonksiyon
+        function addEventListeners() {
+            // Puan artırma/azaltma butonları
             document.querySelectorAll("[data-type='total']").forEach((button) => {
-                button.addEventListener("click", () => {
-                    const id = button.dataset.id;
-                    const action = button.classList.contains("button-green") ? 1 : -1;
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                newButton.addEventListener("click", () => {
+                    const id = newButton.dataset.id;
+                    const action = newButton.classList.contains("button-green") ? 1 : -1;
                     const newScore = Math.max(0, (currentData[id].totalScore || 0) + action);
                     currentData[id].totalScore = newScore;
 
@@ -626,14 +965,17 @@
                     }
                     pendingChanges[id].totalScore = newScore;
 
-                    const span = button.parentElement.querySelector("span.score-display");
+                    const span = newButton.parentElement.querySelector("span.score-display");
                     span.textContent = newScore;
                 });
             });
 
+            // Fotoğraf güncelleme butonları
             document.querySelectorAll(".button-update").forEach((button) => {
-                button.addEventListener("click", async () => {
-                    const id = button.dataset.id;
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                newButton.addEventListener("click", async () => {
+                    const id = newButton.dataset.id;
                     const newPhoto = await showPrompt("Yeni Fotoğraf URL'si girin:");
                     if (newPhoto) {
                         currentData[id].photo = newPhoto;
@@ -641,26 +983,38 @@
                             pendingChanges[id] = {};
                         }
                         pendingChanges[id].photo = newPhoto;
-                        const img = button.parentElement.querySelector("img");
+                        const img = newButton.parentElement.querySelector("img");
                         img.src = newPhoto;
                     }
                 });
             });
 
+            // Silme butonları
             document.querySelectorAll("[data-action='delete']").forEach((button) => {
-                button.addEventListener("click", async () => {
-                    const id = button.dataset.id;
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                newButton.addEventListener("click", async () => {
+                    const id = newButton.dataset.id;
                     const confirmDelete = await showConfirm("Bu öğrenciyi silmek istediğinize emin misiniz?");
                     if (confirmDelete) {
                         pendingChanges[id] = { delete: true };
-                        button.parentElement.parentElement.remove();
+                        newButton.parentElement.parentElement.remove();
                         delete currentData[id]; 
                         availableStudents = availableStudents.filter(sId => sId !== id);
+
+                        // Güncel availableRoles listelerinde varsa, geri ekle
+                        for (let role in availableRoles) {
+                            if (!availableRoles[role].includes(id)) {
+                                availableRoles[role].push(id);
+                                set(ref(db, `classes/${currentClass}/rolesAvailable/${role}`), availableRoles[role]);
+                            }
+                        }
                     }
                 });
             });
         }
 
+        // Öğrenci Ekleme Butonu
         addStudentButton.addEventListener("click", async () => {
             const name = studentNameInput.value.trim();
             let photo = photoUrlInput.value.trim();
@@ -689,23 +1043,24 @@
             };
 
             const row = document.createElement("tr");
+
             row.innerHTML = `
                 <td>
                     <img src="${photo}" alt="Fotoğraf">
-                    <button class="button-update" data-id="${tempId}">Güncelle</button>
+                    <button class="button-update editable-button" data-id="${tempId}">Güncelle</button>
                 </td>
                 <td>${name}</td>
                 <td>
-                    <button class="button-red" data-id="${tempId}" data-type="total">-</button>
+                    <button class="button-red editable-button" data-id="${tempId}" data-type="total">-</button>
                     <span class="score-display">0</span>
-                    <button class="button-green" data-id="${tempId}" data-type="total">+</button>
+                    <button class="button-green editable-button" data-id="${tempId}" data-type="total">+</button>
                 </td>
                 <td class="actions">
                     <button class="button-red" data-id="${tempId}" data-action="delete">X</button>
                 </td>
             `;
             studentTable.appendChild(row);
-            addEventListeners([[tempId, currentData[tempId]]]);
+            addEventListeners(); // Event listener'ları tekrar ekle
 
             studentNameInput.value = "";
             photoUrlInput.value = "";
@@ -713,19 +1068,27 @@
             availableStudents.push(tempId);
         });
 
+        // Kaydet Butonu
         saveChangesButton.addEventListener("click", async () => {
-            await commitChanges();
-            exitEditMode();
-            await showAlert("Değişiklikler kaydedildi!");
+            try {
+                await commitChanges();
+                exitEditMode();
+                await showAlert("Değişiklikler kaydedildi!");
+                await loadRoles(currentClass); // Roller güncellendiğinde UI'yi yenile
+            } catch (error) {
+                console.error("Error saving changes:", error);
+                await showAlert("Değişiklikler kaydedilirken bir hata oluştu.");
+            }
         });
 
+        // Değişiklikleri Firebase'e Kaydetme Fonksiyonu
         async function commitChanges() {
             const studentsRef = ref(db, `classes/${currentClass}/students`);
             for (const id in pendingChanges) {
                 const changes = pendingChanges[id];
                 if (changes.delete) {
                     if (!id.startsWith("temp_")) {
-                        await set(ref(db, `classes/${currentClass}/students/${id}`), null);
+                        await remove(ref(db, `classes/${currentClass}/students/${id}`));
                     }
                 } else if (changes.isNew) {
                     const newRef = push(studentsRef);
@@ -741,6 +1104,7 @@
                         if (changes.photo !== undefined) updates.photo = changes.photo;
                         await update(ref(db, `classes/${currentClass}/students/${id}`), updates);
                     } else {
+                        // Temp öğrenci ise, kalıcı hale getir
                         const newRef = push(studentsRef);
                         await set(newRef, currentData[id]);
                     }
@@ -749,15 +1113,150 @@
             pendingChanges = {};
         }
 
+        // Edit Modundan Çıkış Fonksiyonu
         function exitEditMode() {
             adminPanel.style.display = "none";
             saveChangesButton.style.display = "none";
-            document.querySelector("table").classList.remove("edit-mode-enabled");
+            // Edit modunu kapat
+            tableContainer.querySelector("table").classList.remove("edit-mode-enabled");
+            taskTableContainer.classList.remove("edit-mode-enabled"); // Görev tablosundan edit modu kaldır
+            addTaskBtnDisplay(false); // Görev ekleme butonunu gizle
+
+            // "İşlemler" sütununu gizle
+            // .actions sütunu CSS ile kontrol edildi, bu nedenle JavaScript'te ekleme yapmaya gerek yok
+
             pinInput.value = "";
             pinCheck.style.display = "none";
         }
 
-        // Şanslı öğrenci seçimi
+        // Görevli Tablosu Butonu ve Fonksiyonları
+        taskTableBtn.addEventListener("click", () => {
+            if (taskTableContainer.style.display === "none") {
+                taskTableContainer.style.display = "block";
+            } else {
+                taskTableContainer.style.display = "none";
+            }
+        });
+
+        // Haftanın Başkanını Düzenleme Fonksiyonu
+        editHeadButton.addEventListener("click", async () => {
+            const students = Object.keys(currentData);
+            if (students.length === 0) {
+                await showAlert("Öğrenci yok!");
+                return;
+            }
+
+            // Roller için available listesi kontrolü
+            const availableRef = ref(db, `classes/${currentClass}/rolesAvailable/headOfWeek`);
+            try {
+                const availableSnap = await get(availableRef);
+                let availableList = availableSnap.exists() ? availableSnap.val() : Object.keys(currentData);
+                if (availableList.length === 0) {
+                    // Eğer available listesi boşsa, resetle
+                    availableList = Object.keys(currentData);
+                    await set(availableRef, availableList);
+                    availableRoles.headOfWeek = availableList;
+                }
+
+                // Seçilebilecek öğrenciler
+                const selectableStudents = availableList.map(id => `<option value="${id}">${currentData[id].name}</option>`).join('');
+
+                // Modal'ı güncelle
+                modalMessage.innerHTML = `Yeni Haftanın Başkanını seçin:<br><select id="head-select">${selectableStudents}</select>`;
+                modalInput.style.display = "none";
+                checkboxContainer.style.display = "none";
+                cancelBtn.style.display = "inline-block";
+                confirmBtn.style.display = "inline-block";
+                okBtn.style.display = "none";
+                modal.showModal();
+
+                const headSelect = document.getElementById("head-select");
+                confirmBtn.onclick = async () => {
+                    const selectedId = headSelect.value;
+                    await set(ref(db, `classes/${currentClass}/roles/headOfWeek`), selectedId);
+                    headOfWeekCell.innerHTML = `🏆 ${currentData[selectedId]?.name || "Belirlenmedi"}`;
+
+                    // Güncelleme sonrası available listeden çıkar
+                    availableRoles.headOfWeek = availableRoles.headOfWeek.filter(id => id !== selectedId);
+                    await set(ref(db, `classes/${currentClass}/rolesAvailable/headOfWeek`), availableRoles.headOfWeek);
+
+                    modal.close();
+                };
+
+                cancelBtn.onclick = () => {
+                    modal.close();
+                };
+            } catch (error) {
+                console.error("Error editing head of week:", error);
+                await showAlert("Haftanın başkanını düzenlerken bir hata oluştu.");
+            }
+        });
+
+        // Nöbetçi Öğrencileri Düzenleme Fonksiyonu
+        editDutyStudentsButton.addEventListener("click", async () => {
+            const students = Object.keys(currentData);
+            if (students.length < 2) {
+                await showAlert("İki öğrenci seçmek için yeterli öğrenci yok.");
+                return;
+            }
+
+            // Roller için available listesi kontrolü
+            const availableRef = ref(db, `classes/${currentClass}/rolesAvailable/dutyStudents`);
+            try {
+                const availableSnap = await get(availableRef);
+                let availableList = availableSnap.exists() ? availableSnap.val() : Object.keys(currentData);
+                if (availableList.length < 2) {
+                    // Eğer available listesi azsa, resetle
+                    availableList = Object.keys(currentData);
+                    await set(availableRef, availableList);
+                    availableRoles.dutyStudents = availableList;
+                }
+
+                // Seçilebilecek öğrenciler - Checkboxlarla
+                const selectableStudents = availableList.map(id => `
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="student-${id}" name="task-students" value="${id}">
+                        <label for="student-${id}">${currentData[id].name}</label>
+                    </div>
+                `).join('');
+
+                // Modal'ı güncelle
+                modalMessage.innerHTML = `Nöbetçi Öğrencileri seçin (2 öğrenci):<br>`;
+                checkboxContainer.innerHTML = selectableStudents;
+                checkboxContainer.style.display = "flex"; // Göster
+                modalInput.style.display = "none";
+                cancelBtn.style.display = "inline-block";
+                confirmBtn.style.display = "inline-block";
+                okBtn.style.display = "none";
+                modal.showModal();
+
+                confirmBtn.onclick = async () => {
+                    const selectedCheckboxes = document.querySelectorAll('input[name="task-students"]:checked');
+                    if (selectedCheckboxes.length === 2) {
+                        const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+                        await set(ref(db, `classes/${currentClass}/roles/dutyStudents`), selectedIds);
+                        dutyStudentsCell.textContent = selectedIds.map(id => currentData[id]?.name).join(", ");
+
+                        // Remove from available list
+                        availableRoles.dutyStudents = availableRoles.dutyStudents.filter(id => !selectedIds.includes(id));
+                        await set(ref(db, `classes/${currentClass}/rolesAvailable/dutyStudents`), availableRoles.dutyStudents);
+
+                        modal.close();
+                    } else {
+                        await showAlert("Lütfen iki öğrenci seçin.");
+                    }
+                };
+
+                cancelBtn.onclick = () => {
+                    modal.close();
+                };
+            } catch (error) {
+                console.error("Error editing duty students:", error);
+                await showAlert("Nöbetçi öğrencileri düzenlerken bir hata oluştu.");
+            }
+        });
+
+        // Şanslı Öğrenci Seçimi
         luckyStudentBtn.addEventListener("click", () => {
             if (availableStudents.length === 0) {
                 luckyStudentResult.textContent = "Seçilebilecek öğrenci kalmadı!";
@@ -772,12 +1271,180 @@
             availableStudents.splice(randomIndex, 1);
         });
 
-        // Yenile butonuna tıklayınca tüm öğrenciler tekrar seçilebilir olsun
+        // Şanslı Öğrencileri Sıfırlama
         resetLuckyBtn.addEventListener("click", () => {
             // availableStudents dizisini tüm öğrencilerle tekrar doldur
             availableStudents = Object.keys(currentData);
             luckyStudentResult.textContent = "";
         });
+
+        // Görev Ekleme Butonu
+        document.getElementById("add-task-btn").addEventListener("click", async () => {
+            const taskName = await showPrompt("Yeni görev adını girin:");
+            if (taskName) {
+                const newTaskId = "task_" + Date.now();
+                await set(ref(db, `classes/${currentClass}/tasks/${newTaskId}`), {
+                    name: taskName,
+                    assignedStudents: [] // Başlangıçta atanmış öğrenci yok
+                });
+                // Görev eklediğinizde, onValue listener table'ı güncelleyeceği için addTaskRow çağırmaya gerek yok
+            }
+        });
+
+        // Görev Satırı Ekleme Fonksiyonu
+        function addTaskRow(taskId, taskName) {
+            const tbody = taskTableContainer.querySelector("tbody");
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${taskName}</td>
+                <td id="task-${taskId}-student">Belirlenmedi</td>
+                <td class="actions">
+                    <button class="edit-button edit-task-btn" data-task-id="${taskId}">Düzenle</button>
+                    <button class="edit-button delete-task-btn" data-task-id="${taskId}">Sil</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+
+            // Silme butonuna event listener ekle
+            const deleteBtn = row.querySelector(".delete-task-btn");
+            const newDeleteBtn = deleteBtn.cloneNode(true);
+            deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
+            newDeleteBtn.addEventListener("click", async () => {
+                const confirmDelete = await showConfirm("Bu görevi silmek istediğinize emin misiniz?");
+                if (confirmDelete) {
+                    await remove(ref(db, `classes/${currentClass}/tasks/${taskId}`));
+                    row.remove();
+                }
+            });
+
+            // Düzenleme butonuna event listener ekle
+            const editBtn = row.querySelector(".edit-task-btn");
+            const newEditBtn = editBtn.cloneNode(true);
+            editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+            newEditBtn.addEventListener("click", async () => {
+                const taskRef = ref(db, `classes/${currentClass}/tasks/${taskId}`);
+                try {
+                    const snapshot = await get(taskRef);
+                    if (snapshot.exists()) {
+                        const taskData = snapshot.val();
+                        const assignedStudents = taskData.assignedStudents || [];
+
+                        // Seçili öğrencileri listeye ekle
+                        const selectableStudents = Object.keys(currentData).map(id => `
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="task-${taskId}-student-${id}" name="task-students" value="${id}" ${assignedStudents.includes(id) ? 'checked' : ''}>
+                                <label for="task-${taskId}-student-${id}">${currentData[id].name}</label>
+                            </div>
+                        `).join('');
+
+                        // Modal'ı güncelle
+                        modalMessage.innerHTML = `Göreve Atanacak Öğrencileri seçin:<br>`;
+                        checkboxContainer.innerHTML = selectableStudents;
+                        checkboxContainer.style.display = "flex"; // Göster
+                        modalInput.style.display = "none";
+                        cancelBtn.style.display = "inline-block";
+                        confirmBtn.style.display = "inline-block";
+                        okBtn.style.display = "none";
+                        modal.showModal();
+
+                        confirmBtn.onclick = async () => {
+                            const selectedCheckboxes = document.querySelectorAll('input[name="task-students"]:checked');
+                            const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+                            await update(ref(db, `classes/${currentClass}/tasks/${taskId}`), {
+                                assignedStudents: selectedIds
+                            });
+
+                            // Görev tablosunda öğrencileri güncelle
+                            if (selectedIds.length > 0) {
+                                const studentNames = selectedIds.map(id => currentData[id]?.name).join(", ");
+                                row.querySelector(`#task-${taskId}-student`).textContent = studentNames;
+                            } else {
+                                row.querySelector(`#task-${taskId}-student`).textContent = "Belirlenmedi";
+                            }
+
+                            modal.close();
+                        };
+
+                        cancelBtn.onclick = () => {
+                            modal.close();
+                        };
+                    } else {
+                        await showAlert("Görev bulunamadı.");
+                    }
+                } catch (error) {
+                    console.error("Error editing task:", error);
+                    await showAlert("Görev düzenlenirken bir hata oluştu.");
+                }
+            });
+        }
+
+        // Görev Tablosunu Doldurma Fonksiyonu
+        async function populateTaskTable() {
+            const tasksRef = ref(db, `classes/${currentClass}/tasks`);
+            try {
+                const snapshot = await get(tasksRef);
+                if (snapshot.exists()) {
+                    const tasks = snapshot.val();
+                    const tbody = taskTableContainer.querySelector("tbody");
+                    // Mevcut görev satırlarını temizle (sabit satırlar hariç)
+                    tbody.querySelectorAll("tr:not(#head-of-week-row):not(#duty-students-row)").forEach(row => row.remove());
+
+                    for (let taskId in tasks) {
+                        addTaskRow(taskId, tasks[taskId].name);
+                        // Atanan öğrencileri tabloya yansıt
+                        const assignedIds = tasks[taskId].assignedStudents || [];
+                        const studentNames = assignedIds.map(id => currentData[id]?.name).join(", ");
+                        const studentCell = document.getElementById(`task-${taskId}-student`);
+                        if (studentCell) {
+                            studentCell.textContent = assignedIds.length > 0 ? studentNames : "Belirlenmedi";
+                        }
+                    }
+                } else {
+                    // Eğer sınıfa ait görev yoksa, sadece başkan ve nöbetçi satırlarını bırak
+                    const tbody = taskTableContainer.querySelector("tbody");
+                    tbody.querySelectorAll("tr:not(#head-of-week-row):not(#duty-students-row)").forEach(row => row.remove());
+                }
+            } catch (error) {
+                console.error("Error populating task table:", error);
+            }
+        }
+
+        // Görevlerdeki Değişiklikleri İzleme Fonksiyonu
+        function observeTasks(cls) {
+            const tasksRef = ref(db, `classes/${cls}/tasks`);
+            onValue(tasksRef, async (snapshot) => {
+                await populateTaskTable();
+            });
+        }
+
+        // Nöbetçi Öğrencilerdeki Değişiklikleri İzleme Fonksiyonu
+        function observeDutyStudents() {
+            const dutyStudentsRef = ref(db, `classes/${currentClass}/roles/dutyStudents`);
+            onValue(dutyStudentsRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const dutyIds = snapshot.val(); // İki öğrenci ID'si
+                    const dutyNames = dutyIds.map(id => currentData[id]?.name).filter(name => name);
+                    dutyStudentsCell.textContent = dutyNames.length > 0 ? dutyNames.join(", ") : "Belirlenmedi";
+                } else {
+                    dutyStudentsCell.textContent = "Belirlenmedi";
+                }
+            });
+        }
+
+        // Roller Yükleme Fonksiyonu
+        // Bu fonksiyon artık sınıf seçildiğinde zaten çağrılıyor
+        // Bu nedenle, aşağıdaki duplicate 'change' listener'ı kaldırıldı
+        // classSelect.addEventListener("change", async () => {
+        //     if (currentClass) {
+        //         await populateTaskTable();
+        //         observeTasks();
+        //         observeDutyStudents();
+        //     }
+        // });
+
+        // Haftanın Başkanını ve Nöbetçi Öğrencileri Güncelleme Fonksiyonu
+        // Bu kısım zaten yukarıda handle edildi
+
     </script>
 </body>
 </html>
