@@ -142,11 +142,13 @@
         }
 
         /* Puan Butonları */
-        td button {
+        .button-red, .button-green, .button-update {
             margin: 5px;
             padding: 5px 10px;
             font-size: 0.9em;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         .button-red {
@@ -154,14 +156,26 @@
             color: white;
         }
 
+        .button-red:hover {
+            background-color: #d32f2f;
+        }
+
         .button-green {
             background-color: #4caf50;
             color: white;
         }
 
+        .button-green:hover {
+            background-color: #388e3c;
+        }
+
         .button-update {
             background-color: #ffa500;
             color: white;
+        }
+
+        .button-update:hover {
+            background-color: #e69500;
         }
 
         /* Kaydet Butonu */
@@ -245,6 +259,16 @@
             padding: 12px 20px;
             font-weight: bold;
             display: inline-block;
+            background-color: #0078d7;
+            transition: background 0.3s ease;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #lucky-student-btn:hover {
+            background-color: #005bb5;
         }
 
         #lucky-student-result {
@@ -261,28 +285,7 @@
             100% { transform: scale(1.1); }
         }
 
-        .score-display {
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .score-display::before {
-            content: "+";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4caf50;
-            font-weight: bold;
-            animation: plusBlink 1s infinite alternate;
-        }
-
-        @keyframes plusBlink {
-            0% { opacity: 1; transform: translateY(-50%) scale(1); }
-            100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
-        }
-
-        /* Yenile Butonu */
+        /* Reset Lucky Butonu */
         #reset-lucky {
             margin-left: 10px;
             padding: 12px 15px;
@@ -367,6 +370,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
+            display: none;
         }
 
         /* Görevli Tablosu Eklemeleri */
@@ -440,6 +444,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         .edit-button:hover {
@@ -451,6 +456,13 @@
             background-color: #17a2b8;
             margin-top: 10px;
             display: none;
+            padding: 8px 16px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         #add-task-btn:hover {
@@ -460,6 +472,12 @@
         /* Görev Silme Butonları */
         .delete-task-btn {
             background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         .delete-task-btn:hover {
@@ -470,6 +488,12 @@
         .edit-task-btn {
             background-color: #ffc107;
             margin-right: 5px;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         .edit-task-btn:hover {
@@ -510,6 +534,307 @@
 
         .edit-mode-enabled .editable-button {
             display: inline-block;
+        }
+
+        /* Oyun Overlay Stilleri */
+        #game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #game-container {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            border-radius: 10px;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #close-game-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 60px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Ortalamak için eklendi */
+        }
+
+        #close-game-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        #question-area {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #question-text {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #bunny-left, #bunny-right, #carrot {
+            position: absolute;
+            top: 60px;
+            width: 80px;
+            height: 80px;
+        }
+
+        #bunny-left {
+            left: 10%;
+            transition: left 0.5s ease;
+        }
+
+        #bunny-right {
+            right: 10%;
+            transition: right 0.5s ease;
+        }
+
+        #carrot {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #game-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 100%;
+        }
+
+        /* Oyun İçeriği */
+        #game-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .player-section {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .player-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .answers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .answer-btn {
+            padding: 10px 20px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1 1 30%; /* 3 şık için esnek genişlik */
+            transition: background 0.3s ease;
+        }
+
+        .answer-btn:hover {
+            background-color: #005bb5;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Kazanma Efekti */
+        #winner-effect {
+            position: fixed; /* absolute yerine fixed yapıldı */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: url('https://cdn.pixabay.com/animation/2023/12/09/19/16/19-16-42-998_512.gif'); /* Havai fişek GIF */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #00ff00; /* Yeşil renk */
+            padding: 40px 60px; /* Daha büyük */
+            border-radius: 15px;
+            font-size: 2em; /* Küçültüldü */
+            animation: popIn 1s;
+            z-index: 3000; /* Daha yüksek */
+            display: none;
+            box-shadow: 0 0 20px #00ff00;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Tekrar Oyna Butonu */
+        #play-again-btn {
+            margin-top: 20px;
+            padding: 5px 10px; /* Küçültüldü */
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.7em; /* Küçültüldü */
+            transition: background 0.3s ease;
+        }
+
+        #play-again-btn:hover {
+            background-color: #005bb5;
+        }
+
+        /* Öğrenci Seçim Modal Stili */
+        #student-selection-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #student-selection-container {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        #close-selection-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Ortalamak için eklendi */
+        }
+
+        #close-selection-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .selection-panel {
+            margin-bottom: 20px;
+        }
+
+        .selection-panel label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .selection-panel select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #confirm-selection-btn {
+            background-color: #28a745;
+            margin-top: 10px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #confirm-selection-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Tekrar Oyna Butonuna Ekstra Stil */
+        #play-again-btn {
+            background-color: #0078d7;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #play-again-btn:hover {
+            background-color: #005bb5;
         }
     </style>
 </head>
@@ -588,6 +913,11 @@
         </table>
     </div>
 
+    <!-- Oyun Başlat Butonu -->
+    <button id="start-game-btn" style="margin-top: 30px; padding: 15px 30px; font-size: 1.2em; background-color: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; display: none;">
+        Oyun Başlat
+    </button>
+
     <!-- Modal Dialog -->
     <dialog id="modal">
         <div id="modal-content">
@@ -595,7 +925,7 @@
             <div id="checkbox-container" class="checkbox-container" style="display: none;">
                 <!-- Checkboxlar burada oluşturulacak -->
             </div>
-            <input type="text" id="modal-input" style="display:none;" />
+            <input type="text" id="modal-input" />
             <div id="modal-buttons">
                 <button class="ok-btn">OK</button>
                 <button class="cancel-btn" style="display:none;">Cancel</button>
@@ -603,6 +933,63 @@
             </div>
         </div>
     </dialog>
+
+    <!-- Öğrenci Seçim Modalı -->
+    <div id="student-selection-modal">
+        <div id="student-selection-container">
+            <button id="close-selection-btn">X</button>
+            <div class="selection-panel">
+                <label for="left-student-select">Sol Öğrenci:</label>
+                <select id="left-student-select-modal">
+                    <option value="">--Seçiniz--</option>
+                    <!-- Dinamik olarak doldurulacak -->
+                </select>
+            </div>
+            <div class="selection-panel">
+                <label for="right-student-select">Sağ Öğrenci:</label>
+                <select id="right-student-select-modal">
+                    <option value="">--Seçiniz--</option>
+                    <!-- Dinamik olarak doldurulacak -->
+                </select>
+            </div>
+            <button id="confirm-selection-btn">Onayla</button>
+        </div>
+    </div>
+
+    <!-- Oyun Overlay -->
+    <div id="game-overlay">
+        <div id="game-container">
+            <button id="close-game-btn">X</button>
+            <div id="question-area">
+                <img src="https://cdn.pixabay.com/photo/2016/04/12/17/24/easter-bunny-1324889_1280.png" alt="Tavşan Sol" id="bunny-left">
+                <img src="https://cdn.pixabay.com/photo/2020/03/30/15/56/carrot-4984620_1280.png" alt="Havuç" id="carrot">
+                <img src="https://cdn.pixabay.com/photo/2016/04/12/17/24/easter-bunny-1324889_1280.png" alt="Tavşan Sağ" id="bunny-right">
+                <div id="question-text">Soru burada olacak</div>
+            </div>
+            <div id="game-body">
+                <div id="game-content">
+                    <div class="player-section" id="left-panel">
+                        <div class="player-name" id="left-player-name">Sol Öğrenci: Seçilmedi</div>
+                        <div id="left-answers" class="answers">
+                            <!-- Sol taraf şıkları burada olacak -->
+                        </div>
+                    </div>
+                    <div class="player-section" id="right-panel">
+                        <div class="player-name" id="right-player-name">Sağ Öğrenci: Seçilmedi</div>
+                        <div id="right-answers" class="answers">
+                            <!-- Sağ taraf şıkları burada olacak -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kazanan Öğrenci İsim Etkisi -->
+    <div id="winner-effect" class="winner" style="display: none;">
+        <div id="winner-message"></div>
+        <button id="play-again-btn">Tekrar Oyna</button>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
@@ -659,6 +1046,16 @@
         const confirmBtn = document.querySelector(".confirm-btn");
         const checkboxContainer = document.getElementById("checkbox-container");
 
+        // Öğrenci Seçim Modalı Elementleri
+        const studentSelectionModal = document.getElementById("student-selection-modal");
+        const closeSelectionBtn = document.getElementById("close-selection-btn");
+        const leftStudentSelectModal = document.getElementById("left-student-select-modal");
+        const rightStudentSelectModal = document.getElementById("right-student-select-modal");
+        const confirmSelectionBtn = document.getElementById("confirm-selection-btn");
+
+        // Oyun Başlat Butonu
+        const startGameBtn = document.getElementById("start-game-btn");
+
         let currentClass = "";
         let currentClassPin = "";
         let currentData = {};
@@ -666,6 +1063,32 @@
         const defaultPhotoURL = "https://cdn.pixabay.com/photo/2013/07/13/13/42/tux-161406_1280.png";
 
         let availableStudents = [];
+
+        // Oyun Elementleri
+        const gameOverlay = document.getElementById("game-overlay");
+        const closeGameBtn = document.getElementById("close-game-btn");
+        const leftAnswersDiv = document.getElementById("left-answers");
+        const rightAnswersDiv = document.getElementById("right-answers");
+        const questionText = document.getElementById("question-text");
+        const bunnyLeft = document.getElementById("bunny-left");
+        const bunnyRight = document.getElementById("bunny-right");
+        const leftPlayerName = document.getElementById("left-player-name");
+        const rightPlayerName = document.getElementById("right-player-name");
+
+        let gameQuestions = [];
+        let currentQuestionIndex = 0;
+        let leftBunnyPosition = 0;
+        let rightBunnyPosition = 0;
+        const maxPosition = 5;
+
+        // Seçilen Oyuncular
+        let selectedLeftStudent = "";
+        let selectedRightStudent = "";
+
+        // Kazanan Etki Elementi
+        const winnerEffect = document.getElementById("winner-effect");
+        const winnerMessage = document.getElementById("winner-message");
+        const playAgainBtn = document.getElementById("play-again-btn");
 
         // Uyarı Modalı Gösterme Fonksiyonu
         function showAlert(message) {
@@ -700,7 +1123,7 @@
                 modal.showModal();
 
                 okBtn.onclick = () => {
-                    const inputValue = modalInput.value;
+                    const inputValue = modalInput.value.trim();
                     modal.close();
                     resolve(inputValue);
                 };
@@ -787,9 +1210,11 @@
                     luckyStudentBtn.style.display = "inline-block";
                     resetLuckyBtn.style.display = "inline-block";
                     taskTableBtn.style.display = "inline-block"; // Görevli Tablosu Butonu gösterildi
-                    taskTableContainer.style.display = "none"; // Görev tablosu başlangıçta gizli
                     addTaskBtnDisplay(false);
                     exitEditMode();
+
+                    // "Oyun Başlat" butonunu göster
+                    startGameBtn.style.display = "inline-block";
                 } catch (error) {
                     console.error("Error selecting class:", error);
                     await showAlert("Sınıf seçimi sırasında bir hata oluştu.");
@@ -806,6 +1231,9 @@
                 taskTableContainer.style.display = "none"; // Görevli Tablosu gizlendi
                 addTaskBtnDisplay(false);
                 luckyStudentResult.textContent = "";
+
+                // "Oyun Başlat" butonunu gizle
+                startGameBtn.style.display = "none";
             }
         });
 
@@ -831,6 +1259,7 @@
                 populateTaskTable(); // Görevleri yükle
                 observeTasks(cls); // Görevleri izle
                 observeDutyStudents();
+                populateStudentSelectionModal(); // Öğrenci seçim modalını doldur
             }, {
                 onlyOnce: false
             });
@@ -921,6 +1350,7 @@
         function addEventListeners() {
             // Puan artırma/azaltma butonları
             document.querySelectorAll("[data-type='total']").forEach((button) => {
+                // Önceki event listener'ı kaldırmak için cloneNode kullanıldı
                 const newButton = button.cloneNode(true);
                 button.parentNode.replaceChild(newButton, button);
                 newButton.addEventListener("click", () => {
@@ -1036,6 +1466,7 @@
                 exitEditMode();
                 await showAlert("Değişiklikler kaydedildi!");
                 await loadRoles(currentClass); // Roller güncellendiğinde UI'yi yenile
+                populateStudentSelectionModal(); // Öğrenci seçim modalını güncelle
             } catch (error) {
                 console.error("Error saving changes:", error);
                 await showAlert("Değişiklikler kaydedilirken bir hata oluştu.");
@@ -1089,7 +1520,7 @@
 
         // Görevli Tablosu Butonu ve Fonksiyonları
         taskTableBtn.addEventListener("click", () => {
-            if (taskTableContainer.style.display === "none") {
+            if (taskTableContainer.style.display === "none" || taskTableContainer.style.display === "") {
                 taskTableContainer.style.display = "block";
             } else {
                 taskTableContainer.style.display = "none";
@@ -1357,8 +1788,354 @@
             });
         }
 
-        // Haftanın Başkanını ve Nöbetçi Öğrencileri Güncelleme Fonksiyonu
-        // Bu kısım zaten yukarıda handle edildi
+        // Oyun Başlat Butonuna Event Listener Ekleme
+        startGameBtn.addEventListener("click", () => {
+            // Öğrenci seçimi modalını göster
+            studentSelectionModal.style.display = "flex";
+        });
+
+        // Öğrenci Seçim Modalını Kapatma Fonksiyonu
+        closeSelectionBtn.addEventListener("click", () => {
+            studentSelectionModal.style.display = "none";
+        });
+
+        // Seçim Onay Butonuna Event Listener Ekleme
+        confirmSelectionBtn.addEventListener("click", () => {
+            selectedLeftStudent = leftStudentSelectModal.value;
+            selectedRightStudent = rightStudentSelectModal.value;
+
+            if (!selectedLeftStudent || !selectedRightStudent) {
+                showAlert("Her iki taraf için de bir öğrenci seçmeniz gerekiyor.");
+                return;
+            }
+
+            if (selectedLeftStudent === selectedRightStudent) {
+                showAlert("Aynı öğrenciyi her iki taraf için seçemezsiniz.");
+                return;
+            }
+
+            // Modalı kapat
+            studentSelectionModal.style.display = "none";
+
+            // Oyunu başlat
+            startGame(selectedLeftStudent, selectedRightStudent);
+        });
+
+        // Oyun Başlatma Fonksiyonu
+        function startGame(leftId, rightId) {
+            // Reset oyun durumu
+            gameQuestions = generateQuestions(20); // 20 soru oluştur
+            currentQuestionIndex = 0;
+            leftBunnyPosition = 0;
+            rightBunnyPosition = 0;
+
+            // Bunnies'i başlangıç pozisyonuna getir
+            bunnyLeft.style.left = '10%';
+            bunnyRight.style.right = '10%';
+
+            // Oyunu başlatmak için gerekli kontroller
+            if (!leftId || !rightId) {
+                showAlert("Oyunu başlatmak için iki öğrenci seçmelisiniz.");
+                return;
+            }
+
+            // Seçilen öğrencilerin isimlerini göster
+            const leftName = currentData[leftId].name;
+            const rightName = currentData[rightId].name;
+            leftPlayerName.textContent = `Sol Öğrenci: ${leftName}`;
+            rightPlayerName.textContent = `Sağ Öğrenci: ${rightName}`;
+
+            // Oyun UI'sını göster
+            gameOverlay.style.display = "flex";
+
+            // İlk soruyu yükle
+            loadNextQuestion(leftId, rightId);
+        }
+
+        // Oyun Kapatma Fonksiyonu
+        closeGameBtn.addEventListener("click", () => {
+            gameOverlay.style.display = "none";
+            // Oyunu sıfırla
+            gameQuestions = [];
+            currentQuestionIndex = 0;
+            leftBunnyPosition = 0;
+            rightBunnyPosition = 0;
+            questionText.textContent = "Soru burada olacak";
+            leftAnswersDiv.innerHTML = "";
+            rightAnswersDiv.innerHTML = "";
+            leftPlayerName.textContent = "Sol Öğrenci: Seçilmedi";
+            rightPlayerName.textContent = "Sağ Öğrenci: Seçilmedi";
+            winnerEffect.style.display = "none";
+
+            // Ekrandaki diğer UI öğelerini yeniden normal hale getir
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
+                element.style.filter = "none";
+                element.style.pointerEvents = "auto";
+                element.style.opacity = "1";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+        });
+
+        // Soru Oluşturma Fonksiyonu
+        function generateQuestions(count) {
+            const questions = [];
+            while (questions.length < count) {
+                const num1 = getRandomInt(10, 89); // 10 ile 89 arasında
+                const num2 = getRandomInt(10, 89); // 10 ile 89 arasında
+                if (num1 + num2 <= 99) {
+                    questions.push({ num1, num2, answer: num1 + num2 });
+                }
+            }
+            return questions;
+        }
+
+        // Rastgele Tam Sayı Alma Fonksiyonu
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Sıradaki Soruyu Yükleme Fonksiyonu
+        function loadNextQuestion(leftId, rightId) {
+            if (currentQuestionIndex >= gameQuestions.length) {
+                endGame(leftId, rightId);
+                return;
+            }
+
+            const currentQuestion = gameQuestions[currentQuestionIndex];
+            questionText.textContent = `Toplam: ${currentQuestion.num1} + ${currentQuestion.num2} = ?`;
+
+            // Şıklar oluşturma
+            const correctAnswer = currentQuestion.answer;
+            const wrongAnswers = generateWrongAnswers(correctAnswer);
+            const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
+
+            // Şıkları sol ve sağ tarafa yerleştirme
+            leftAnswersDiv.innerHTML = "";
+            rightAnswersDiv.innerHTML = "";
+
+            allAnswers.forEach(ans => {
+                const leftBtn = document.createElement("button");
+                leftBtn.textContent = ans;
+                leftBtn.classList.add("answer-btn");
+                leftBtn.dataset.answer = ans;
+                leftBtn.addEventListener("click", () => handleAnswer('left', ans, leftId, rightId));
+
+                const rightBtn = document.createElement("button");
+                rightBtn.textContent = ans;
+                rightBtn.classList.add("answer-btn");
+                rightBtn.dataset.answer = ans;
+                rightBtn.addEventListener("click", () => handleAnswer('right', ans, leftId, rightId));
+
+                leftAnswersDiv.appendChild(leftBtn);
+                rightAnswersDiv.appendChild(rightBtn);
+            });
+        }
+
+        // Yanlış Şıklar Oluşturma Fonksiyonu
+        function generateWrongAnswers(correct) {
+            const wrong = new Set();
+            while (wrong.size < 2) { // 3 şık için 2 yanlış şık
+                const delta = getRandomInt(1, 10);
+                const sign = Math.random() < 0.5 ? -1 : 1;
+                const ans = correct + (delta * sign);
+                if (ans > 0 && ans !== correct && ans <= 99) {
+                    wrong.add(ans);
+                }
+            }
+            return Array.from(wrong);
+        }
+
+        // Diziyi Karıştırma Fonksiyonu
+        function shuffleArray(array) {
+            for (let i = array.length -1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i +1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Yanıtı İşleme Fonksiyonu
+        function handleAnswer(side, selectedAnswer, leftId, rightId) {
+            const currentQuestion = gameQuestions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === currentQuestion.answer;
+
+            if (isCorrect) {
+                if (side === 'left') {
+                    leftBunnyPosition = Math.min(leftBunnyPosition + 1, maxPosition);
+                    moveBunny(bunnyLeft, 'left', leftBunnyPosition, leftId, rightId);
+                } else {
+                    rightBunnyPosition = Math.min(rightBunnyPosition + 1, maxPosition);
+                    moveBunny(bunnyRight, 'right', rightBunnyPosition, leftId, rightId);
+                }
+                showFeedback(side, true);
+            } else {
+                if (side === 'left') {
+                    leftBunnyPosition = Math.max(leftBunnyPosition - 1, 0);
+                    moveBunny(bunnyLeft, 'left', leftBunnyPosition, leftId, rightId);
+                } else {
+                    rightBunnyPosition = Math.max(rightBunnyPosition - 1, 0);
+                    moveBunny(bunnyRight, 'right', rightBunnyPosition, leftId, rightId);
+                }
+                showFeedback(side, false);
+            }
+
+            // Şıkları devre dışı bırak
+            disableAnswerButtons();
+
+            // Bir süre sonra sonraki soruya geç
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadNextQuestion(leftId, rightId);
+            }, 1000);
+        }
+
+        // Bunyaları Hareket Ettirme Fonksiyonu
+        function moveBunny(bunny, side, position, leftId, rightId) {
+            const stepPercentage = 40 / maxPosition; // Tavşanın 5 adımda %40 ilerlemesi
+            if (side === 'left') {
+                if (position === maxPosition) {
+                    bunny.style.left = '50%'; // Tam olarak havuca ulaşıyor
+                } else {
+                    const newLeft = 10 + (stepPercentage * position) + '%';
+                    bunny.style.left = newLeft;
+                }
+            } else {
+                if (position === maxPosition) {
+                    bunny.style.right = '50%'; // Tam olarak havuca ulaşıyor
+                } else {
+                    const newRight = 10 + (stepPercentage * position) + '%';
+                    bunny.style.right = newRight;
+                }
+            }
+
+            // Eğer tavşan havucu ulaştıysa oyunu bitir
+            if (position === maxPosition) {
+                const winnerSide = side;
+                const winnerName = side === 'left' ? currentData[leftId].name : currentData[rightId].name;
+                showWinner(winnerName, side, leftId, rightId);
+            }
+        }
+
+        // Şıkları Devre Dışı Bırakma Fonksiyonu
+        function disableAnswerButtons() {
+            document.querySelectorAll(".answer-btn").forEach(btn => {
+                btn.classList.add("disabled");
+                btn.disabled = true;
+            });
+        }
+
+        // Geri Bildirim Gösterme Fonksiyonu
+        function showFeedback(side, isCorrect) {
+            const feedbackText = isCorrect ? "Doğru!" : "Yanlış!";
+            const color = isCorrect ? "#4caf50" : "#f44336";
+
+            const feedbackDiv = document.createElement("div");
+            feedbackDiv.textContent = feedbackText;
+            feedbackDiv.style.color = color;
+            feedbackDiv.style.fontSize = "1.5em";
+            feedbackDiv.style.marginTop = "10px";
+            feedbackDiv.classList.add("grow");
+
+            if (side === 'left') {
+                leftAnswersDiv.appendChild(feedbackDiv);
+            } else {
+                rightAnswersDiv.appendChild(feedbackDiv);
+            }
+        }
+
+        // Oyunu Bitirme Fonksiyonu
+        function endGame(leftId, rightId) {
+            let winner = "";
+            if (leftBunnyPosition > rightBunnyPosition) {
+                winner = currentData[leftId].name + " kazandı!";
+            } else if (rightBunnyPosition > leftBunnyPosition) {
+                winner = currentData[rightId].name + " kazandı!";
+            } else {
+                winner = "Berabere!";
+            }
+
+            showWinner(winner, null, leftId, rightId);
+        }
+
+        // Kazananı Gösterme Fonksiyonu
+        function showWinner(winnerName, side, leftId, rightId) {
+            // Kazananın ismini büyük, yeşil renkte göster
+            winnerMessage.textContent = `${winnerName} kazandı!`;
+            winnerEffect.style.display = "flex";
+
+            // Ekrandaki diğer UI öğelerini bulanıklaştır ve etkileşimleri devre dışı bırak
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
+                element.style.filter = "blur(5px)";
+                element.style.pointerEvents = "none";
+                element.style.opacity = "0.5";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+        }
+
+        // Tekrar Oyna Butonuna Event Listener Ekleme
+        playAgainBtn.addEventListener("click", () => {
+            winnerEffect.style.display = "none";
+            // Ekrandaki diğer UI öğelerini yeniden normal hale getir
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
+                element.style.filter = "none";
+                element.style.pointerEvents = "auto";
+                element.style.opacity = "1";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+
+            // Oyunu sıfırla
+            gameQuestions = [];
+            currentQuestionIndex = 0;
+            leftBunnyPosition = 0;
+            rightBunnyPosition = 0;
+            questionText.textContent = "Soru burada olacak";
+            leftAnswersDiv.innerHTML = "";
+            rightAnswersDiv.innerHTML = "";
+            leftPlayerName.textContent = "Sol Öğrenci: Seçilmedi";
+            rightPlayerName.textContent = "Sağ Öğrenci: Seçilmedi";
+
+            // Oyun ekranını kapat ve ana sayfayı göster
+            gameOverlay.style.display = "none";
+            classSelect.value = "";
+            tableContainer.style.display = "none";
+            editModeButton.style.display = "none";
+            adminPanel.style.display = "none";
+            saveChangesButton.style.display = "none";
+            luckyStudentBtn.style.display = "none";
+            resetLuckyBtn.style.display = "none";
+            taskTableBtn.style.display = "none";
+            taskTableContainer.style.display = "none";
+            addTaskBtnDisplay(false);
+            luckyStudentResult.textContent = "";
+
+            // "Oyun Başlat" butonunu gizle
+            startGameBtn.style.display = "none";
+        });
+
+        // Başlangıçta öğrenci seçimlerini doldurmak için fonksiyon
+        function populateStudentSelectionModal() {
+            // Sol Öğrenci Seçimi
+            leftStudentSelectModal.innerHTML = `<option value="">--Seçiniz--</option>`;
+            Object.keys(currentData).forEach(id => {
+                const option = document.createElement("option");
+                option.value = id;
+                option.textContent = currentData[id].name;
+                leftStudentSelectModal.appendChild(option);
+            });
+
+            // Sağ Öğrenci Seçimi
+            rightStudentSelectModal.innerHTML = `<option value="">--Seçiniz--</option>`;
+            Object.keys(currentData).forEach(id => {
+                const option = document.createElement("option");
+                option.value = id;
+                option.textContent = currentData[id].name;
+                rightStudentSelectModal.appendChild(option);
+            });
+        }
+
+        // Oyun Başlatma Fonksiyonu
+        // Mevcut kodda zaten tanımlanmış, burada tekrar tanımlamaya gerek yok
+        // Ancak mevcut kodda tekrar tanımlama yapılmaması için dikkat edilmelidir
 
     </script>
 </body>
