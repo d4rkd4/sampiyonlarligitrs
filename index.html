@@ -118,9 +118,8 @@
         }
 
         /* Görevli Tablosu İçin Başlık */
-        #task-table th {
-            background: linear-gradient(to right, #28a745, #218838);
-            color: white;
+        #task-table th, #task-table td {
+            /* Ortak stiller zaten yukarıda tanımlandı */
         }
 
         /* "İşlemler" Sütunu */
@@ -706,7 +705,7 @@
             padding: 40px 60px; /* Daha büyük */
             border-radius: 15px;
             font-size: 2em; /* Küçültüldü */
-            animation: popIn 1s;
+            animation: popIn 1s, flash 2s infinite; /* Yeni flash animasyonu eklendi */
             z-index: 3000; /* Daha yüksek */
             display: none;
             box-shadow: 0 0 20px #00ff00;
@@ -715,6 +714,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         @keyframes popIn {
@@ -969,13 +973,15 @@
             <div id="game-body">
                 <div id="game-content">
                     <div class="player-section" id="left-panel">
-                        <div class="player-name" id="left-player-name">Sol Öğrenci: Seçilmedi</div>
+                        <!-- Etiket kaldırıldı -->
+                        <div class="player-name" id="left-player-name">Seçilmedi</div>
                         <div id="left-answers" class="answers">
                             <!-- Sol taraf şıkları burada olacak -->
                         </div>
                     </div>
                     <div class="player-section" id="right-panel">
-                        <div class="player-name" id="right-player-name">Sağ Öğrenci: Seçilmedi</div>
+                        <!-- Etiket kaldırıldı -->
+                        <div class="player-name" id="right-player-name">Seçilmedi</div>
                         <div id="right-answers" class="answers">
                             <!-- Sağ taraf şıkları burada olacak -->
                         </div>
@@ -1842,8 +1848,8 @@
             // Seçilen öğrencilerin isimlerini göster
             const leftName = currentData[leftId].name;
             const rightName = currentData[rightId].name;
-            leftPlayerName.textContent = `Sol Öğrenci: ${leftName}`;
-            rightPlayerName.textContent = `Sağ Öğrenci: ${rightName}`;
+            leftPlayerName.textContent = `${leftName}`;
+            rightPlayerName.textContent = `${rightName}`;
 
             // Oyun UI'sını göster
             gameOverlay.style.display = "flex";
@@ -1863,8 +1869,8 @@
             questionText.textContent = "Soru burada olacak";
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
-            leftPlayerName.textContent = "Sol Öğrenci: Seçilmedi";
-            rightPlayerName.textContent = "Sağ Öğrenci: Seçilmedi";
+            leftPlayerName.textContent = "Seçilmedi";
+            rightPlayerName.textContent = "Seçilmedi";
             winnerEffect.style.display = "none";
 
             // Ekrandaki diğer UI öğelerini yeniden normal hale getir
@@ -2091,25 +2097,14 @@
             questionText.textContent = "Soru burada olacak";
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
-            leftPlayerName.textContent = "Sol Öğrenci: Seçilmedi";
-            rightPlayerName.textContent = "Sağ Öğrenci: Seçilmedi";
+            leftPlayerName.textContent = "Seçilmedi"; // Değişiklik: Etiket kaldırıldı
+            rightPlayerName.textContent = "Seçilmedi"; // Değişiklik: Etiket kaldırıldı
 
-            // Oyun ekranını kapat ve ana sayfayı göster
+            // Oyun ekranını kapat
             gameOverlay.style.display = "none";
-            classSelect.value = "";
-            tableContainer.style.display = "none";
-            editModeButton.style.display = "none";
-            adminPanel.style.display = "none";
-            saveChangesButton.style.display = "none";
-            luckyStudentBtn.style.display = "none";
-            resetLuckyBtn.style.display = "none";
-            taskTableBtn.style.display = "none";
-            taskTableContainer.style.display = "none";
-            addTaskBtnDisplay(false);
-            luckyStudentResult.textContent = "";
 
-            // "Oyun Başlat" butonunu gizle
-            startGameBtn.style.display = "none";
+            // Öğrenci seçim modalını göster
+            studentSelectionModal.style.display = "flex";
         });
 
         // Başlangıçta öğrenci seçimlerini doldurmak için fonksiyon
