@@ -117,11 +117,6 @@
             color: white;
         }
 
-        /* Görevli Tablosu İçin Başlık */
-        #task-table th, #task-table td {
-            /* Ortak stiller zaten yukarıda tanımlandı */
-        }
-
         /* "İşlemler" Sütunu */
         .actions {
             display: none; /* Sütunu tamamen gizle */
@@ -563,32 +558,35 @@
             flex-direction: column;
         }
 
+        /* Küçültülmüş Kapat Butonu */
         #close-game-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             background-color: #f44336;
             color: white;
             border: none;
-            border-radius: 5px;
-            width: 60px;
-            height: 40px;
+            border-radius: 50%;
+            width: 30px; /* Küçültüldü */
+            height: 30px; /* Küçültüldü */
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1em; /* Küçültüldü */
             display: flex;
             justify-content: center;
-            align-items: center; /* Ortalamak için eklendi */
+            align-items: center;
+            padding: 0;
         }
 
         #close-game-btn:hover {
             background-color: #d32f2f;
         }
 
+        /* Soru Alanı */
         #question-area {
             position: relative;
             width: 100%;
-            height: 150px;
-            margin-bottom: 20px;
+            height: 600px; /* Güncellenen yükseklik */
+            margin-bottom: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -596,10 +594,12 @@
 
         #question-text {
             position: absolute;
-            top: 10px;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 2.5em; /* Font boyutu artırıldı */
             font-weight: bold;
             animation: fadeIn 1s;
         }
@@ -609,20 +609,21 @@
             to { opacity: 1; }
         }
 
+        /* Tavşan ve Havuç Resimleri */
         #bunny-left, #bunny-right, #carrot {
             position: absolute;
-            top: 60px;
-            width: 80px;
-            height: 80px;
+            top: 0;
+            width: 150px;
+            height: 120px;
         }
 
         #bunny-left {
-            left: 10%;
+            left: 0%; /* En sola taşındı */
             transition: left 0.5s ease;
         }
 
         #bunny-right {
-            right: 10%;
+            right: 0%; /* En sağa taşındı */
             transition: right 0.5s ease;
         }
 
@@ -631,22 +632,49 @@
             transform: translateX(-50%);
         }
 
-        #game-body {
+        /* Yıldızlar */
+        .left-stars, .right-stars {
+            position: absolute;
+            top: 10%; /* Yıldızların orta hizada olması için */
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            height: 100%;
+            gap: 20px; /* Eşit aralık */
+            transform: translateY(-50%);
+        }
+
+        /* Sol Yıldızları Daha Sola Yanaştırma ve Soldan Başlayarak Yok Olmasını Sağlama */
+        .left-stars {
+            left: 11%; /* Daha sola taşındı */
+            flex-direction: row-reverse; /* Yıldızları soldan sağa dizmek için */
+        }
+
+        /* Sağ Yıldızları Daha Sağa Yanaştırma */
+        .right-stars {
+            right: 11%; /* Daha sağa taşındı */
+            flex-direction: row; /* Varsayılan yön */
+        }
+
+        .star {
+            width: 80px; /* Yıldız boyutu artırıldı */
+            height: 80px;
         }
 
         /* Oyun İçeriği */
-        #game-content {
+        #game-body {
             flex: 1;
             display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* İsim ve şıkları aşağıya çekmek için */
+            height: 100%;
+        }
+
+        #game-content {
+            display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end; /* Daha aşağıda konumlandırmak için */
             position: relative;
             width: 100%;
             height: 100%;
+            margin-top: 20px; /* İsim ve şıkları aşağıya çekmek için */
         }
 
         .player-section {
@@ -654,10 +682,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 20px; /* İsim ve şıkları daha aşağıya çekmek için */
         }
 
         .player-name {
-            font-size: 1.5em;
+            font-size: 2em; /* Font boyutu artırıldı */
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -668,7 +697,7 @@
             gap: 10px;
             width: 100%;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .answer-btn {
@@ -680,6 +709,7 @@
             cursor: pointer;
             flex: 1 1 30%; /* 3 şık için esnek genişlik */
             transition: background 0.3s ease;
+            font-size: 1.2em; /* Font boyutu artırıldı */
         }
 
         .answer-btn:hover {
@@ -693,7 +723,7 @@
 
         /* Kazanma Efekti */
         #winner-effect {
-            position: fixed; /* absolute yerine fixed yapıldı */
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -710,7 +740,6 @@
             display: none;
             box-shadow: 0 0 20px #00ff00;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -739,13 +768,13 @@
         /* Tekrar Oyna Butonu */
         #play-again-btn {
             margin-top: 20px;
-            padding: 5px 10px; /* Küçültüldü */
+            padding: 10px 20px;
             background-color: #0078d7;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 0.7em; /* Küçültüldü */
+            font-size: 1em;
             transition: background 0.3s ease;
         }
 
@@ -777,6 +806,7 @@
             position: relative;
         }
 
+        /* Küçültülmüş Kapat Butonu */
         #close-selection-btn {
             position: absolute;
             top: 10px;
@@ -785,13 +815,14 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 25px; /* Küçültüldü */
+            height: 25px; /* Küçültüldü */
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 0.9em; /* Küçültüldü */
             display: flex;
             justify-content: center;
-            align-items: center; /* Ortalamak için eklendi */
+            align-items: center;
+            padding: 0;
         }
 
         #close-selection-btn:hover {
@@ -820,26 +851,42 @@
             margin-top: 10px;
             color: white;
             border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
         }
 
         #confirm-selection-btn:hover {
             background-color: #218838;
         }
 
-        /* Tekrar Oyna Butonuna Ekstra Stil */
-        #play-again-btn {
-            background-color: #0078d7;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+        /* Yıldızların Görünürlüğünü Kontrol Etme */
+        .hidden-star {
+            visibility: hidden;
         }
 
-        #play-again-btn:hover {
-            background-color: #005bb5;
+        /* Yeni Eklenen Bölüm: Intro Overlay */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000; /* Diğer overlay'lerden daha yüksek */
         }
+
+        #intro-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 <body>
@@ -965,22 +1012,38 @@
         <div id="game-container">
             <button id="close-game-btn">X</button>
             <div id="question-area">
-                <img src="https://cdn.pixabay.com/photo/2016/04/12/17/24/easter-bunny-1324889_1280.png" alt="Tavşan Sol" id="bunny-left">
-                <img src="https://cdn.pixabay.com/photo/2020/03/30/15/56/carrot-4984620_1280.png" alt="Havuç" id="carrot">
-                <img src="https://cdn.pixabay.com/photo/2016/04/12/17/24/easter-bunny-1324889_1280.png" alt="Tavşan Sağ" id="bunny-right">
+                <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sol" id="bunny-left">
+                
+                <!-- Sol Yıldızlar -->
+                <div class="left-stars">
+                    <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                </div>
+                
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGhyb3IyNWs5azlqcHJhZ2Vhc2ptcHl0eXp6Y3BvYXRqNWhrOWRqbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ZzPjgVE12gU54wIVtf/giphy.webp" alt="Havuç" id="carrot">
+                
+                <!-- Sağ Yıldızlar -->
+                <div class="right-stars">
+                    <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                </div>
+                
+                <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sağ" id="bunny-right">
                 <div id="question-text">Soru burada olacak</div>
             </div>
             <div id="game-body">
                 <div id="game-content">
                     <div class="player-section" id="left-panel">
-                        <!-- Etiket kaldırıldı -->
                         <div class="player-name" id="left-player-name">Seçilmedi</div>
                         <div id="left-answers" class="answers">
                             <!-- Sol taraf şıkları burada olacak -->
                         </div>
                     </div>
                     <div class="player-section" id="right-panel">
-                        <!-- Etiket kaldırıldı -->
                         <div class="player-name" id="right-player-name">Seçilmedi</div>
                         <div id="right-answers" class="answers">
                             <!-- Sağ taraf şıkları burada olacak -->
@@ -996,6 +1059,17 @@
         <div id="winner-message"></div>
         <button id="play-again-btn">Tekrar Oyna</button>
     </div>
+
+    <!-- Intro Video Overlay -->
+    <div id="intro-overlay">
+        <video id="intro-video" src="https://github.com/d4rkd4/G-R-V-DE/raw/refs/heads/main/BA%C5%9ELA.mp4" autoplay></video>
+    </div>
+
+    <!-- Ses Elementleri -->
+    <!-- Doğru ve Yanlış Cevap Ses Efektleri ve Kazanma Efekti için Sesler -->
+    <audio id="correct-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/new-level-142995.mp3" preload="auto"></audio>
+    <audio id="incorrect-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/fail-234710.mp3" preload="auto"></audio>
+    <audio id="winner-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/Awards%20Fanfare%20Winner%20Nomination%20Ceremony%20Background%20Music.mp3" preload="auto"></audio>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
@@ -1033,6 +1107,11 @@
         const luckyStudentBtn = document.getElementById("lucky-student-btn");
         const luckyStudentResult = document.getElementById("lucky-student-result");
         const resetLuckyBtn = document.getElementById("reset-lucky");
+
+        // Ses Elementlerini Almak
+        const correctSound = document.getElementById("correct-sound");
+        const incorrectSound = document.getElementById("incorrect-sound");
+        const winnerSound = document.getElementById("winner-sound"); // Yeni Eklenen Ses
 
         // Görevli Tablosu Elementleri
         const taskTableBtn = document.getElementById("task-table-btn");
@@ -1078,14 +1157,15 @@
         const questionText = document.getElementById("question-text");
         const bunnyLeft = document.getElementById("bunny-left");
         const bunnyRight = document.getElementById("bunny-right");
+        const carrot = document.getElementById("carrot");
         const leftPlayerName = document.getElementById("left-player-name");
         const rightPlayerName = document.getElementById("right-player-name");
 
         let gameQuestions = [];
         let currentQuestionIndex = 0;
-        let leftBunnyPosition = 0;
-        let rightBunnyPosition = 0;
-        const maxPosition = 5;
+        let leftSteps = 4; // Sol taraf için başlangıç adım sayısı
+        let rightSteps = 4; // Sağ taraf için başlangıç adım sayısı
+        const maxSteps = 4;
 
         // Seçilen Oyuncular
         let selectedLeftStudent = "";
@@ -1095,6 +1175,10 @@
         const winnerEffect = document.getElementById("winner-effect");
         const winnerMessage = document.getElementById("winner-message");
         const playAgainBtn = document.getElementById("play-again-btn");
+
+        // Intro Video Overlay Elementleri
+        const introOverlay = document.getElementById("intro-overlay");
+        const introVideo = document.getElementById("intro-video");
 
         // Uyarı Modalı Gösterme Fonksiyonu
         function showAlert(message) {
@@ -1472,6 +1556,7 @@
                 exitEditMode();
                 await showAlert("Değişiklikler kaydedildi!");
                 await loadRoles(currentClass); // Roller güncellendiğinde UI'yi yenile
+                populateTaskTable(); // Görev tablosunu güncelle
                 populateStudentSelectionModal(); // Öğrenci seçim modalını güncelle
             } catch (error) {
                 console.error("Error saving changes:", error);
@@ -1832,12 +1917,12 @@
             // Reset oyun durumu
             gameQuestions = generateQuestions(20); // 20 soru oluştur
             currentQuestionIndex = 0;
-            leftBunnyPosition = 0;
-            rightBunnyPosition = 0;
+            leftSteps = 4; // Sol taraf için adım sayısı
+            rightSteps = 4; // Sağ taraf için adım sayısı
 
             // Bunnies'i başlangıç pozisyonuna getir
-            bunnyLeft.style.left = '10%';
-            bunnyRight.style.right = '10%';
+            bunnyLeft.style.left = '0%';
+            bunnyRight.style.right = '0%';
 
             // Oyunu başlatmak için gerekli kontroller
             if (!leftId || !rightId) {
@@ -1851,11 +1936,21 @@
             leftPlayerName.textContent = `${leftName}`;
             rightPlayerName.textContent = `${rightName}`;
 
-            // Oyun UI'sını göster
-            gameOverlay.style.display = "flex";
+            // Yıldızları görünür yap
+            resetStars();
 
-            // İlk soruyu yükle
-            loadNextQuestion(leftId, rightId);
+            // Oyunu başlatmadan önce Intro Video'yu göster
+            introOverlay.style.display = "flex";
+            introVideo.play();
+
+            // 15 saniye sonra Intro Video'yu kapatıp oyun ekranını göster
+            setTimeout(() => {
+                introOverlay.style.display = "none";
+                gameOverlay.style.display = "flex";
+
+                // İlk soruyu yükle
+                loadNextQuestion(leftId, rightId);
+            }, 15000); // 15000 milisaniye = 15 saniye
         }
 
         // Oyun Kapatma Fonksiyonu
@@ -1864,8 +1959,8 @@
             // Oyunu sıfırla
             gameQuestions = [];
             currentQuestionIndex = 0;
-            leftBunnyPosition = 0;
-            rightBunnyPosition = 0;
+            leftSteps = 4;
+            rightSteps = 4;
             questionText.textContent = "Soru burada olacak";
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
@@ -1915,7 +2010,7 @@
             const wrongAnswers = generateWrongAnswers(correctAnswer);
             const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
 
-            // Şıkları sol ve sağ tarafa yerleştirme
+            // Şıkları sol ve sağ tarafa yerleştirme (şıkları aşağıya çekmek için flex yönünü değiştiriyoruz)
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
 
@@ -1966,21 +2061,41 @@
             const isCorrect = selectedAnswer === currentQuestion.answer;
 
             if (isCorrect) {
+                // Doğru cevap sesini çal
+                correctSound.currentTime = 0; // Sesi yeniden başlat
+                correctSound.play();
+
                 if (side === 'left') {
-                    leftBunnyPosition = Math.min(leftBunnyPosition + 1, maxPosition);
-                    moveBunny(bunnyLeft, 'left', leftBunnyPosition, leftId, rightId);
+                    if (leftSteps > 0) {
+                        leftSteps--;
+                        updateStars('left', leftSteps);
+                        moveBunny('left', leftId, rightId);
+                    }
                 } else {
-                    rightBunnyPosition = Math.min(rightBunnyPosition + 1, maxPosition);
-                    moveBunny(bunnyRight, 'right', rightBunnyPosition, leftId, rightId);
+                    if (rightSteps > 0) {
+                        rightSteps--;
+                        updateStars('right', rightSteps);
+                        moveBunny('right', leftId, rightId);
+                    }
                 }
                 showFeedback(side, true);
             } else {
+                // Yanlış cevap sesini çal
+                incorrectSound.currentTime = 0; // Sesi yeniden başlat
+                incorrectSound.play();
+
                 if (side === 'left') {
-                    leftBunnyPosition = Math.max(leftBunnyPosition - 1, 0);
-                    moveBunny(bunnyLeft, 'left', leftBunnyPosition, leftId, rightId);
+                    if (leftSteps < maxSteps) {
+                        leftSteps++;
+                        updateStars('left', leftSteps);
+                        moveBunny('left', leftId, rightId, false);
+                    }
                 } else {
-                    rightBunnyPosition = Math.max(rightBunnyPosition - 1, 0);
-                    moveBunny(bunnyRight, 'right', rightBunnyPosition, leftId, rightId);
+                    if (rightSteps < maxSteps) {
+                        rightSteps++;
+                        updateStars('right', rightSteps);
+                        moveBunny('right', leftId, rightId, false);
+                    }
                 }
                 showFeedback(side, false);
             }
@@ -1995,30 +2110,52 @@
             }, 1000);
         }
 
-        // Bunyaları Hareket Ettirme Fonksiyonu
-        function moveBunny(bunny, side, position, leftId, rightId) {
-            const stepPercentage = 40 / maxPosition; // Tavşanın 5 adımda %40 ilerlemesi
-            if (side === 'left') {
-                if (position === maxPosition) {
-                    bunny.style.left = '50%'; // Tam olarak havuca ulaşıyor
+        // Yıldızları Güncelleme Fonksiyonu
+        function updateStars(side, steps) {
+            const starsContainer = side === 'left' ? document.querySelector(".left-stars") : document.querySelector(".right-stars");
+            const stars = starsContainer.querySelectorAll(".star");
+            stars.forEach((star, index) => {
+                if (index < steps) {
+                    star.classList.remove("hidden-star");
                 } else {
-                    const newLeft = 10 + (stepPercentage * position) + '%';
-                    bunny.style.left = newLeft;
+                    star.classList.add("hidden-star");
                 }
-            } else {
-                if (position === maxPosition) {
-                    bunny.style.right = '50%'; // Tam olarak havuca ulaşıyor
-                } else {
-                    const newRight = 10 + (stepPercentage * position) + '%';
-                    bunny.style.right = newRight;
-                }
-            }
+            });
+        }
 
-            // Eğer tavşan havucu ulaştıysa oyunu bitir
-            if (position === maxPosition) {
-                const winnerSide = side;
-                const winnerName = side === 'left' ? currentData[leftId].name : currentData[rightId].name;
-                showWinner(winnerName, side, leftId, rightId);
+        // Bunyaları Hareket Ettirme Fonksiyonu
+        function moveBunny(side, leftId, rightId, forward=true) {
+            const stepPercentage = 8; // Her adımda %8 ilerleme veya geri gitme
+            if (side === 'left') {
+                let currentLeft = parseFloat(bunnyLeft.style.left) || 0;
+                if (forward) {
+                    currentLeft += stepPercentage;
+                } else {
+                    currentLeft -= stepPercentage;
+                }
+                currentLeft = Math.max(0, Math.min(currentLeft, 40)); // %0 ile %40 arasında
+                bunnyLeft.style.left = `${currentLeft}%`;
+
+                // Check if left bunny reached havuç
+                if (leftSteps === 0) {
+                    const winnerName = currentData[leftId].name;
+                    showWinner(`${winnerName} kazandı!`, 'left', leftId, rightId);
+                }
+            } else if (side === 'right') {
+                let currentRight = parseFloat(bunnyRight.style.right) || 0;
+                if (forward) {
+                    currentRight += stepPercentage;
+                } else {
+                    currentRight -= stepPercentage;
+                }
+                currentRight = Math.max(0, Math.min(currentRight, 40)); // %0 ile %40 arasında
+                bunnyRight.style.right = `${currentRight}%`;
+
+                // Check if right bunny reached havuç
+                if (rightSteps === 0) {
+                    const winnerName = currentData[rightId].name;
+                    showWinner(`${winnerName} kazandı!`, 'right', leftId, rightId);
+                }
             }
         }
 
@@ -2040,7 +2177,6 @@
             feedbackDiv.style.color = color;
             feedbackDiv.style.fontSize = "1.5em";
             feedbackDiv.style.marginTop = "10px";
-            feedbackDiv.classList.add("grow");
 
             if (side === 'left') {
                 leftAnswersDiv.appendChild(feedbackDiv);
@@ -2052,10 +2188,10 @@
         // Oyunu Bitirme Fonksiyonu
         function endGame(leftId, rightId) {
             let winner = "";
-            if (leftBunnyPosition > rightBunnyPosition) {
-                winner = currentData[leftId].name + " kazandı!";
-            } else if (rightBunnyPosition > leftBunnyPosition) {
-                winner = currentData[rightId].name + " kazandı!";
+            if (leftSteps < rightSteps) {
+                winner = `${currentData[leftId].name} kazandı!`;
+            } else if (rightSteps < leftSteps) {
+                winner = `${currentData[rightId].name} kazandı!`;
             } else {
                 winner = "Berabere!";
             }
@@ -2066,8 +2202,12 @@
         // Kazananı Gösterme Fonksiyonu
         function showWinner(winnerName, side, leftId, rightId) {
             // Kazananın ismini büyük, yeşil renkte göster
-            winnerMessage.textContent = `${winnerName} kazandı!`;
+            winnerMessage.textContent = `${winnerName}`;
             winnerEffect.style.display = "flex";
+
+            // Kazanan sesi çal
+            winnerSound.currentTime = 0; // Sesi yeniden başlat
+            winnerSound.play();
 
             // Ekrandaki diğer UI öğelerini bulanıklaştır ve etkileşimleri devre dışı bırak
             document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
@@ -2081,6 +2221,10 @@
         // Tekrar Oyna Butonuna Event Listener Ekleme
         playAgainBtn.addEventListener("click", () => {
             winnerEffect.style.display = "none";
+            // Kazanan sesi durdur
+            winnerSound.pause();
+            winnerSound.currentTime = 0;
+
             // Ekrandaki diğer UI öğelerini yeniden normal hale getir
             document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
                 element.style.filter = "none";
@@ -2092,13 +2236,17 @@
             // Oyunu sıfırla
             gameQuestions = [];
             currentQuestionIndex = 0;
-            leftBunnyPosition = 0;
-            rightBunnyPosition = 0;
+            leftSteps = 4;
+            rightSteps = 4;
             questionText.textContent = "Soru burada olacak";
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
-            leftPlayerName.textContent = "Seçilmedi"; // Değişiklik: Etiket kaldırıldı
-            rightPlayerName.textContent = "Seçilmedi"; // Değişiklik: Etiket kaldırıldı
+            leftPlayerName.textContent = "Seçilmedi";
+            rightPlayerName.textContent = "Seçilmedi";
+            winnerEffect.style.display = "none";
+
+            // Yıldızları görünür yap
+            resetStars();
 
             // Oyun ekranını kapat
             gameOverlay.style.display = "none";
@@ -2128,10 +2276,11 @@
             });
         }
 
-        // Oyun Başlatma Fonksiyonu
-        // Mevcut kodda zaten tanımlanmış, burada tekrar tanımlamaya gerek yok
-        // Ancak mevcut kodda tekrar tanımlama yapılmaması için dikkat edilmelidir
-
+        // Yıldızları Sıfırlama Fonksiyonu
+        function resetStars() {
+            updateStars('left', leftSteps);
+            updateStars('right', rightSteps);
+        }
     </script>
 </body>
 </html>
