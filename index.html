@@ -12,14 +12,6 @@
             margin: 0;
             padding: 20px;
             text-align: center;
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
-        }
-
-        /* Ana Container */
-        #main-container {
-            width: 1200px; /* Masaüstü için sabit genişlik */
-            margin: 0 auto;
-            position: relative;
         }
 
         h1 {
@@ -94,7 +86,7 @@
 
         /* Tablo Container ve Görevli Tablosu */
         .table-container, #task-table-container {
-            max-width: 100%;
+            max-width: 90%;
             margin: 20px auto;
             background-color: #ffffff;
             border-radius: 10px;
@@ -379,7 +371,7 @@
 
         /* Görevli Tablosu Eklemeleri */
         #task-table-container {
-            max-width: 100%;
+            max-width: 90%;
             margin: 20px auto;
             background-color: #ffffff;
             border: 3px solid #28a745; /* Yeşil çerçeve */
@@ -780,24 +772,26 @@
         }
 
         /* Tekrar Oyna Butonu */
+        /* Güncellenmiş Stil Başlangıcı */
         #play-again-btn {
-            margin-top: 10px; /* Küçültülmüş margin */
-            padding: 5px 10px; /* Küçültülmüş padding */
-            background-color: #28a745; /* Daha estetik yeşil renk */
+            margin-top: 5px; /* Daha küçük margin */
+            padding: 4px 8px; /* Daha küçük padding */
+            background-color: #1E90FF; /* Metalik mavi renk */
             color: white;
             border: none;
-            border-radius: 3px; /* Küçültülmüş border-radius */
+            border-radius: 3px; /* Aynı border-radius */
             cursor: pointer;
-            font-size: 0.9em; /* Küçültülmüş font boyutu */
+            font-size: 0.8em; /* Daha küçük font boyutu */
             transition: background 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 5px; /* Simge ile metin arasındaki boşluk */
+            gap: 3px; /* Simge ile metin arasındaki boşluğu azalttık */
         }
 
         #play-again-btn:hover {
-            background-color: #218838;
+            background-color: #104E8B; /* Hover durumunda daha koyu metalik mavi */
         }
+        /* Güncellenmiş Stil Bitişi */
 
         /* Öğrenci Seçim Modal Stili */
         #student-selection-modal {
@@ -905,35 +899,13 @@
         }
 
         /* Responsive Tasarım için Medya Sorguları */
-        @media (max-width: 1200px) {
-            #main-container {
-                transform: scale(0.8);
-                transform-origin: top left;
-                width: 1200px; /* Sabit genişlik */
-            }
-        }
-
-        @media (max-width: 1024px) {
-            #main-container {
-                transform: scale(0.7);
-                transform-origin: top left;
-                width: 1200px; /* Sabit genişlik */
-            }
-        }
-
         @media (max-width: 768px) {
-            #main-container {
-                transform: scale(0.6);
-                transform-origin: top left;
-                width: 1200px; /* Sabit genişlik */
-            }
-
             h1 {
                 font-size: 2.5em;
             }
 
             #task-table-container, .table-container {
-                max-width: 100%;
+                max-width: 95%;
             }
 
             #question-area {
@@ -988,12 +960,6 @@
         }
 
         @media (max-width: 480px) {
-            #main-container {
-                transform: scale(0.5);
-                transform-origin: top left;
-                width: 1200px; /* Sabit genişlik */
-            }
-
             h1 {
                 font-size: 2em;
             }
@@ -1053,89 +1019,128 @@
                 font-size: 0.7em;
             }
         }
+
+        /* Kazanan Öğrenci Mesajının Güncellenmiş Stili */
+        #winner-message {
+            font-size: 3em; /* Font boyutunu artırdık */
+            font-weight: bold;
+            color: #00FFFF; /* Metin rengini metalik maviye yakın bir renge ayarladık */
+            padding: 20px;
+            border: 3px solid #00FFFF; /* Fosforlu mavi çerçeve */
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF; /* Fosforlu etki için gölge */
+            animation: glow 1.5s infinite alternate; /* Yumuşak bir parıltı animasyonu */
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF;
+            }
+            to {
+                box-shadow: 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00FFFF;
+            }
+        }
+
+        /* "Tekrar Oyna" Butonunun Güncellenmiş Stili */
+        #play-again-btn {
+            margin-top: 5px; /* Daha küçük margin */
+            padding: 4px 8px; /* Daha küçük padding */
+            background-color: #1E90FF; /* Metalik mavi renk */
+            color: white;
+            border: none;
+            border-radius: 3px; /* Aynı border-radius */
+            cursor: pointer;
+            font-size: 0.8em; /* Daha küçük font boyutu */
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 3px; /* Simge ile metin arasındaki boşluğu azalttık */
+        }
+
+        #play-again-btn:hover {
+            background-color: #104E8B; /* Hover durumunda daha koyu metalik mavi */
+        }
     </style>
 </head>
 <body>
-    <div id="main-container">
-        <h1>Şampiyonlar <span>+</span> Ligi</h1>
-        <div id="class-selection">
-            <label for="class-select">Sınıf Seçin:</label>
-            <select id="class-select">
-                <option value="">--Sınıf Seçin--</option>
-            </select>
-        </div>
-
-        <!-- Görevli Tablosu Butonu -->
-        <button id="task-table-btn" style="display:none;">Görevli Tablosu</button>
-        <div id="task-table-container">
-            <table id="task-table">
-                <thead>
-                    <tr>
-                        <th>Görev</th>
-                        <th>Öğrenci</th>
-                        <th class="actions">İşlem</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Haftanın Başkanı Satırı -->
-                    <tr id="head-of-week-row" class="highlighted">
-                        <td>Sınıf Başkanı</td>
-                        <td id="head-of-week">Belirlenmedi</td>
-                        <td class="actions">
-                            <button class="edit-button" id="edit-head">Düzenle</button>
-                        </td>
-                    </tr>
-                    <!-- Nöbetçi Öğrenciler Satırı -->
-                    <tr id="duty-students-row">
-                        <td>Nöbetçi Öğrenciler</td>
-                        <td id="duty-students">Belirlenmedi</td>
-                        <td class="actions">
-                            <button class="edit-button" id="edit-duty-students">Düzenle</button>
-                        </td>
-                    </tr>
-                    <!-- Diğer Görevler Satırı (Düzenleme Modunda Eklenecek) -->
-                </tbody>
-            </table>
-            <button id="add-task-btn">Görev Ekle</button>
-        </div>
-
-        <button id="lucky-student-btn" style="display:none;">Şanslı Öğrenci Seç</button>
-        <button id="reset-lucky" style="display:none;" title="Şanslı seçimleri sıfırla"></button>
-        <div id="lucky-student-result"></div>
-
-        <button id="edit-mode" style="display:none;">Düzenle</button>
-        <div class="pin-container" id="pin-check" style="display: none;">
-            <input type="password" id="pin" placeholder="PIN Girin">
-            <button id="pin-submit">Doğrula</button>
-        </div>
-        <div id="admin-panel" style="display: none;">
-            <h2>Öğrenci Ekle</h2>
-            <input type="text" id="student-name" placeholder="Öğrenci Adı">
-            <input type="text" id="photo-url" placeholder="Fotoğraf URL'si (Opsiyonel)">
-            <button id="add-student">Öğrenci Ekle</button>
-        </div>
-        <button id="save-changes">Kaydet</button>
-        <div class="table-container" style="display:none;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fotoğraf</th>
-                        <th>İsim</th>
-                        <th>Genel Puan</th>
-                        <th class="actions">İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody id="student-table">
-                    <!-- Dinamik olarak doldurulacak -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Oyun Başlat Butonu -->
-        <button id="start-game-btn" style="margin-top: 30px; padding: 15px 30px; font-size: 1.2em; background-color: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; display: none;">
-            AKILLI TAHTA ŞAMPİYON MÜCADELESİ
-        </button>
+    <h1>Şampiyonlar <span>+</span> Ligi</h1>
+    <div id="class-selection">
+        <label for="class-select">Sınıf Seçin:</label>
+        <select id="class-select">
+            <option value="">--Sınıf Seçin--</option>
+        </select>
     </div>
+
+    <!-- Görevli Tablosu Butonu -->
+    <button id="task-table-btn" style="display:none;">Görevli Tablosu</button>
+    <div id="task-table-container">
+        <table id="task-table">
+            <thead>
+                <tr>
+                    <th>Görev</th>
+                    <th>Öğrenci</th>
+                    <th class="actions">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Haftanın Başkanı Satırı -->
+                <tr id="head-of-week-row" class="highlighted">
+                    <td>Sınıf Başkanı</td>
+                    <td id="head-of-week">Belirlenmedi</td>
+                    <td class="actions">
+                        <button class="edit-button" id="edit-head">Düzenle</button>
+                    </td>
+                </tr>
+                <!-- Nöbetçi Öğrenciler Satırı -->
+                <tr id="duty-students-row">
+                    <td>Nöbetçi Öğrenciler</td>
+                    <td id="duty-students">Belirlenmedi</td>
+                    <td class="actions">
+                        <button class="edit-button" id="edit-duty-students">Düzenle</button>
+                    </td>
+                </tr>
+                <!-- Diğer Görevler Satırı (Düzenleme Modunda Eklenecek) -->
+            </tbody>
+        </table>
+        <button id="add-task-btn">Görev Ekle</button>
+    </div>
+
+    <button id="lucky-student-btn" style="display:none;">Şanslı Öğrenci Seç</button>
+    <button id="reset-lucky" style="display:none;" title="Şanslı seçimleri sıfırla"></button>
+    <div id="lucky-student-result"></div>
+
+    <button id="edit-mode" style="display:none;">Düzenle</button>
+    <div class="pin-container" id="pin-check" style="display: none;">
+        <input type="password" id="pin" placeholder="PIN Girin">
+        <button id="pin-submit">Doğrula</button>
+    </div>
+    <div id="admin-panel" style="display: none;">
+        <h2>Öğrenci Ekle</h2>
+        <input type="text" id="student-name" placeholder="Öğrenci Adı">
+        <input type="text" id="photo-url" placeholder="Fotoğraf URL'si (Opsiyonel)">
+        <button id="add-student">Öğrenci Ekle</button>
+    </div>
+    <button id="save-changes">Kaydet</button>
+    <div class="table-container" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fotoğraf</th>
+                    <th>İsim</th>
+                    <th>Genel Puan</th>
+                    <th class="actions">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="student-table">
+                <!-- Dinamik olarak doldurulacak -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Oyun Başlat Butonu -->
+    <button id="start-game-btn" style="margin-top: 30px; padding: 15px 30px; font-size: 1.2em; background-color: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; display: none;">
+        AKILLI TAHTA ŞAMPİYON MÜCADELESİ
+    </button>
 
     <!-- Modal Dialog -->
     <dialog id="modal">
@@ -1181,7 +1186,7 @@
             <button id="close-game-btn">X</button>
             <div id="question-area">
                 <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sol" id="bunny-left">
-
+                
                 <!-- Sol Yıldızlar -->
                 <div class="left-stars">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
@@ -1189,9 +1194,9 @@
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                 </div>
-
+                
                 <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGhyb3IyNWs5azlqcHJhZ2Vhc2ptcHl0eXp6Y3BvYXRqNWhrOWRqbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ZzPjgVE12gU54wIVtf/giphy.webp" alt="Havuç" id="carrot">
-
+                
                 <!-- Sağ Yıldızlar -->
                 <div class="right-stars">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
@@ -1199,7 +1204,7 @@
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                 </div>
-
+                
                 <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sağ" id="bunny-right">
                 <div id="question-text">Soru burada olacak</div>
             </div>
@@ -2137,7 +2142,7 @@
             winnerEffect.style.display = "none";
 
             // Ekrandaki diğer UI öğelerini yeniden normal hale getir
-            document.querySelectorAll("body > #main-container > *:not(#winner-effect)").forEach(element => {
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
                 element.style.filter = "none";
                 element.style.pointerEvents = "auto";
                 element.style.opacity = "1";
@@ -2378,7 +2383,7 @@
             winnerSound.play();
 
             // Ekrandaki diğer UI öğelerini bulanıklaştır ve etkileşimleri devre dışı bırak
-            document.querySelectorAll("body > #main-container > *:not(#winner-effect)").forEach(element => {
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
                 element.style.filter = "blur(5px)";
                 element.style.pointerEvents = "none";
                 element.style.opacity = "0.5";
@@ -2394,7 +2399,7 @@
             winnerSound.currentTime = 0;
 
             // Ekrandaki diğer UI öğelerini yeniden normal hale getir
-            document.querySelectorAll("body > #main-container > *:not(#winner-effect)").forEach(element => {
+            document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
                 element.style.filter = "none";
                 element.style.pointerEvents = "auto";
                 element.style.opacity = "1";
