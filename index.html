@@ -539,7 +539,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-image: url('https://cdn.pixabay.com/photo/2024/05/21/17/36/fairytale-woods-8778691_1280.jpg'); /* Arka plan resmi eklendi */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: none;
             justify-content: center;
             align-items: center;
@@ -547,7 +550,7 @@
         }
 
         #game-container {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9); /* İçeriğin okunabilirliği için hafif beyaz opaklık */
             width: 90%;
             max-width: 1200px;
             height: 90%;
@@ -719,7 +722,7 @@
         }
 
         .answer-btn:hover {
-            background-color: #00b3ff;
+            background-color: #00a3e0;
         }
 
         .disabled {
@@ -733,7 +736,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-image: url('https://cdn.pixabay.com/animation/2023/12/09/19/16/19-16-42-998_512.gif'); /* Havai fişek GIF */
+            background-image: url('https://cdn.pixabay.com/photo/2024/05/21/17/36/fairytale-woods-8778691_1280.jpg'); /* Arka plan resmi */
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -957,6 +960,16 @@
                 padding: 10px;
                 font-size: 0.9em;
             }
+
+            /* Modal İçin */
+            .selection-panel label, #modal-content p {
+                font-size: 1em;
+            }
+
+            #play-again-btn {
+                padding: 4px 8px;
+                font-size: 0.7em;
+            }
         }
 
         @media (max-width: 480px) {
@@ -984,8 +997,8 @@
             }
 
             #play-again-btn {
-                font-size: 0.7em;
                 padding: 4px 8px;
+                font-size: 0.7em;
                 gap: 2px;
             }
 
