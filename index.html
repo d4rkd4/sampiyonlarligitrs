@@ -133,6 +133,8 @@
             border-radius: 50%;
             object-fit: cover;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 100%; /* Responsive */
+            height: auto; /* Responsive */
         }
 
         /* Puan Butonları */
@@ -613,8 +615,10 @@
         #bunny-left, #bunny-right, #carrot {
             position: absolute;
             top: 0;
-            width: 150px;
-            height: 120px;
+            width: 185px;
+            height: 125px;
+            max-width: 100%; /* Responsive */
+            height: auto; /* Responsive */
         }
 
         #bunny-left {
@@ -656,6 +660,8 @@
         .star {
             width: 80px; /* Yıldız boyutu artırıldı */
             height: 80px;
+            max-width: 100%; /* Responsive */
+            height: auto; /* Responsive */
         }
 
         /* Oyun İçeriği */
@@ -731,14 +737,14 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            color: #00ff00; /* Yeşil renk */
+            color: #228B22; /* Daha okunabilir yeşil renk */
             padding: 40px 60px; /* Daha büyük */
             border-radius: 15px;
             font-size: 2em; /* Küçültüldü */
             animation: popIn 1s, flash 2s infinite; /* Yeni flash animasyonu eklendi */
             z-index: 3000; /* Daha yüksek */
             display: none;
-            box-shadow: 0 0 20px #00ff00;
+            box-shadow: 0 0 20px #228B22; /* Çerçeve rengini güncelledim */
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
             flex-direction: column;
             justify-content: center;
@@ -767,19 +773,22 @@
 
         /* Tekrar Oyna Butonu */
         #play-again-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #0078d7;
+            margin-top: 10px; /* Küçültülmüş margin */
+            padding: 5px 10px; /* Küçültülmüş padding */
+            background-color: #28a745; /* Daha estetik yeşil renk */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px; /* Küçültülmüş border-radius */
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.9em; /* Küçültülmüş font boyutu */
             transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Simge ile metin arasındaki boşluk */
         }
 
         #play-again-btn:hover {
-            background-color: #005bb5;
+            background-color: #218838;
         }
 
         /* Öğrenci Seçim Modal Stili */
@@ -887,6 +896,127 @@
             object-fit: cover;
         }
 
+        /* Responsive Tasarım için Medya Sorguları */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            #task-table-container, .table-container {
+                max-width: 95%;
+            }
+
+            #question-area {
+                height: 400px;
+            }
+
+            .player-section {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .player-name {
+                font-size: 1.5em;
+            }
+
+            .answer-btn {
+                flex: 1 1 45%;
+                font-size: 1em;
+                padding: 8px 16px;
+            }
+
+            .star {
+                width: 60px;
+                height: 60px;
+            }
+
+            #play-again-btn {
+                font-size: 0.8em;
+                padding: 5px 8px;
+                gap: 3px;
+            }
+
+            #lucky-student-result {
+                font-size: 1.5em;
+            }
+
+            #question-text {
+                font-size: 2em;
+            }
+
+            /* Öğrenci Fotoğrafları */
+            td img {
+                width: 50px;
+                height: 50px;
+            }
+
+            /* Görevli Tablosu */
+            #task-table th, #task-table td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            #question-area {
+                height: 300px;
+            }
+
+            .player-name {
+                font-size: 1.2em;
+            }
+
+            .answer-btn {
+                flex: 1 1 100%;
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            .star {
+                width: 50px;
+                height: 50px;
+            }
+
+            #play-again-btn {
+                font-size: 0.7em;
+                padding: 4px 8px;
+                gap: 2px;
+            }
+
+            #lucky-student-result {
+                font-size: 1.2em;
+            }
+
+            #question-text {
+                font-size: 1.8em;
+            }
+
+            /* Öğrenci Fotoğrafları */
+            td img {
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Görevli Tablosu */
+            #task-table th, #task-table td {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+
+            /* Modal İçin */
+            .selection-panel label, #modal-content p {
+                font-size: 1em;
+            }
+
+            #play-again-btn {
+                padding: 4px 8px;
+                font-size: 0.7em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1057,7 +1187,7 @@
     <!-- Kazanan Öğrenci İsim Etkisi -->
     <div id="winner-effect" class="winner" style="display: none;">
         <div id="winner-message"></div>
-        <button id="play-again-btn">Tekrar Oyna</button>
+        <button id="play-again-btn">↻ Tekrar Oyna</button>
     </div>
 
     <!-- Intro Video Overlay -->
