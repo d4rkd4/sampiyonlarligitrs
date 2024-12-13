@@ -654,7 +654,7 @@
 
         #question-text {
             position: absolute;
-            top: 96%;
+            top: 115%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%;
@@ -2501,39 +2501,43 @@
             loadNextQuestion();
         }
 
-        function loadNextQuestion() {
-            if (currentQuestionIndex >= gameQuestions.length) {
-                endGame();
-                return;
-            }
+function loadNextQuestion() {
+    if (currentQuestionIndex >= gameQuestions.length) {
+        endGame();
+        return;
+    }
 
-            const currentQ = gameQuestions[currentQuestionIndex];
-            questionText.textContent = (currentQ.qText || "Soru burada olacak");
+    const currentQ = gameQuestions[currentQuestionIndex];
+    if (currentQ.qText.startsWith("http://") || currentQ.qText.startsWith("https://")) {
+        questionText.innerHTML = `<img src="${currentQ.qText}" alt="Soru Resmi" style="max-width:100%; max-height:300px; display:block; margin:0 auto;">`;
+    } else {
+        questionText.textContent = (currentQ.qText || "Soru burada olacak");
+    }
 
-            const correctAnswer = currentQ.answer;
-            const wrongAnswers = currentQ.wrongs;
-            const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
+    const correctAnswer = currentQ.answer;
+    const wrongAnswers = currentQ.wrongs;
+    const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
 
-            leftAnswersDiv.innerHTML = "";
-            rightAnswersDiv.innerHTML = "";
+    leftAnswersDiv.innerHTML = "";
+    rightAnswersDiv.innerHTML = "";
 
-            allAnswers.forEach(ans => {
-                const leftBtn = document.createElement("button");
-                leftBtn.textContent = ans;
-                leftBtn.classList.add("answer-btn");
-                leftBtn.dataset.answer = ans;
-                leftBtn.addEventListener("click", () => handleAnswer('left', ans));
+    allAnswers.forEach(ans => {
+        const leftBtn = document.createElement("button");
+        leftBtn.textContent = ans;
+        leftBtn.classList.add("answer-btn");
+        leftBtn.dataset.answer = ans;
+        leftBtn.addEventListener("click", () => handleAnswer('left', ans));
 
-                const rightBtn = document.createElement("button");
-                rightBtn.textContent = ans;
-                rightBtn.classList.add("answer-btn");
-                rightBtn.dataset.answer = ans;
-                rightBtn.addEventListener("click", () => handleAnswer('right', ans));
+        const rightBtn = document.createElement("button");
+        rightBtn.textContent = ans;
+        rightBtn.classList.add("answer-btn");
+        rightBtn.dataset.answer = ans;
+        rightBtn.addEventListener("click", () => handleAnswer('right', ans));
 
-                leftAnswersDiv.appendChild(leftBtn);
-                rightAnswersDiv.appendChild(rightBtn);
-            });
-        }
+        leftAnswersDiv.appendChild(leftBtn);
+        rightAnswersDiv.appendChild(rightBtn);
+    });
+}
 
         function handleAnswer(side, selectedAnswer) {
             const currentQ = gameQuestions[currentQuestionIndex];
