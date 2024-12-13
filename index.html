@@ -2796,29 +2796,5 @@ function loadNextQuestion() {
             }
         }
     </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const modeDialog = document.createElement('div');
-    modeDialog.innerHTML = `
-        <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000;">
-            <h1 style="color: white; margin-bottom: 20px;">Ekran Modu Seçin</h1>
-            <button id="normal-screen" style="padding: 10px 20px; font-size: 1.2em; margin: 10px;">Normal Ekran</button>
-            <button id="full-screen" style="padding: 10px 20px; font-size: 1.2em; margin: 10px;">Tam Ekran</button>
-        </div>
-    `;
-    document.body.appendChild(modeDialog);
-
-    document.getElementById("normal-screen").addEventListener("click", function() {
-        modeDialog.style.display = "none";
-    });
-
-    document.getElementById("full-screen").addEventListener("click", function() {
-        modeDialog.style.display = "none";
-        document.documentElement.requestFullscreen().catch((err) => console.error(err));
-    });
-});
-</script>
-
 </body>
 </html>
