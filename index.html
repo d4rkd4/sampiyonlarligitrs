@@ -481,12 +481,34 @@
             display: inline-block;
         }
 
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
         #champion-competition-btn, #champion-settings-btn {
     font-size: 1.2em;
     font-weight: bold;
     margin: 20px 10px;
-    background-color: #ff9800; /* Yeni arka plan rengi */
-    color: #343a40; /* Yazı rengini de değiştirebilirsiniz */
+    background-color: #ff9800; /* Normal arka plan rengi */
+    color: #343a40; /* Normal yazı rengi */
+    transition: all 0.3s ease; /* Dinamik geçiş efekti */
+    border: none; /* Buton kenarlarını düzleştirir */
+    padding: 15px 20px; /* Buton boyutu */
+    border-radius: 10px; /* Yuvarlak kenarlar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    cursor: pointer; /* İmleç değişimi */
+        }
+
+        #champion-competition-btn:hover {
+    animation: shake 0.5s ease-in-out; /* Titreme efekti */
+    background-color: #e68a00; /* Hover sırasında arka plan rengi */
+    color: #fff; /* Yazı rengi değişimi */
+    transform: scale(1.1); /* Hafif büyüme efekti */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
         }
 
         #champion-settings-btn {
@@ -2774,5 +2796,29 @@ function loadNextQuestion() {
             }
         }
     </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const modeDialog = document.createElement('div');
+    modeDialog.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000;">
+            <h1 style="color: white; margin-bottom: 20px;">Ekran Modu Seçin</h1>
+            <button id="normal-screen" style="padding: 10px 20px; font-size: 1.2em; margin: 10px;">Normal Ekran</button>
+            <button id="full-screen" style="padding: 10px 20px; font-size: 1.2em; margin: 10px;">Tam Ekran</button>
+        </div>
+    `;
+    document.body.appendChild(modeDialog);
+
+    document.getElementById("normal-screen").addEventListener("click", function() {
+        modeDialog.style.display = "none";
+    });
+
+    document.getElementById("full-screen").addEventListener("click", function() {
+        modeDialog.style.display = "none";
+        document.documentElement.requestFullscreen().catch((err) => console.error(err));
+    });
+});
+</script>
+
 </body>
 </html>
