@@ -1033,7 +1033,7 @@
     <dialog id="champion-modal">
         <div id="champion-modal-content">
             <h3>Şampiyon Mücadelesi</h3>
-            <select id="heading-select"><option value="">Başlık Seç</option></select>
+            <select id="heading-select"><option value="">Sınıf Seç</option></select>
             <select id="lesson-select"><option value="">Ders Seç</option></select>
             <select id="topic-select"><option value="">Konu Seç</option></select>
             <select id="player1-select"><option value="">Oyuncu 1 Seç</option></select>
@@ -1046,16 +1046,16 @@
     <dialog id="settings-modal">
         <div id="settings-modal-content">
             <div id="settings-nav">
-                <button data-section="heading-section">Başlıklar</button>
+                <button data-section="heading-section">Sınıflar</button>
                 <button data-section="lesson-section">Dersler</button>
                 <button data-section="topic-section">Konular</button>
                 <button data-section="question-section">Sorular</button>
             </div>
 
             <div class="settings-section" id="heading-section">
-                <h3>Başlıklar</h3>
-                <input type="text" id="new-heading-name" placeholder="Yeni Başlık Adı">
-                <button id="add-heading-btn">Başlık Ekle</button>
+                <h3>Sınıflar</h3>
+                <input type="text" id="new-heading-name" placeholder="Yeni Sınıf Adı">
+                <button id="add-heading-btn">Sınıf Ekle</button>
                 <div class="heading-list"></div>
             </div>
 
@@ -1377,7 +1377,7 @@
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "Düzenle";
                 editBtn.addEventListener("click", async () => {
-                    const newName = prompt("Yeni başlık adı:", championHeadings[hId].name);
+                    const newName = prompt("Yeni sınıf adı:", championHeadings[hId].name);
                     if (newName) {
                         await update(ref(db, `championData/headings/${hId}`), {name:newName});
                         await loadChampionData();
@@ -1414,7 +1414,7 @@
         addHeadingBtn.addEventListener("click", async () => {
             const headingName = newHeadingNameInput.value.trim();
             if (!headingName) {
-                alert("Başlık adı girin.");
+                alert("Sınıf adı girin.");
                 return;
             }
             const newRef = push(ref(db, 'championData/headings'));
@@ -1427,7 +1427,7 @@
         });
 
         function populateHeadingSelect() {
-            headingSelect.innerHTML = '<option value="">Başlık Seç</option>';
+            headingSelect.innerHTML = '<option value="">Sınıf Seç</option>';
             for (let hId in championHeadings) {
                 const opt = document.createElement("option");
                 opt.value = hId;
@@ -2118,7 +2118,7 @@
             const lessonName = newLessonNameInput.value.trim();
             const headingId = headingForLessonSelect.value;
             if (!headingId) {
-                alert("Önce bir başlık seçin.");
+                alert("Önce bir sınıf seçin.");
                 return;
             }
             if (!lessonName) {
@@ -2445,7 +2445,7 @@
             const lessonId = lessonForQuestionSelect.value;
             const topicId = topicForQuestionSelect.value;
             if (!headingId || !lessonId || !topicId) {
-                alert("Başlık, ders ve konu seçin.");
+                alert("Sınıf, ders ve konu seçin.");
                 return;
             }
             const qText = newQuestionTextInput.value.trim();
