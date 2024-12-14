@@ -2801,6 +2801,122 @@ function loadNextQuestion() {
                 renderQuestions();
             }
         }
+    
+        // Stop the background music when winner and replay buttons appear
+        document.addEventListener("DOMContentLoaded", () => {
+            const winnerEffect = document.getElementById("winner-effect");
+            const playAgainButton = document.getElementById("play-again-btn");
+            const backgroundMusic = document.querySelector('audio[src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3"]');
+
+            if (backgroundMusic) {
+                const stopMusic = () => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0; // Reset the music
+                };
+
+                winnerEffect.addEventListener("animationstart", stopMusic);
+                playAgainButton.addEventListener("click", stopMusic);
+            }
+        });
     </script>
-</body>
+
+
+    <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
+    <script>
+        const backgroundMusic = document.getElementById("background-music");
+        const gameOverlay = document.getElementById("game-overlay");
+        const winnerEffect = document.getElementById("winner-effect");
+
+        // Start background music when the game overlay is displayed
+        gameOverlay.addEventListener("gameStart", () => {
+            backgroundMusic.play();
+        });
+
+        // Stop background music when the winner screen is displayed
+        winnerEffect.addEventListener("winnerDisplay", () => {
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+        });
+
+        // Example functions to simulate showing game and winner screens
+        function startGame() {
+            gameOverlay.style.display = "flex";
+            const event = new Event("gameStart");
+            gameOverlay.dispatchEvent(event);
+        }
+
+        function showWinnerScreen() {
+            winnerEffect.style.display = "flex";
+            const event = new Event("winnerDisplay");
+            winnerEffect.dispatchEvent(event);
+        }
+
+        // Call startGame when the intro video ends
+        const introVideo = document.getElementById("intro-video");
+        introVideo.addEventListener("ended", () => {
+            startGame();
+        });
+    
+        // Stop the background music when winner and replay buttons appear
+        document.addEventListener("DOMContentLoaded", () => {
+            const winnerEffect = document.getElementById("winner-effect");
+            const playAgainButton = document.getElementById("play-again-btn");
+            const backgroundMusic = document.querySelector('audio[src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3"]');
+
+            if (backgroundMusic) {
+                const stopMusic = () => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0; // Reset the music
+                };
+
+                winnerEffect.addEventListener("animationstart", stopMusic);
+                playAgainButton.addEventListener("click", stopMusic);
+            }
+        });
+    </script>
+
+    
+    <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
+    <script>
+        const backgroundMusic = document.getElementById("background-music");
+        const winnerMessage = document.getElementById("winner-message");
+        
+        // Play background music when the game starts
+        const introVideo = document.getElementById("intro-video");
+        introVideo.addEventListener("ended", () => {
+            backgroundMusic.play();
+        });
+
+        // Stop background music when the winner's name is displayed
+        const observer = new MutationObserver(() => {
+            if (winnerMessage.style.display !== "none") {
+                backgroundMusic.pause();
+                backgroundMusic.currentTime = 0;
+            }
+        });
+
+        // Observe changes to the winner-message visibility
+        observer.observe(winnerMessage, { attributes: true, attributeFilter: ["style"] });
+    
+        // Stop the background music when winner and replay buttons appear
+        document.addEventListener("DOMContentLoaded", () => {
+            const winnerEffect = document.getElementById("winner-effect");
+            const playAgainButton = document.getElementById("play-again-btn");
+            const backgroundMusic = document.querySelector('audio[src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3"]');
+
+            if (backgroundMusic) {
+                const stopMusic = () => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0; // Reset the music
+                };
+
+                winnerEffect.addEventListener("animationstart", stopMusic);
+                playAgainButton.addEventListener("click", stopMusic);
+            }
+        });
+    </script>
+
+    </body>
+    
+    
 </html>
