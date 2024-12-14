@@ -687,7 +687,7 @@
             text-align: center;
             font-size: 2.5em;
             font-weight: bold;
-            color: #ff4500;
+            color: #000000;
             text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
             animation: fadeIn 1s;
         }
@@ -2818,7 +2818,15 @@ function loadNextQuestion() {
                 playAgainButton.addEventListener("click", stopMusic);
             }
         });
-    </script>
+    
+document.getElementById("close-game-btn").addEventListener("click", function() {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio to start
+    });
+});
+</script>
 
 
     <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
@@ -2873,7 +2881,15 @@ function loadNextQuestion() {
                 playAgainButton.addEventListener("click", stopMusic);
             }
         });
-    </script>
+    
+document.getElementById("close-game-btn").addEventListener("click", function() {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio to start
+    });
+});
+</script>
 
     
     <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
@@ -2914,7 +2930,15 @@ function loadNextQuestion() {
                 playAgainButton.addEventListener("click", stopMusic);
             }
         });
-    </script>
+    
+document.getElementById("close-game-btn").addEventListener("click", function() {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio to start
+    });
+});
+</script>
 
     </body>
     
