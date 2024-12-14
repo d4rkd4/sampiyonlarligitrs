@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Şampiyonlar Ligi</title>
@@ -678,7 +680,7 @@
 
         #question-text {
             position: absolute;
-            top: 115%;
+            top: 135%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%;
@@ -698,8 +700,8 @@
         #bunny-left, #bunny-right, #carrot {
             position: absolute;
             top: 0;
-            width: 185px;
-            height: 125px;
+            width: 155px;
+            height: 105px;
             max-width: 100%;
             height: auto;
         }
@@ -942,7 +944,11 @@
                 padding: 25px 35px;
             }
         }
-    </style>
+    
+#question-text, .answer-btn {
+    font-family: 'Comfortaa', sans-serif;
+}
+</style>
 </head>
 <body>
     <h1>Şampiyonlar <span>+</span> Ligi</h1>
@@ -2095,7 +2101,7 @@
             gameStartTimer = setTimeout(() => {
                 document.getElementById("intro-overlay").style.display = "none";
                 startGame();
-            }, 13000); 
+            }, 14000); 
         });
 
         championSettingsBtn.addEventListener("click", async () => {
