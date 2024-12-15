@@ -2,919 +2,1164 @@
 <html lang="tr">
 <head>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Şampiyonlar Ligi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 3.5em;
-            font-weight: bold;
-            color: #ff4500;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
-            margin-bottom: 30px;
-        }
-
-        h1 span {
-            color: #0078d7;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .pin-container, #admin-panel {
-            max-width: 400px;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .pin-container input, .pin-container button, #admin-panel input, #admin-panel button {
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: calc(100% - 30px);
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #0078d7;
-            color: white;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-            padding: 10px 20px;
-            font-size: 1em;
-        }
-
-        button:hover {
-            background-color: #005bb5;
-        }
-
-        #task-table-btn {
-            margin-bottom: 20px;
-            font-size: 1.2em;
-            padding: 12px 20px;
-            font-weight: bold;
-            display: inline-block;
-            background-color: #28a745;
-            transition: background 0.3s ease;
-            border: none;
-            color: white;
-        }
-
-        #task-table-btn:hover {
-            background-color: #218838;
-        }
-
-        .table-container, #task-table-container {
-            max-width: 90%;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-            display: none;
-        }
-
-        .table-container:hover, #task-table-container:hover {
-            transform: scale(1.02);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1.1em;
-            text-align: center;
-        }
-
-        th, td {
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: linear-gradient(to right, #0078d7, #005bb5);
-            color: white;
-        }
-
-        #task-table th {
-            background: linear-gradient(to right, #28a745, #218838);
-            color: white;
-        }
-
-        .actions {
-            display: none; 
-        }
-
-        .edit-mode-enabled .actions {
-            display: table-cell; 
-        }
-
-        td img {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        td button {
-            margin: 5px;
-            padding: 5px 10px;
-            font-size: 0.9em;
-            border-radius: 5px;
-        }
-
-        .button-red {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .button-green {
-            background-color: #4caf50;
-            color: white;
-        }
-
-        .button-update {
-            background-color: #ffa500;
-            color: white;
-        }
-
-        #save-changes {
-            display: none;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #28a745;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-        }
-
-        #save-changes:hover {
-            background-color: #218838;
-        }
-
-        #class-selection {
-            margin-bottom: 20px;
-        }
-
-        @keyframes wave {
-            0% {
-                background-position: 0% 0%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
-        }
-
-        .top-1 {
-            background: linear-gradient(135deg, 
-                #FFD700 0%, 
-                #FFE033 20%, 
-                #FFD700 40%, 
-                #FFE033 60%, 
-                #FFD700 80%, 
-                #FFE033 100%
-            );
-            background-size: 400% 400%;
-            animation: wave 5s linear infinite;
-        }
-
-        .top-2 {
-            background: linear-gradient(135deg, 
-                #FFE033 0%, 
-                #FFF1A8 20%, 
-                #FFE033 40%, 
-                #FFF1A8 60%, 
-                #FFE033 80%, 
-                #FFF9C4 100%
-            );
-            background-size: 400% 400%;
-            animation: wave 5s linear infinite;
-        }
-
-        .top-3 {
-            background: linear-gradient(135deg, 
-                #FFF1A8 0%, 
-                #FFF9C4 20%, 
-                #FFF1A8 40%, 
-                #FFF9C4 60%, 
-                #FFF1A8 80%, 
-                #FFF9C4 100%
-            );
-            background-size: 400% 400%;
-            animation: wave 5s linear infinite;
-        }
-
-        #lucky-student-btn {
-            margin-bottom: 10px;
-            font-size: 1.2em;
-            padding: 12px 20px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        #lucky-student-result {
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 2em;
-            color: #0078d7;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        .score-display {
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .score-display::before {
-            content: "+";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4caf50;
-            font-weight: bold;
-            animation: plusBlink 1s infinite alternate;
-        }
-
-        @keyframes plusBlink {
-            0% { opacity: 1; transform: translateY(-50%) scale(1); }
-            100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
-        }
-
-        #reset-lucky {
-            margin-left: 10px;
-            padding: 12px 15px;
-            font-size: 1.2em;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-            background-color: #0078d7;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        #reset-lucky::before {
-            content: "↻";
-            display: inline-block;
-            font-size: 1.4em;
-            transform: rotate(0deg);
-            transition: transform 0.5s ease;
-        }
-
-        #reset-lucky:hover {
-            background-color: #005bb5;
-        }
-
-        #reset-lucky:hover::before {
-            transform: rotate(360deg);
-        }
-
-        dialog {
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-            padding: 20px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-
-        #modal-content p {
-            margin-bottom: 20px;
-            font-size: 1.2em;
-        }
-
-        #modal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        #modal-buttons button {
-            padding: 10px 20px;
-            font-size: 1em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #modal-buttons .ok-btn {
-            background-color: #0078d7;
-            color: white;
-        }
-
-        #modal-buttons .cancel-btn {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        #modal-buttons .confirm-btn {
-            background-color: #28a745;
-            color: white;
-        }
-
-        #modal-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            font-size: 1em;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        #task-table-container {
-            max-width: 90%;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border: 3px solid #28a745;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-            display: none;
-        }
-
-        #task-table-container:hover {
-            transform: scale(1.02);
-        }
-
-        #task-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1.1em;
-            text-align: center;
-        }
-
-        #task-table th, #task-table td {
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #task-table th {
-            background: linear-gradient(to right, #28a745, #218838);
-            color: white;
-        }
-
-        .highlighted {
-            position: relative;
-            animation: glow 2s infinite;
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            padding: 10px;
-        }
-
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
-            }
-            50% {
-                box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
-            }
-            100% {
-                box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
-            }
-        }
-
-        .edit-button {
-            background-color: #0078d7;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .edit-button:hover {
-            background-color: #005bb5;
-        }
-
-        #add-task-btn {
-            background-color: #17a2b8;
-            margin-top: 10px;
-            display: none;
-        }
-
-        #add-task-btn:hover {
-            background-color: #138496;
-        }
-
-        .delete-task-btn {
-            background-color: #dc3545;
-        }
-
-        .delete-task-btn:hover {
-            background-color: #c82333;
-        }
-
-        .edit-task-btn {
-            background-color: #ffc107;
-            margin-right: 5px;
-        }
-
-        .edit-task-btn:hover {
-            background-color: #e0a800;
-        }
-
-        .checkbox-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            width: 45%;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            margin-right: 10px;
-            transform: scale(1.2);
-        }
-
-        .checkbox-item label {
-            flex: 1;
-            text-align: left;
-        }
-
-        .editable-button {
-            display: none;
-        }
-
-        .edit-mode-enabled .editable-button {
-            display: inline-block;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-
-        #champion-competition-btn, #champion-settings-btn {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 20px 10px;
-            background-color: #ff9800; 
-            color: #343a40; 
-            transition: all 0.3s ease; 
-            border: none; 
-            padding: 15px 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-            cursor: pointer; 
-        }
-
-        #champion-competition-btn:hover {
-            animation: shake 0.5s ease-in-out; 
-            background-color: #e68a00; 
-            color: #fff; 
-            transform: scale(1.1); 
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
-        }
-
-        #champion-settings-btn {
-            background-color: #ff9800;
-        }
-
-        #champion-settings-btn:hover {
-            background-color: #e68a00;
-        }
-
-        #champion-modal-content select, #champion-modal-content button {
-            margin: 10px 0;
-        }
-
-        #champion-modal-content {
-            text-align: center;
-        }
-
-        #settings-modal-content {
-            max-height: 500px;
-            overflow-y: auto;
-            text-align: left;
-        }
-
-        #settings-nav {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-        }
-
-        #settings-nav button {
-            background: #0078d7;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        #settings-nav button:hover {
-            background: #005bb5;
-        }
-
-        .settings-section {
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .settings-section.active {
-            display: block;
-        }
-
-        .settings-section h3 {
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .settings-section input, .settings-section button, .settings-section select {
-            display: block;
-            margin: 5px auto;
-            padding: 5px;
-            width: 80%;
-        }
-
-        .heading-list, .lesson-list, .topic-list, .question-list {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .heading-item, .lesson-item, .topic-item, .question-item {
-            margin-bottom: 5px;
-        }
-
-        .item-actions button {
-            margin-left: 5px;
-        }
-
-        body.game-mode {
-            overflow: hidden; 
-        }
-
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 4000;
-        }
-
-        #intro-video {
-            width: 150%;
-            height: auto;
-            max-width: 2200px;
-            border-radius: 10px;
-        }
-
-        #game-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://cdn.pixabay.com/photo/2024/05/21/17/36/fairytale-woods-8778691_1280.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-        }
-
-        /* Ölçeklendirme için transform-origin ayarlanacak */
-        #game-container {
-            background-color: rgba(255, 255, 255, 0.95);
-            width: 90%;
-            max-width: 1200px;
-            height: 90%;
-            border-radius: 10px;
-            position: relative;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform-origin: center center;
-        }
-
-        #close-game-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            font-size: 1.2em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-        }
-
-        #close-game-btn:hover {
-            background-color: #d32f2f;
-        }
-
-        #question-area {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #question-text {
-            position: absolute;
-            top: 135%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            text-align: center;
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #000000;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-            animation: fadeIn 1s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        #bunny-left, #bunny-right, #carrot {
-            position: absolute;
-            top: 0;
-            width: 155px;
-            height: 105px;
-            max-width: 100%;
-            height: auto;
-        }
-
-        #bunny-left {
-            left: 0%;
-            transition: left 0.5s ease;
-        }
-
-        #bunny-right {
-            right: 0%;
-            transition: right 0.5s ease;
-        }
-
-        #carrot {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .left-stars, .right-stars {
-            position: absolute;
-            top: 10%;
-            display: flex;
-            gap: 20px;
-            transform: translateY(-50%);
-        }
-
-        .left-stars {
-            left: 11%;
-            flex-direction: row-reverse;
-        }
-
-        .right-stars {
-            right: 11%;
-            flex-direction: row;
-        }
-
-        .star {
-            width: 80px;
-            height: 80px;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .hidden-star {
-            visibility: hidden;
-        }
-
-        #game-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            height: 100%;
-        }
-
-        #game-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            margin-top: 20px;
-        }
-
-        .player-section {
-            width: 45%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .player-name {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .answers {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            width: 100%;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .answer-btn {
-            padding: 10px 20px;
-            background-color: #00b3ff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            flex: 1 1 30%;
-            transition: background 0.3s ease;
-            font-size: 1.2em;
-        }
-
-        .answer-btn:hover {
-            background-color: #00a3e0;
-        }
-
-        .disabled {
-            pointer-events: none;
-            opacity: 0.6;
-        }
-
-        #winner-effect {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-image: url('https://github.com/d4rkd4/winnerarkaplan/blob/main/Yeni-projewinner-arka.gif?raw=true');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            color: #00FFFF; 
-            font-family: 'Arial Black', Arial, sans-serif; 
-            font-weight: bold; 
-            font-size: 4em; 
-            letter-spacing: 1px; 
-            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); 
-            padding: 100px 180px;
-            border-radius: 15px;
-            animation: popIn 1s, flash 2s infinite;
-            z-index: 5000;
-            display: none;
-            box-shadow: 0 0 50px #66FFFF;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @keyframes flash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        #play-again-btn {
-            margin-top: 20px;
-            padding: 3px 6px;
-            background-color: #00FF33;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.5em;
-            transition: background 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        #play-again-btn:hover {
-            background-color: #104E8B;
-        }
-
-        .editable-button {
-            display: none;
-        }
-
-        .edit-mode-enabled .editable-button {
-            display: inline-block;
-        }
-
-        #question-text, .answer-btn {
-            font-family: 'Comfortaa', sans-serif;
-        }
-
-        /* Ölçeklendirme slider için stil */
-        #scale-slider-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border-radius: 8px;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        #scale-slider {
-            width: 100px;
-        }
-    </style>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Şampiyonlar Ligi</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: #ff4500;
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+        margin-bottom: 30px;
+    }
+
+    h1 span {
+        color: #0078d7;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    .pin-container, #admin-panel {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .pin-container input, .pin-container button, #admin-panel input, #admin-panel button {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: calc(100% - 30px);
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #0078d7;
+        color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    button:hover {
+        background-color: #005bb5;
+    }
+
+    #task-table-btn {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        padding: 12px 20px;
+        font-weight: bold;
+        display: inline-block;
+        background-color: #28a745;
+        transition: background 0.3s ease;
+        border: none;
+        color: white;
+    }
+
+    #task-table-btn:hover {
+        background-color: #218838;
+    }
+
+    .table-container, #task-table-container {
+        max-width: 90%;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out;
+        display: none;
+    }
+
+    .table-container:hover, #task-table-container:hover {
+        transform: scale(1.02);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.1em;
+        text-align: center;
+    }
+
+    th, td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: linear-gradient(to right, #0078d7, #005bb5);
+        color: white;
+    }
+
+    #task-table th {
+        background: linear-gradient(to right, #28a745, #218838);
+        color: white;
+    }
+
+    .actions {
+        display: none; 
+    }
+
+    .edit-mode-enabled .actions {
+        display: table-cell; 
+    }
+
+    td img {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    td button {
+        margin: 5px;
+        padding: 5px 10px;
+        font-size: 0.9em;
+        border-radius: 5px;
+    }
+
+    .button-red {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .button-green {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .button-update {
+        background-color: #ffa500;
+        color: white;
+    }
+
+    #save-changes {
+        display: none;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #28a745;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+    }
+
+    #save-changes:hover {
+        background-color: #218838;
+    }
+
+    #class-selection {
+        margin-bottom: 20px;
+    }
+
+    @keyframes wave {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+
+    .top-1 {
+        background: linear-gradient(135deg, 
+            #FFD700 0%, 
+            #FFE033 20%, 
+            #FFD700 40%, 
+            #FFE033 60%, 
+            #FFD700 80%, 
+            #FFE033 100%
+        );
+        background-size: 400% 400%;
+        animation: wave 5s linear infinite;
+    }
+
+    .top-2 {
+        background: linear-gradient(135deg, 
+            #FFE033 0%, 
+            #FFF1A8 20%, 
+            #FFE033 40%, 
+            #FFF1A8 60%, 
+            #FFE033 80%, 
+            #FFF9C4 100%
+        );
+        background-size: 400% 400%;
+        animation: wave 5s linear infinite;
+    }
+
+    .top-3 {
+        background: linear-gradient(135deg, 
+            #FFF1A8 0%, 
+            #FFF9C4 20%, 
+            #FFF1A8 40%, 
+            #FFF9C4 60%, 
+            #FFF1A8 80%, 
+            #FFF9C4 100%
+        );
+        background-size: 400% 400%;
+        animation: wave 5s linear infinite;
+    }
+
+    #lucky-student-btn {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        padding: 12px 20px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    #lucky-student-result {
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 2em;
+        color: #0078d7;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.1); }
+    }
+
+    .score-display {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .score-display::before {
+        content: "+";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4caf50;
+        font-weight: bold;
+        animation: plusBlink 1s infinite alternate;
+    }
+
+    @keyframes plusBlink {
+        0% { opacity: 1; transform: translateY(-50%) scale(1); }
+        100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
+    }
+
+    #reset-lucky {
+        margin-left: 10px;
+        padding: 12px 15px;
+        font-size: 1.2em;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        background-color: #0078d7;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    #reset-lucky::before {
+        content: "↻";
+        display: inline-block;
+        font-size: 1.4em;
+        transform: rotate(0deg);
+        transition: transform 0.5s ease;
+    }
+
+    #reset-lucky:hover {
+        background-color: #005bb5;
+    }
+
+    #reset-lucky:hover::before {
+        transform: rotate(360deg);
+    }
+
+    dialog {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        padding: 20px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+    }
+
+    #modal-content p {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+    }
+
+    #modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    #modal-buttons button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #modal-buttons .ok-btn {
+        background-color: #0078d7;
+        color: white;
+    }
+
+    #modal-buttons .cancel-btn {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    #modal-buttons .confirm-btn {
+        background-color: #28a745;
+        color: white;
+    }
+
+    #modal-input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    #task-table-container {
+        max-width: 90%;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border: 3px solid #28a745;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out;
+        display: none;
+    }
+
+    #task-table-container:hover {
+        transform: scale(1.02);
+    }
+
+    #task-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.1em;
+        text-align: center;
+    }
+
+    #task-table th, #task-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #task-table th {
+        background: linear-gradient(to right, #28a745, #218838);
+        color: white;
+    }
+
+    .highlighted {
+        position: relative;
+        animation: glow 2s infinite;
+        border: 2px solid #FFD700;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+        }
+        50% {
+            box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+        }
+        100% {
+            box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+        }
+    }
+
+    .edit-button {
+        background-color: #0078d7;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-button:hover {
+        background-color: #005bb5;
+    }
+
+    #add-task-btn {
+        background-color: #17a2b8;
+        margin-top: 10px;
+        display: none;
+    }
+
+    #add-task-btn:hover {
+        background-color: #138496;
+    }
+
+    .delete-task-btn {
+        background-color: #dc3545;
+    }
+
+    .delete-task-btn:hover {
+        background-color: #c82333;
+    }
+
+    .edit-task-btn {
+        background-color: #ffc107;
+        margin-right: 5px;
+    }
+
+    .edit-task-btn:hover {
+        background-color: #e0a800;
+    }
+
+    .checkbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        width: 45%;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        margin-right: 10px;
+        transform: scale(1.2);
+    }
+
+    .checkbox-item label {
+        flex: 1;
+        text-align: left;
+    }
+
+    .editable-button {
+        display: none;
+    }
+
+    .edit-mode-enabled .editable-button {
+        display: inline-block;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+
+    #champion-competition-btn, #champion-settings-btn {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 20px 10px;
+        background-color: #ff9800; 
+        color: #343a40; 
+        transition: all 0.3s ease; 
+        border: none; 
+        padding: 15px 20px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        cursor: pointer; 
+    }
+
+    #champion-competition-btn:hover {
+        animation: shake 0.5s ease-in-out; 
+        background-color: #e68a00; 
+        color: #fff; 
+        transform: scale(1.1); 
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+    }
+
+    #champion-settings-btn {
+        background-color: #ff9800;
+    }
+
+    #champion-settings-btn:hover {
+        background-color: #e68a00;
+    }
+
+    #champion-modal-content select, #champion-modal-content button {
+        margin: 10px 0;
+    }
+
+    #champion-modal-content {
+        text-align: center;
+    }
+
+    #settings-modal-content {
+        max-height: 500px;
+        overflow-y: auto;
+        text-align: left;
+    }
+
+    #settings-nav {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    #settings-nav button {
+        background: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #settings-nav button:hover {
+        background: #005bb5;
+    }
+
+    .settings-section {
+        margin-bottom: 20px;
+        display: none;
+    }
+
+    .settings-section.active {
+        display: block;
+    }
+
+    .settings-section h3 {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .settings-section input, .settings-section button, .settings-section select {
+        display: block;
+        margin: 5px auto;
+        padding: 5px;
+        width: 80%;
+    }
+
+    .heading-list, .lesson-list, .topic-list, .question-list {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .heading-item, .lesson-item, .topic-item, .question-item {
+        margin-bottom: 5px;
+    }
+
+    .item-actions button {
+        margin-left: 5px;
+    }
+
+    body.game-mode {
+        overflow: hidden; 
+    }
+
+    #intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        display: none; 
+        justify-content: center;
+        align-items: center;
+        z-index: 4000;
+    }
+
+    #intro-video {
+        width: 150%;
+        height: auto;
+        max-width: 2200px;
+        border-radius: 10px;
+    }
+
+    /* GAME OVERLAY 1 */
+    #game-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://cdn.pixabay.com/photo/2024/05/21/17/36/fairytale-woods-8778691_1280.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+    }
+
+    #game-container {
+        background-color: rgba(255, 255, 255, 0.95);
+        width: 90%;
+        max-width: 1200px;
+        height: 90%;
+        border-radius: 10px;
+        position: relative;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transform-origin: center center;
+    }
+
+    #close-game-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        font-size: 1.2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+    }
+
+    #close-game-btn:hover {
+        background-color: #d32f2f;
+    }
+
+    #question-area {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #question-text {
+        position: absolute;
+        top: 135%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #000000;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    #bunny-left, #bunny-right, #carrot {
+        position: absolute;
+        top: 0;
+        width: 155px;
+        height: 105px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #bunny-left {
+        left: 0%;
+        transition: left 0.5s ease;
+    }
+
+    #bunny-right {
+        right: 0%;
+        transition: right 0.5s ease;
+    }
+
+    #carrot {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .left-stars, .right-stars {
+        position: absolute;
+        top: 10%;
+        display: flex;
+        gap: 20px;
+        transform: translateY(-50%);
+    }
+
+    .left-stars {
+        left: 11%;
+        flex-direction: row-reverse;
+    }
+
+    .right-stars {
+        right: 11%;
+        flex-direction: row;
+    }
+
+    .star {
+        width: 80px;
+        height: 80px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .hidden-star {
+        visibility: hidden;
+    }
+
+    #game-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+    }
+
+    #game-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 20px;
+    }
+
+    .player-section {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .player-name {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .answers {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .answer-btn {
+        padding: 10px 20px;
+        background-color: #00b3ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        flex: 1 1 30%;
+        transition: background 0.3s ease;
+        font-size: 1.2em;
+    }
+
+    .answer-btn:hover {
+        background-color: #00a3e0;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    #winner-effect {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://github.com/d4rkd4/winnerarkaplan/blob/main/Yeni-projewinner-arka.gif?raw=true');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: #00FFFF; 
+        font-family: 'Arial Black', Arial, sans-serif; 
+        font-weight: bold; 
+        font-size: 4em; 
+        letter-spacing: 1px; 
+        text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); 
+        padding: 100px 180px;
+        border-radius: 15px;
+        animation: popIn 1s, flash 2s infinite;
+        z-index: 5000;
+        display: none;
+        box-shadow: 0 0 50px #66FFFF;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @keyframes flash {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+
+    @keyframes popIn {
+        0% {
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    }
+
+    #play-again-btn {
+        margin-top: 20px;
+        padding: 3px 6px;
+        background-color: #00FF33;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.5em;
+        transition: background 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #play-again-btn:hover {
+        background-color: #104E8B;
+    }
+
+    .editable-button {
+        display: none;
+    }
+
+    .edit-mode-enabled .editable-button {
+        display: inline-block;
+    }
+
+    #question-text, .answer-btn {
+        font-family: 'Comfortaa', sans-serif;
+    }
+
+    /* Ölçeklendirme slider için stil */
+    #scale-slider-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(0,0,0,0.5);
+        padding: 10px;
+        border-radius: 8px;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    #scale-slider {
+        width: 100px;
+    }
+
+    /* ------------------- OYUN ALANI 2 (KOPYALAMA) ------------------ */
+    #game-overlay-2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/Backgorund.gif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+    }
+
+    #game-container-2 {
+        background-color: rgba(255, 255, 255, 0.95);
+        width: 90%;
+        max-width: 1200px;
+        height: 90%;
+        border-radius: 10px;
+        position: relative;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transform-origin: center center;
+    }
+
+    #close-game-btn-2 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        font-size: 1.2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+    }
+
+    #close-game-btn-2:hover {
+        background-color: #d32f2f;
+    }
+
+    #question-area-2 {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #question-text-2 {
+        position: absolute;
+        top: 135%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #000000;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        animation: fadeIn 1s;
+    }
+
+    #bunny-left-2, #bunny-right-2, #carrot-2 {
+        position: absolute;
+        top: 0;
+        width: 155px;
+        height: 105px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #bunny-left-2 {
+        left: 0%;
+        transition: left 0.5s ease;
+    }
+
+    #bunny-right-2 {
+        right: 0%;
+        transition: right 0.5s ease;
+    }
+
+    #carrot-2 {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .left-stars-2, .right-stars-2 {
+        position: absolute;
+        top: 10%;
+        display: flex;
+        gap: 20px;
+        transform: translateY(-50%);
+    }
+
+    .left-stars-2 {
+        left: 11%;
+        flex-direction: row-reverse;
+    }
+
+    .right-stars-2 {
+        right: 11%;
+        flex-direction: row;
+    }
+
+    .star-2 {
+        width: 80px;
+        height: 80px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .hidden-star-2 {
+        visibility: hidden;
+    }
+
+    #game-body-2 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+    }
+
+    #game-content-2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 20px;
+    }
+
+    .player-section-2 {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .player-name-2 {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .answers-2 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .answer-btn-2 {
+        padding: 10px 20px;
+        background-color: #00b3ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        flex: 1 1 30%;
+        transition: background 0.3s ease;
+        font-size: 1.2em;
+    }
+
+    .answer-btn-2:hover {
+        background-color: #00a3e0;
+    }
+
+    .disabled-2 {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    /* Ölçeklendirme slider (2.oyun alanı için de kullanabilir) */
+    #scale-slider-container-2 {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(0,0,0,0.5);
+        padding: 10px;
+        border-radius: 8px;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    #scale-slider-2 {
+        width: 100px;
+    }
+
+    /* Second game area winner effect styling */
+    #winner-effect-2 {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://raw.githubusercontent.com/d4rkd4/winnerarkaplan/refs/heads/main/Yeni-proje.gif');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: #ACED39; 
+        font-family: 'Arial Black', Arial, sans-serif; 
+        font-weight: bold; 
+        font-size: 4em; 
+        letter-spacing: 1px; 
+        text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); 
+        padding: 100px 180px;
+        border-radius: 15px;
+        animation: popIn 1s, flash 2s infinite;
+        z-index: 5000;
+        display: none;
+        box-shadow: 0 0 50px #FFD700;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+    </head>
+    
 <body>
     <h1>Şampiyonlar <span>+</span> Ligi</h1>
     <div id="class-selection">
@@ -1009,6 +1254,10 @@
             <select id="topic-select"><option value="">Konu Seç</option></select>
             <select id="player1-select"><option value="">Oyuncu 1 Seç</option></select>
             <select id="player2-select"><option value="">Oyuncu 2 Seç</option></select>
+            <select id="game-area-select">
+                <option value="1">Oyun Alanı 1</option>
+                <option value="2">Oyun Alanı 2</option>
+            </select>
             <button id="start-game-btn">Oyna</button>
             <button id="close-champion-modal">Kapat</button>
         </div>
@@ -1066,8 +1315,8 @@
         <video id="intro-video" src="https://github.com/d4rkd4/G-R-V-DE/raw/refs/heads/main/BA%C5%9ELA.mp4"></video>
     </div>
 
+    <!-- Orijinal Oyun Alanı -->
     <div id="game-overlay">
-        <!-- Ölçeklendirme slider -->
         <div id="scale-slider-container">
             <label for="scale-slider">Ölçek:</label>
             <input type="range" id="scale-slider" min="0.5" max="2" step="0.01" value="1">
@@ -1077,23 +1326,19 @@
             <button id="close-game-btn">X</button>
             <div id="question-area">
                 <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sol" id="bunny-left">
-                
                 <div class="left-stars">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star left-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                 </div>
-                
                 <img src="https://media4.giphy.com/media/ZzPjgVE12gU54wIVtf/giphy.webp" alt="Havuç" id="carrot">
-                
                 <div class="right-stars">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                     <img class="star right-star" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
                 </div>
-                
                 <img src="https://cdn.pixabay.com/animation/2024/02/23/15/15/15-15-50-56_512.gif" alt="Tavşan Sağ" id="bunny-right">
                 <div id="question-text">Soru burada olacak</div>
             </div>
@@ -1112,6 +1357,48 @@
         </div>
     </div>
 
+    <!-- İkinci Oyun Alanı -->
+    <div id="game-overlay-2">
+        <div id="scale-slider-container-2">
+            <label for="scale-slider-2">Ölçek:</label>
+            <input type="range" id="scale-slider-2" min="0.5" max="2" step="0.01" value="1">
+        </div>
+
+        <div id="game-container-2">
+            <button id="close-game-btn-2">X</button>
+            <div id="question-area-2">
+                <img src="https://cdn.pixabay.com/animation/2024/04/27/19/29/19-29-06-468_512.gif" alt="Tavşan Sol" id="bunny-left-2">
+                <div class="left-stars-2">
+                    <img class="star-2 left-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 left-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 left-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 left-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                </div>
+                <img src="https://cdn.pixabay.com/animation/2024/05/02/06/07/06-07-23-815_512.gif" alt="Havuç" id="carrot-2">
+                <div class="right-stars-2">
+                    <img class="star-2 right-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 right-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 right-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                    <img class="star-2 right-star-2" src="https://cdn.pixabay.com/animation/2024/05/09/14/36/14-36-39-632_512.gif" alt="Star">
+                </div>
+                <img src="https://cdn.pixabay.com/animation/2024/04/27/19/29/19-29-06-468_512.gif" alt="Tavşan Sağ" id="bunny-right-2">
+                <div id="question-text-2">Soru burada olacak</div>
+            </div>
+            <div id="game-body-2">
+                <div id="game-content-2">
+                    <div class="player-section-2" id="left-panel-2">
+                        <div class="player-name-2" id="left-player-name-2">Oyuncu 1</div>
+                        <div id="left-answers-2" class="answers-2"></div>
+                    </div>
+                    <div class="player-section-2" id="right-panel-2">
+                        <div class="player-name-2" id="right-player-name-2">Oyuncu 2</div>
+                        <div id="right-answers-2" class="answers-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="winner-effect">
         <div id="winner-message">Kazanan: Oyuncu</div>
         <button id="play-again-btn">↻ Tekrar Oyna</button>
@@ -1121,7 +1408,24 @@
     <audio id="incorrect-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/fail-234710.mp3" preload="auto"></audio>
     <audio id="winner-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/Awards%20Fanfare%20Winner%20Nomination%20Ceremony%20Background%20Music.mp3" preload="auto"></audio>
 
+    <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
+
+
     <script type="module">
+        function showWinner2(winnerName) {
+            const winnerEffect2 = document.getElementById("winner-effect-2");
+            const winnerMessage2 = document.getElementById("winner-message-2");
+            winnerMessage2.textContent = `${winnerName} kazandı!`;
+            winnerEffect2.style.display = "flex";
+
+            document.querySelectorAll("body > *:not(#winner-effect-2)").forEach(element => {
+                element.style.filter = "blur(5px)";
+                element.style.pointerEvents = "none";
+                element.style.opacity = "0.5";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+        }
+    
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, update, set, get, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
@@ -1182,6 +1486,7 @@
         const player2Select = document.getElementById("player2-select");
         const startGameBtn = document.getElementById("start-game-btn");
         const closeChampionModalBtn = document.getElementById("close-champion-modal");
+        const gameAreaSelect = document.getElementById("game-area-select");
 
         const championSettingsBtn = document.getElementById("champion-settings-btn");
         const settingsModal = document.getElementById("settings-modal");
@@ -2021,6 +2326,7 @@
         let gameStartTimer;
         let player1Name = "Oyuncu 1";
         let player2Name = "Oyuncu 2";
+        let selectedGameArea = "1"; 
 
         startGameBtn.addEventListener("click", async () => {
             const selectedHeading = headingSelect.value;
@@ -2028,6 +2334,7 @@
             const selectedTopic = topicSelect.value;
             const player1 = player1Select.value;
             const player2 = player2Select.value;
+            selectedGameArea = gameAreaSelect.value;
 
             if (!selectedHeading || !selectedLesson || !selectedTopic || !player1 || !player2) {
                 alert("Lütfen tüm seçimleri yapınız.");
@@ -2070,7 +2377,7 @@
             }
             gameStartTimer = setTimeout(() => {
                 document.getElementById("intro-overlay").style.display = "none";
-                startGame();
+                startGame(selectedGameArea);
             }, 14000); 
         });
 
@@ -2480,65 +2787,98 @@
         const winnerSound = document.getElementById("winner-sound");
         const carrot = document.getElementById("carrot");
 
-        function resetStars() {
-            updateStars('left', leftSteps);
-            updateStars('right', rightSteps);
+        const gameOverlay2 = document.getElementById("game-overlay-2");
+        const closeGameBtn2 = document.getElementById("close-game-btn-2");
+        const leftAnswersDiv2 = document.getElementById("left-answers-2");
+        const rightAnswersDiv2 = document.getElementById("right-answers-2");
+        const questionText2 = document.getElementById("question-text-2");
+        const bunnyLeft2 = document.getElementById("bunny-left-2");
+        const bunnyRight2 = document.getElementById("bunny-right-2");
+        const carrot2 = document.getElementById("carrot-2");
+        const scaleSlider = document.getElementById("scale-slider");
+        const gameContainer = document.getElementById("game-container");
+
+        const scaleSlider2 = document.getElementById("scale-slider-2");
+        const gameContainer2 = document.getElementById("game-container-2");
+
+        function resetStars(gameArea) {
+            if (gameArea === "2") {
+                updateStars('left', leftSteps, gameArea);
+                updateStars('right', rightSteps, gameArea);
+            } else {
+                updateStars('left', leftSteps, gameArea);
+                updateStars('right', rightSteps, gameArea);
+            }
         }
 
-        function startGame() {
+        function startGame(gameArea) {
             currentQuestionIndex = 0;
             leftSteps = 4;
             rightSteps = 4;
 
-            bunnyLeft.style.left = '0%';
-            bunnyRight.style.right = '0%';
-            document.getElementById("left-player-name").textContent = player1Name;
-            document.getElementById("right-player-name").textContent = player2Name;
+            if (gameArea === "2") {
+                bunnyLeft2.style.left = '0%';
+                bunnyRight2.style.right = '0%';
+                document.getElementById("left-player-name-2").textContent = player1Name;
+                document.getElementById("right-player-name-2").textContent = player2Name;
 
-            resetStars();
-            gameOverlay.style.display = "flex";
-            loadNextQuestion();
+                resetStars("2");
+                gameOverlay2.style.display = "flex";
+            } else {
+                bunnyLeft.style.left = '0%';
+                bunnyRight.style.right = '0%';
+                document.getElementById("left-player-name").textContent = player1Name;
+                document.getElementById("right-player-name").textContent = player2Name;
+
+                resetStars("1");
+                gameOverlay.style.display = "flex";
+            }
+            loadNextQuestion(gameArea);
         }
 
-        function loadNextQuestion() {
+        function loadNextQuestion(gameArea) {
             if (currentQuestionIndex >= gameQuestions.length) {
-                endGame();
+                endGame(gameArea);
                 return;
             }
 
             const currentQ = gameQuestions[currentQuestionIndex];
+            const qTextElem = (gameArea === "2") ? questionText2 : questionText;
+
             if (currentQ.qText.startsWith("http://") || currentQ.qText.startsWith("https://")) {
-                questionText.innerHTML = `<img src="${currentQ.qText}" alt="Soru Resmi" style="max-width:100%; max-height:300px; display:block; margin:0 auto;">`;
+                qTextElem.innerHTML = `<img src="${currentQ.qText}" alt="Soru Resmi" style="max-width:100%; max-height:300px; display:block; margin:0 auto;">`;
             } else {
-                questionText.textContent = (currentQ.qText || "Soru burada olacak");
+                qTextElem.textContent = (currentQ.qText || "Soru burada olacak");
             }
 
             const correctAnswer = currentQ.answer;
             const wrongAnswers = currentQ.wrongs;
             const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
 
-            leftAnswersDiv.innerHTML = "";
-            rightAnswersDiv.innerHTML = "";
+            const leftDiv = (gameArea === "2") ? leftAnswersDiv2 : leftAnswersDiv;
+            const rightDiv = (gameArea === "2") ? rightAnswersDiv2 : rightAnswersDiv;
+            leftDiv.innerHTML = "";
+            rightDiv.innerHTML = "";
 
             allAnswers.forEach(ans => {
                 const leftBtn = document.createElement("button");
                 leftBtn.textContent = ans;
-                leftBtn.classList.add("answer-btn");
+                leftBtn.classList.add(gameArea === "2" ? "answer-btn-2" : "answer-btn");
                 leftBtn.dataset.answer = ans;
-                leftBtn.addEventListener("click", () => handleAnswer('left', ans));
+                leftBtn.addEventListener("click", () => handleAnswer('left', ans, gameArea));
 
                 const rightBtn = document.createElement("button");
                 rightBtn.textContent = ans;
-                rightBtn.classList.add("answer-btn");
+                rightBtn.classList.add(gameArea === "2" ? "answer-btn-2" : "answer-btn");
                 rightBtn.dataset.answer = ans;
-                rightBtn.addEventListener("click", () => handleAnswer('right', ans));
+                rightBtn.addEventListener("click", () => handleAnswer('right', ans, gameArea));
 
-                leftAnswersDiv.appendChild(leftBtn);
-                rightAnswersDiv.appendChild(rightBtn);
+                leftDiv.appendChild(leftBtn);
+                rightDiv.appendChild(rightBtn);
             });
         }
 
-        function handleAnswer(side, selectedAnswer) {
+        function handleAnswer(side, selectedAnswer, gameArea) {
             const currentQ = gameQuestions[currentQuestionIndex];
             const isCorrect = (selectedAnswer === currentQ.answer);
 
@@ -2549,17 +2889,17 @@
                 if (side === 'left') {
                     if (leftSteps > 0) {
                         leftSteps--;
-                        updateStars('left', leftSteps);
-                        moveBunny('left');
+                        updateStars('left', leftSteps, gameArea);
+                        moveBunny('left', true, gameArea);
                     }
                 } else {
                     if (rightSteps > 0) {
                         rightSteps--;
-                        updateStars('right', rightSteps);
-                        moveBunny('right');
+                        updateStars('right', rightSteps, gameArea);
+                        moveBunny('right', true, gameArea);
                     }
                 }
-                showFeedback(side, true);
+                showFeedback(side, true, gameArea);
             } else {
                 incorrectSound.currentTime = 0;
                 incorrectSound.play();
@@ -2567,79 +2907,114 @@
                 if (side === 'left') {
                     if (leftSteps < maxSteps) {
                         leftSteps++;
-                        updateStars('left', leftSteps);
-                        moveBunny('left', false);
+                        updateStars('left', leftSteps, gameArea);
+                        moveBunny('left', false, gameArea);
                     }
                 } else {
                     if (rightSteps < maxSteps) {
                         rightSteps++;
-                        updateStars('right', rightSteps);
-                        moveBunny('right', false);
+                        updateStars('right', rightSteps, gameArea);
+                        moveBunny('right', false, gameArea);
                     }
                 }
-                showFeedback(side, false);
+                showFeedback(side, false, gameArea);
             }
 
-            disableAnswerButtons();
+            disableAnswerButtons(gameArea);
             setTimeout(() => {
                 currentQuestionIndex++;
-                loadNextQuestion();
+                loadNextQuestion(gameArea);
             }, 1000);
         }
 
-        function updateStars(side, steps) {
-            const starsContainer = side === 'left' ? document.querySelector(".left-stars") : document.querySelector(".right-stars");
-            const stars = starsContainer.querySelectorAll(".star");
+        function updateStars(side, steps, gameArea) {
+            let starsContainer, starClass, hiddenClass;
+            if (gameArea === "2") {
+                starsContainer = side === 'left' ? document.querySelector(".left-stars-2") : document.querySelector(".right-stars-2");
+                starClass = "star-2";
+                hiddenClass = "hidden-star-2";
+            } else {
+                starsContainer = side === 'left' ? document.querySelector(".left-stars") : document.querySelector(".right-stars");
+                starClass = "star";
+                hiddenClass = "hidden-star";
+            }
+
+            const stars = starsContainer.querySelectorAll(`.${starClass}`);
             stars.forEach((star, index) => {
                 if (index < steps) {
-                    star.classList.remove("hidden-star");
+                    star.classList.remove(hiddenClass);
                 } else {
-                    star.classList.add("hidden-star");
+                    star.classList.add(hiddenClass);
                 }
             });
         }
 
-        function moveBunny(side, forward=true) {
+        function moveBunny(side, forward, gameArea) {
             const stepPercentage = 8; 
-            if (side === 'left') {
-                let currentLeft = parseFloat(bunnyLeft.style.left) || 0;
-                if (forward) {
-                    currentLeft += stepPercentage;
-                } else {
-                    currentLeft -= stepPercentage;
-                }
-                currentLeft = Math.max(0, Math.min(currentLeft, 40)); 
-                bunnyLeft.style.left = `${currentLeft}%`;
+            if (gameArea === "2") {
+                if (side === 'left') {
+                    let currentLeft = parseFloat(bunnyLeft2.style.left) || 0;
+                    currentLeft = forward ? currentLeft + stepPercentage : currentLeft - stepPercentage;
+                    currentLeft = Math.max(0, Math.min(currentLeft, 40)); 
+                    bunnyLeft2.style.left = `${currentLeft}%`;
 
-                if (leftSteps === 0) {
-                    const winnerName = player1Name;
-                    showWinner(`${winnerName} kazandı!`);
-                }
-            } else if (side === 'right') {
-                let currentRight = parseFloat(bunnyRight.style.right) || 0;
-                if (forward) {
-                    currentRight += stepPercentage;
-                } else {
-                    currentRight -= stepPercentage;
-                }
-                currentRight = Math.max(0, Math.min(currentRight, 40)); 
-                bunnyRight.style.right = `${currentRight}%`;
+                    if (leftSteps === 0) {
+                        const winnerName = player1Name;
+                        if (gameArea === "2") {
+                            showWinner2(winnerName);
+                        } else {
+                            showWinner(`${winnerName} kazandı!`);
+                        }
+                    }
+                } else if (side === 'right') {
+                    let currentRight = parseFloat(bunnyRight2.style.right) || 0;
+                    currentRight = forward ? currentRight + stepPercentage : currentRight - stepPercentage;
+                    currentRight = Math.max(0, Math.min(currentRight, 40)); 
+                    bunnyRight2.style.right = `${currentRight}%`;
 
-                if (rightSteps === 0) {
-                    const winnerName = player2Name;
-                    showWinner(`${winnerName} kazandı!`);
+                    if (rightSteps === 0) {
+                        const winnerName = player2Name;
+                        if (gameArea === "2") {
+                            showWinner2(winnerName);
+                        } else {
+                            showWinner(`${winnerName} kazandı!`);
+                        }
+                    }
+                }
+            } else {
+                if (side === 'left') {
+                    let currentLeft = parseFloat(bunnyLeft.style.left) || 0;
+                    currentLeft = forward ? currentLeft + stepPercentage : currentLeft - stepPercentage;
+                    currentLeft = Math.max(0, Math.min(currentLeft, 40)); 
+                    bunnyLeft.style.left = `${currentLeft}%`;
+
+                    if (leftSteps === 0) {
+                        const winnerName = player1Name;
+                        showWinner(`${winnerName} kazandı!`);
+                    }
+                } else if (side === 'right') {
+                    let currentRight = parseFloat(bunnyRight.style.right) || 0;
+                    currentRight = forward ? currentRight + stepPercentage : currentRight - stepPercentage;
+                    currentRight = Math.max(0, Math.min(currentRight, 40)); 
+                    bunnyRight.style.right = `${currentRight}%`;
+
+                    if (rightSteps === 0) {
+                        const winnerName = player2Name;
+                        showWinner(`${winnerName} kazandı!`);
+                    }
                 }
             }
         }
 
-        function disableAnswerButtons() {
-            document.querySelectorAll(".answer-btn").forEach(btn => {
-                btn.classList.add("disabled");
+        function disableAnswerButtons(gameArea) {
+            const btnClass = (gameArea === "2") ? ".answer-btn-2" : ".answer-btn";
+            document.querySelectorAll(btnClass).forEach(btn => {
+                btn.classList.add((gameArea === "2") ? "disabled-2" : "disabled");
                 btn.disabled = true;
             });
         }
 
-        function showFeedback(side, isCorrect) {
+        function showFeedback(side, isCorrect, gameArea) {
             const feedbackText = isCorrect ? "Doğru!" : "Yanlış!";
             const color = isCorrect ? "#4caf50" : "#f44336";
 
@@ -2649,14 +3024,22 @@
             feedbackDiv.style.fontSize = "1.5em";
             feedbackDiv.style.marginTop = "10px";
 
-            if (side === 'left') {
-                leftAnswersDiv.appendChild(feedbackDiv);
+            if (gameArea === "2") {
+                if (side === 'left') {
+                    leftAnswersDiv2.appendChild(feedbackDiv);
+                } else {
+                    rightAnswersDiv2.appendChild(feedbackDiv);
+                }
             } else {
-                rightAnswersDiv.appendChild(feedbackDiv);
+                if (side === 'left') {
+                    leftAnswersDiv.appendChild(feedbackDiv);
+                } else {
+                    rightAnswersDiv.appendChild(feedbackDiv);
+                }
             }
         }
 
-        function endGame() {
+        function endGame(gameArea) {
             let winner = "";
             if (leftSteps < rightSteps) {
                 winner = `${player1Name} kazandı!`;
@@ -2666,7 +3049,11 @@
                 winner = "Berabere!";
             }
 
-            showWinner(winner);
+            if (gameArea === "2") {
+                showWinner2(winner);
+            } else {
+                showWinner(winner);
+            }
         }
 
         function showWinner(winnerName) {
@@ -2707,27 +3094,72 @@
             document.getElementById("right-player-name").textContent = player2Name;
             winnerEffect.style.display = "none";
 
-            resetStars();
+            resetStars("1");
 
             gameOverlay.style.display = "none";
+            gameOverlay2.style.display = "none"; 
+            document.body.classList.remove("game-mode");
+            document.getElementById("champion-modal").showModal();
+        });
+
+        const playAgainBtn2 = document.getElementById("play-again-btn-2");
+        playAgainBtn2.addEventListener("click", () => {
+            document.getElementById("winner-effect-2").style.display = "none";
+            winnerSound.pause();
+            winnerSound.currentTime = 0;
+
+            document.querySelectorAll("body > *:not(#winner-effect-2)").forEach(element => {
+                element.style.filter = "none";
+                element.style.pointerEvents = "auto";
+                element.style.opacity = "1";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+
+            gameQuestions = [];
+            currentQuestionIndex = 0;
+            leftSteps = 4;
+            rightSteps = 4;
+            questionText2.textContent = "Soru burada olacak";
+            leftAnswersDiv2.innerHTML = "";
+            rightAnswersDiv2.innerHTML = "";
+            document.getElementById("left-player-name-2").textContent = player1Name;
+            document.getElementById("right-player-name-2").textContent = player2Name;
+            resetStars("2");
+
+            gameOverlay2.style.display = "none";
             document.body.classList.remove("game-mode");
             document.getElementById("champion-modal").showModal();
         });
 
         closeGameBtn.addEventListener("click", () => {
+            closeGame();
+        });
+
+        closeGameBtn2.addEventListener("click", () => {
+            closeGame();
+        });
+
+        function closeGame() {
             gameOverlay.style.display = "none";
+            gameOverlay2.style.display = "none";
             gameQuestions = [];
             currentQuestionIndex = 0;
             leftSteps = 4;
             rightSteps = 4;
             questionText.textContent = "Soru burada olacak";
+            questionText2.textContent = "Soru burada olacak";
             leftAnswersDiv.innerHTML = "";
             rightAnswersDiv.innerHTML = "";
+            leftAnswersDiv2.innerHTML = "";
+            rightAnswersDiv2.innerHTML = "";
             document.getElementById("left-player-name").textContent = player1Name;
             document.getElementById("right-player-name").textContent = player2Name;
+            document.getElementById("left-player-name-2").textContent = player1Name;
+            document.getElementById("right-player-name-2").textContent = player2Name;
             winnerEffect.style.display = "none";
 
-            resetStars();
+            resetStars("1");
+            resetStars("2");
 
             document.querySelectorAll("body > *:not(#winner-effect)").forEach(element => {
                 element.style.filter = "none";
@@ -2738,7 +3170,7 @@
 
             document.body.classList.remove("game-mode");
             document.getElementById("champion-modal").showModal();
-        });
+        }
 
         settingsNav.addEventListener("click", (e) => {
             if (e.target.tagName === "BUTTON") {
@@ -2794,73 +3226,30 @@
             });
         });
 
-        // Ölçeklendirme slider kontrolü
-        const scaleSlider = document.getElementById("scale-slider");
-        const gameContainer = document.getElementById("game-container");
+        document.getElementById("close-game-btn-2").addEventListener("click", function() {
+            const audios = document.querySelectorAll("audio");
+            audios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0; 
+            });
+        });
 
         scaleSlider.addEventListener("input", () => {
             const scaleValue = parseFloat(scaleSlider.value);
             gameContainer.style.transform = `scale(${scaleValue})`;
         });
+
+        scaleSlider2.addEventListener("input", () => {
+            const scaleValue = parseFloat(scaleSlider2.value);
+            gameContainer2.style.transform = `scale(${scaleValue})`;
+        });
+
     </script>
 
-
-    <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
-    <script>
-        const backgroundMusic = document.getElementById("background-music");
-        const gameOverlay = document.getElementById("game-overlay");
-        const winnerEffect = document.getElementById("winner-effect");
-
-        gameOverlay.addEventListener("gameStart", () => {
-            backgroundMusic.play();
-        });
-
-        winnerEffect.addEventListener("winnerDisplay", () => {
-            backgroundMusic.pause();
-            backgroundMusic.currentTime = 0;
-        });
-
-        function startGame() {
-            gameOverlay.style.display = "flex";
-            const event = new Event("gameStart");
-            gameOverlay.dispatchEvent(event);
-        }
-
-        function showWinnerScreen() {
-            winnerEffect.style.display = "flex";
-            const event = new Event("winnerDisplay");
-            winnerEffect.dispatchEvent(event);
-        }
-
-        const introVideo = document.getElementById("intro-video");
-        introVideo.addEventListener("ended", () => {
-            startGame();
-        });
+    <div id="winner-effect-2">
+        <div id="winner-message-2">Kazanan: Oyuncu</div>
+        <button id="play-again-btn-2">↻ Tekrar Oyna</button>
+    </div>
+    </body>
     
-        document.addEventListener("DOMContentLoaded", () => {
-            const winnerEffect = document.getElementById("winner-effect");
-            const playAgainButton = document.getElementById("play-again-btn");
-            const backgroundMusic = document.querySelector('audio[src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3"]');
-
-            if (backgroundMusic) {
-                const stopMusic = () => {
-                    backgroundMusic.pause();
-                    backgroundMusic.currentTime = 0; 
-                };
-
-                winnerEffect.addEventListener("animationstart", stopMusic);
-                playAgainButton.addEventListener("click", stopMusic);
-            }
-        });
-    
-        document.getElementById("close-game-btn").addEventListener("click", function() {
-            const audios = document.querySelectorAll("audio");
-            audios.forEach(audio => {
-                audio.pause();
-                audio.currentTime = 0;
-            });
-        });
-    </script>
-
-</body>
 </html>
