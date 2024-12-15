@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+
+<style>
+    /* Ensure Comfortaa font is applied to all elements in Game Area 1 */
+    #game-overlay, #game-overlay * {
+        font-family: 'Comfortaa', sans-serif !important;
+    }
+</style>
+
+
+<style>
+    /* Ensure Comfortaa font is applied to all elements in Game Area 2 */
+    #game-overlay-2, #game-overlay-2 * {
+        font-family: 'Comfortaa', sans-serif !important;
+    }
+</style>
+
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1151,7 +1167,7 @@
         animation: popIn 1s, flash 2s infinite;
         z-index: 5000;
         display: none;
-        box-shadow: 0 0 50px #FFD700;
+        box-shadow: 0 0 50px #00eeff;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -1402,11 +1418,44 @@
     <div id="winner-effect">
         <div id="winner-message">Kazanan: Oyuncu</div>
         <button id="play-again-btn">↻ Tekrar Oyna</button>
+
+        <script>
+                
+const playAgainButtons = document.querySelectorAll("#play-again-btn, #play-again-btn-2");
+
+playAgainButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        stopAllMusic();
+        document.querySelectorAll(".winner-effect").forEach(effect => {
+            effect.style.display = "none";
+        });
+        document.querySelectorAll("body > *:not(.winner-effect)").forEach(element => {
+            element.style.filter = "none";
+            element.style.pointerEvents = "auto";
+            element.style.opacity = "1";
+            element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+        });
+    });
+});
+
+        playAgainButton2.addEventListener("click", () => {
+            stopAllMusic();
+            // Diğer temizleme işlemleri
+            winnerEffect2.style.display = "none";
+            document.querySelectorAll("body > *:not(#winner-effect-2)").forEach(element => {
+                element.style.filter = "none";
+                element.style.pointerEvents = "auto";
+                element.style.opacity = "1";
+                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+            });
+        });
+    }
+        </script>
     </div>
 
     <audio id="correct-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/new-level-142995.mp3" preload="auto"></audio>
     <audio id="incorrect-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/fail-234710.mp3" preload="auto"></audio>
-    <audio id="winner-sound" src="https://github.com/d4rkd4/audio-assets/raw/3925758c22f90c4e9ac2b81bf41a65fd8c8d85be/Awards%20Fanfare%20Winner%20Nomination%20Ceremony%20Background%20Music.mp3" preload="auto"></audio>
+    <audio id="winner-sound" src="https://github.com/d4rkd4/audio-assets/raw/refs/heads/main/finish%20k%C4%B1sa.mp3" preload="auto"></audio>
 
     <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
 
@@ -3250,6 +3299,91 @@
         <div id="winner-message-2">Kazanan: Oyuncu</div>
         <button id="play-again-btn-2">↻ Tekrar Oyna</button>
     </div>
-    </body>
+    
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Background music for Game Area 1
+    const gameOverlay1 = document.getElementById("game-overlay");
+    const winnerEffect1 = document.getElementById("winner-effect");
+    window.bgMusic1 = new Audio("https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3");
+    window.bgMusic1.loop = true;
+
+    // Play music when Game Area 1 is shown
+    const observer1 = new MutationObserver(() => {
+        if (gameOverlay1.style.display === "flex") {
+            bgMusic1.play();
+        } else {
+            bgMusic1.pause();
+            bgMusic1.currentTime = 0;
+        }
+    });
+    observer1.observe(gameOverlay1, { attributes: true, attributeFilter: ['style'] });
+
+    // Stop music when Winner Effect for Game Area 1 is shown
+    const observerWinner1 = new MutationObserver(() => {
+        if (winnerEffect1.style.display === "flex") {
+            bgMusic1.pause();
+            bgMusic1.currentTime = 0;
+        }
+    });
+    observerWinner1.observe(winnerEffect1, { attributes: true, attributeFilter: ['style'] });
+
+    // Background music for Game Area 2
+    const gameOverlay2 = document.getElementById("game-overlay-2");
+    const winnerEffect2 = document.getElementById("winner-effect-2");
+    window.bgMusic2 = new Audio("https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/Childrens%20Music%20%E2%80%94%20Happy%20Upbeat%20Music%20(Instrumental%20Music%20For%20Kids).mp3");
+    window.bgMusic2.loop = true;
+
+    // Play music when Game Area 2 is shown
+    const observer2 = new MutationObserver(() => {
+        if (gameOverlay2.style.display === "flex") {
+            bgMusic2.play();
+        } else {
+            bgMusic2.pause();
+            bgMusic2.currentTime = 0;
+        }
+    });
+    observer2.observe(gameOverlay2, { attributes: true, attributeFilter: ['style'] });
+
+    // Stop music when Winner Effect for Game Area 2 is shown
+    const observerWinner2 = new MutationObserver(() => {
+        if (winnerEffect2.style.display === "flex") {
+            bgMusic2.pause();
+            bgMusic2.currentTime = 0;
+        }
+    });
+    observerWinner2.observe(winnerEffect2, { attributes: true, attributeFilter: ['style'] });
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    window.winnerMusic.loop = false;
+
+    // Play winner music for Game Area 1
+    const winnerEffect1 = document.getElementById("winner-effect");
+    const observerWinner1 = new MutationObserver(() => {
+        if (winnerEffect1.style.display === "flex") {
+            winnerMusic.currentTime = 0;
+            winnerMusic.play();
+        }
+    });
+    observerWinner1.observe(winnerEffect1, { attributes: true, attributeFilter: ['style'] });
+
+    // Play winner music for Game Area 2
+    const winnerEffect2 = document.getElementById("winner-effect-2");
+    const observerWinner2 = new MutationObserver(() => {
+        if (winnerEffect2.style.display === "flex") {
+            winnerMusic.currentTime = 0;
+            winnerMusic.play();
+        }
+    });
+    observerWinner2.observe(winnerEffect2, { attributes: true, attributeFilter: ['style'] });
+});
+</script>
+
+</body>
     
 </html>
