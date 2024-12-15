@@ -483,34 +483,34 @@
             display: inline-block;
         }
 
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-}
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
 
         #champion-competition-btn, #champion-settings-btn {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 20px 10px;
-    background-color: #ff9800; /* Normal arka plan rengi */
-    color: #343a40; /* Normal yazı rengi */
-    transition: all 0.3s ease; /* Dinamik geçiş efekti */
-    border: none; /* Buton kenarlarını düzleştirir */
-    padding: 15px 20px; /* Buton boyutu */
-    border-radius: 10px; /* Yuvarlak kenarlar */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
-    cursor: pointer; /* İmleç değişimi */
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 10px;
+            background-color: #ff9800; 
+            color: #343a40; 
+            transition: all 0.3s ease; 
+            border: none; 
+            padding: 15px 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            cursor: pointer; 
         }
 
         #champion-competition-btn:hover {
-    animation: shake 0.5s ease-in-out; /* Titreme efekti */
-    background-color: #e68a00; /* Hover sırasında arka plan rengi */
-    color: #fff; /* Yazı rengi değişimi */
-    transform: scale(1.1); /* Hafif büyüme efekti */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
+            animation: shake 0.5s ease-in-out; 
+            background-color: #e68a00; 
+            color: #fff; 
+            transform: scale(1.1); 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
         }
 
         #champion-settings-btn {
@@ -535,7 +535,6 @@
             text-align: left;
         }
 
-        /* Yeni tasarım için ayarlar menüsü */
         #settings-nav {
             display: flex;
             justify-content: space-around;
@@ -632,6 +631,7 @@
             z-index: 3000;
         }
 
+        /* Ölçeklendirme için transform-origin ayarlanacak */
         #game-container {
             background-color: rgba(255, 255, 255, 0.95);
             width: 90%;
@@ -644,6 +644,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transform-origin: center center;
         }
 
         #close-game-btn {
@@ -817,30 +818,30 @@
         }
 
         #winner-effect {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url('https://github.com/d4rkd4/winnerarkaplan/blob/main/Yeni-projewinner-arka.gif?raw=true');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: #00FFFF; /* Daha okunaklı bir renk */
-    font-family: 'Arial Black', Arial, sans-serif; /* Okunaklı bir yazı tipi */
-    font-weight: bold; /* Daha kalın yazı */
-    font-size: 4em; /* Yazı boyutu */
-    letter-spacing: 1px; /* Harfler arası boşluk */
-    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); /* Daha net gölge */
-    padding: 100px 180px;
-    border-radius: 15px;
-    animation: popIn 1s, flash 2s infinite;
-    z-index: 5000;
-    display: none;
-    box-shadow: 0 0 50px #66FFFF;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: url('https://github.com/d4rkd4/winnerarkaplan/blob/main/Yeni-projewinner-arka.gif?raw=true');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #00FFFF; 
+            font-family: 'Arial Black', Arial, sans-serif; 
+            font-weight: bold; 
+            font-size: 4em; 
+            letter-spacing: 1px; 
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); 
+            padding: 100px 180px;
+            border-radius: 15px;
+            animation: popIn 1s, flash 2s infinite;
+            z-index: 5000;
+            display: none;
+            box-shadow: 0 0 50px #66FFFF;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
         @keyframes flash {
             0%, 100% { opacity: 1; }
@@ -881,74 +882,38 @@
             background-color: #104E8B;
         }
 
-        @media (max-width: 768px) {
-            #question-text {
-                font-size: 2em;
-            }
-
-            .star {
-                width: 60px;
-                height: 60px;
-            }
-
-            .player-name {
-                font-size: 1.5em;
-            }
-
-            .answer-btn {
-                flex: 1 1 45%;
-                font-size: 1em;
-                padding: 8px 16px;
-            }
-
-            #play-again-btn {
-                font-size: 0.9em;
-                padding: 4px 8px;
-                gap: 3px;
-            }
-
-            #winner-effect {
-                font-size: 2em;
-                padding: 60px 90px;
-            }
+        .editable-button {
+            display: none;
         }
 
-        @media (max-width: 480px) {
-            #question-text {
-                font-size: 1.8em;
-            }
-
-            .star {
-                width: 50px;
-                height: 50px;
-            }
-
-            .player-name {
-                font-size: 1.2em;
-            }
-
-            .answer-btn {
-                flex: 1 1 100%;
-                font-size: 0.9em;
-                padding: 6px 12px;
-            }
-
-            #play-again-btn {
-                font-size: 0.8em;
-                padding: 6px 12px;
-                gap: 2px;
-            }
-
-            #winner-effect {
-                font-size: 1.8em;
-                padding: 25px 35px;
-            }
+        .edit-mode-enabled .editable-button {
+            display: inline-block;
         }
-    
-#question-text, .answer-btn {
-    font-family: 'Comfortaa', sans-serif;
-}
-</style>
+
+        #question-text, .answer-btn {
+            font-family: 'Comfortaa', sans-serif;
+        }
+
+        /* Ölçeklendirme slider için stil */
+        #scale-slider-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        #scale-slider {
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
     <h1>Şampiyonlar <span>+</span> Ligi</h1>
@@ -1102,6 +1067,12 @@
     </div>
 
     <div id="game-overlay">
+        <!-- Ölçeklendirme slider -->
+        <div id="scale-slider-container">
+            <label for="scale-slider">Ölçek:</label>
+            <input type="range" id="scale-slider" min="0.5" max="2" step="0.01" value="1">
+        </div>
+
         <div id="game-container">
             <button id="close-game-btn">X</button>
             <div id="question-area">
@@ -1258,7 +1229,6 @@
         let selectedHeadingId = "";
         let championSettingsPin = "817641";
 
-        // Seçimlerin kaybolmaması için güncel seçimleri tut
         let currentSelectedHeadingForLesson = "";
         let currentSelectedLessonForTopic = "";
         let currentSelectedLessonForQuestion = "";
@@ -2105,7 +2075,7 @@
         });
 
         championSettingsBtn.addEventListener("click", async () => {
-            const enteredPin = await showPrompt("Ayarlar için PIN girin:", 'password');
+            const enteredPin = await showPrompt("Ayarlar için Yetkili Şifresi Gereklidir:", 'password');
             if (enteredPin === championSettingsPin) {
                 settingsModal.showModal();
                 await loadChampionData();
@@ -2136,7 +2106,6 @@
                 name: lessonName
             });
             newLessonNameInput.value = "";
-            // Re-render only locally
             championHeadings[headingId].lessons = championHeadings[headingId].lessons || {};
             championHeadings[headingId].lessons[newRef.key] = {name: lessonName};
             renderLessons();
@@ -2531,43 +2500,43 @@
             loadNextQuestion();
         }
 
-function loadNextQuestion() {
-    if (currentQuestionIndex >= gameQuestions.length) {
-        endGame();
-        return;
-    }
+        function loadNextQuestion() {
+            if (currentQuestionIndex >= gameQuestions.length) {
+                endGame();
+                return;
+            }
 
-    const currentQ = gameQuestions[currentQuestionIndex];
-    if (currentQ.qText.startsWith("http://") || currentQ.qText.startsWith("https://")) {
-        questionText.innerHTML = `<img src="${currentQ.qText}" alt="Soru Resmi" style="max-width:100%; max-height:300px; display:block; margin:0 auto;">`;
-    } else {
-        questionText.textContent = (currentQ.qText || "Soru burada olacak");
-    }
+            const currentQ = gameQuestions[currentQuestionIndex];
+            if (currentQ.qText.startsWith("http://") || currentQ.qText.startsWith("https://")) {
+                questionText.innerHTML = `<img src="${currentQ.qText}" alt="Soru Resmi" style="max-width:100%; max-height:300px; display:block; margin:0 auto;">`;
+            } else {
+                questionText.textContent = (currentQ.qText || "Soru burada olacak");
+            }
 
-    const correctAnswer = currentQ.answer;
-    const wrongAnswers = currentQ.wrongs;
-    const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
+            const correctAnswer = currentQ.answer;
+            const wrongAnswers = currentQ.wrongs;
+            const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
 
-    leftAnswersDiv.innerHTML = "";
-    rightAnswersDiv.innerHTML = "";
+            leftAnswersDiv.innerHTML = "";
+            rightAnswersDiv.innerHTML = "";
 
-    allAnswers.forEach(ans => {
-        const leftBtn = document.createElement("button");
-        leftBtn.textContent = ans;
-        leftBtn.classList.add("answer-btn");
-        leftBtn.dataset.answer = ans;
-        leftBtn.addEventListener("click", () => handleAnswer('left', ans));
+            allAnswers.forEach(ans => {
+                const leftBtn = document.createElement("button");
+                leftBtn.textContent = ans;
+                leftBtn.classList.add("answer-btn");
+                leftBtn.dataset.answer = ans;
+                leftBtn.addEventListener("click", () => handleAnswer('left', ans));
 
-        const rightBtn = document.createElement("button");
-        rightBtn.textContent = ans;
-        rightBtn.classList.add("answer-btn");
-        rightBtn.dataset.answer = ans;
-        rightBtn.addEventListener("click", () => handleAnswer('right', ans));
+                const rightBtn = document.createElement("button");
+                rightBtn.textContent = ans;
+                rightBtn.classList.add("answer-btn");
+                rightBtn.dataset.answer = ans;
+                rightBtn.addEventListener("click", () => handleAnswer('right', ans));
 
-        leftAnswersDiv.appendChild(leftBtn);
-        rightAnswersDiv.appendChild(rightBtn);
-    });
-}
+                leftAnswersDiv.appendChild(leftBtn);
+                rightAnswersDiv.appendChild(rightBtn);
+            });
+        }
 
         function handleAnswer(side, selectedAnswer) {
             const currentQ = gameQuestions[currentQuestionIndex];
@@ -2771,7 +2740,6 @@ function loadNextQuestion() {
             document.getElementById("champion-modal").showModal();
         });
 
-        // Settings sekmeler arasında geçiş
         settingsNav.addEventListener("click", (e) => {
             if (e.target.tagName === "BUTTON") {
                 switchSettingsSection(e.target.dataset.section);
@@ -2801,8 +2769,7 @@ function loadNextQuestion() {
                 renderQuestions();
             }
         }
-    
-        // Stop the background music when winner and replay buttons appear
+
         document.addEventListener("DOMContentLoaded", () => {
             const winnerEffect = document.getElementById("winner-effect");
             const playAgainButton = document.getElementById("play-again-btn");
@@ -2811,7 +2778,7 @@ function loadNextQuestion() {
             if (backgroundMusic) {
                 const stopMusic = () => {
                     backgroundMusic.pause();
-                    backgroundMusic.currentTime = 0; // Reset the music
+                    backgroundMusic.currentTime = 0; 
                 };
 
                 winnerEffect.addEventListener("animationstart", stopMusic);
@@ -2819,14 +2786,23 @@ function loadNextQuestion() {
             }
         });
     
-document.getElementById("close-game-btn").addEventListener("click", function() {
-    const audios = document.querySelectorAll("audio");
-    audios.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0; // Reset the audio to start
-    });
-});
-</script>
+        document.getElementById("close-game-btn").addEventListener("click", function() {
+            const audios = document.querySelectorAll("audio");
+            audios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0; 
+            });
+        });
+
+        // Ölçeklendirme slider kontrolü
+        const scaleSlider = document.getElementById("scale-slider");
+        const gameContainer = document.getElementById("game-container");
+
+        scaleSlider.addEventListener("input", () => {
+            const scaleValue = parseFloat(scaleSlider.value);
+            gameContainer.style.transform = `scale(${scaleValue})`;
+        });
+    </script>
 
 
     <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
@@ -2835,18 +2811,15 @@ document.getElementById("close-game-btn").addEventListener("click", function() {
         const gameOverlay = document.getElementById("game-overlay");
         const winnerEffect = document.getElementById("winner-effect");
 
-        // Start background music when the game overlay is displayed
         gameOverlay.addEventListener("gameStart", () => {
             backgroundMusic.play();
         });
 
-        // Stop background music when the winner screen is displayed
         winnerEffect.addEventListener("winnerDisplay", () => {
             backgroundMusic.pause();
             backgroundMusic.currentTime = 0;
         });
 
-        // Example functions to simulate showing game and winner screens
         function startGame() {
             gameOverlay.style.display = "flex";
             const event = new Event("gameStart");
@@ -2859,13 +2832,11 @@ document.getElementById("close-game-btn").addEventListener("click", function() {
             winnerEffect.dispatchEvent(event);
         }
 
-        // Call startGame when the intro video ends
         const introVideo = document.getElementById("intro-video");
         introVideo.addEventListener("ended", () => {
             startGame();
         });
     
-        // Stop the background music when winner and replay buttons appear
         document.addEventListener("DOMContentLoaded", () => {
             const winnerEffect = document.getElementById("winner-effect");
             const playAgainButton = document.getElementById("play-again-btn");
@@ -2874,7 +2845,7 @@ document.getElementById("close-game-btn").addEventListener("click", function() {
             if (backgroundMusic) {
                 const stopMusic = () => {
                     backgroundMusic.pause();
-                    backgroundMusic.currentTime = 0; // Reset the music
+                    backgroundMusic.currentTime = 0; 
                 };
 
                 winnerEffect.addEventListener("animationstart", stopMusic);
@@ -2882,65 +2853,14 @@ document.getElementById("close-game-btn").addEventListener("click", function() {
             }
         });
     
-document.getElementById("close-game-btn").addEventListener("click", function() {
-    const audios = document.querySelectorAll("audio");
-    audios.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0; // Reset the audio to start
-    });
-});
-</script>
-
-    
-    <audio id="background-music" src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3" loop></audio>
-    <script>
-        const backgroundMusic = document.getElementById("background-music");
-        const winnerMessage = document.getElementById("winner-message");
-        
-        // Play background music when the game starts
-        const introVideo = document.getElementById("intro-video");
-        introVideo.addEventListener("ended", () => {
-            backgroundMusic.play();
+        document.getElementById("close-game-btn").addEventListener("click", function() {
+            const audios = document.querySelectorAll("audio");
+            audios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
         });
+    </script>
 
-        // Stop background music when the winner's name is displayed
-        const observer = new MutationObserver(() => {
-            if (winnerMessage.style.display !== "none") {
-                backgroundMusic.pause();
-                backgroundMusic.currentTime = 0;
-            }
-        });
-
-        // Observe changes to the winner-message visibility
-        observer.observe(winnerMessage, { attributes: true, attributeFilter: ["style"] });
-    
-        // Stop the background music when winner and replay buttons appear
-        document.addEventListener("DOMContentLoaded", () => {
-            const winnerEffect = document.getElementById("winner-effect");
-            const playAgainButton = document.getElementById("play-again-btn");
-            const backgroundMusic = document.querySelector('audio[src="https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/soru%20arka.mp3"]');
-
-            if (backgroundMusic) {
-                const stopMusic = () => {
-                    backgroundMusic.pause();
-                    backgroundMusic.currentTime = 0; // Reset the music
-                };
-
-                winnerEffect.addEventListener("animationstart", stopMusic);
-                playAgainButton.addEventListener("click", stopMusic);
-            }
-        });
-    
-document.getElementById("close-game-btn").addEventListener("click", function() {
-    const audios = document.querySelectorAll("audio");
-    audios.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0; // Reset the audio to start
-    });
-});
-</script>
-
-    </body>
-    
-    
+</body>
 </html>
