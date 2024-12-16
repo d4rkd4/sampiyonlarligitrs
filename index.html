@@ -1033,7 +1033,7 @@
 
     .left-stars-2, .right-stars-2 {
         position: absolute;
-        top: 10%;
+        top: 20%;
         display: flex;
         gap: 20px;
         transform: translateY(-50%);
@@ -1145,6 +1145,29 @@
     #scale-slider-2 {
         width: 100px;
     }
+
+ /* 2. Oyun Alanı için "Tekrar Oyna" Butonu */
+        #play-again-btn-2 {
+            /* Boyutlandırma */
+            padding: 15px 30px; /* Yukarı/aşağı ve sağ/sol boşluk */
+            font-size: 0.3em; /* Yazı boyutu */
+            /* Şekil */
+            border-radius: 25px; /* Daha yuvarlak köşeler */
+            /* Renkler */
+            background-color: #22c8ff; /* Arka plan rengi */
+            color: #ffffff; /* Yazı rengi */
+            border: none; /* Kenarlık yok */
+            /* Diğer Stil Özellikleri */
+            cursor: pointer; /* Fare imlecini el yapar */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Geçiş efektleri */
+        }
+
+        /* Hover Durumu */
+        #play-again-btn-2:hover {
+            background-color: #e64a19; /* Hover arka plan rengi */
+            transform: scale(1.05); /* Hafif büyüme efekti */
+        }
 
     /* Second game area winner effect styling */
     #winner-effect-2 {
@@ -1271,8 +1294,8 @@
             <select id="player1-select"><option value="">Oyuncu 1 Seç</option></select>
             <select id="player2-select"><option value="">Oyuncu 2 Seç</option></select>
             <select id="game-area-select">
-                <option value="1">Oyun Alanı 1</option>
-                <option value="2">Oyun Alanı 2</option>
+                <option value="1">Arıların Bal Macerası</option>
+                <option value="2">Uzay Yolculuğu</option>
             </select>
             <button id="start-game-btn">Oyna</button>
             <button id="close-champion-modal">Kapat</button>
@@ -3364,7 +3387,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Background music for Game Area 2
     const gameOverlay2 = document.getElementById("game-overlay-2");
     const winnerEffect2 = document.getElementById("winner-effect-2");
-    window.bgMusic2 = new Audio("https://github.com/d4rkd4/winnerarkaplan/raw/refs/heads/main/Childrens%20Music%20%E2%80%94%20Happy%20Upbeat%20Music%20(Instrumental%20Music%20For%20Kids).mp3");
+    window.bgMusic2 = new Audio("https://github.com/d4rkd4/audio-assets/raw/refs/heads/main/OYUN%202%20ARKA%20PLAN%20M%C3%9CZ%C4%B0%C4%9E%C4%B0.mp3");
     window.bgMusic2.loop = true;
 
     // Play music when Game Area 2 is shown
