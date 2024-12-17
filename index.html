@@ -837,7 +837,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-image: url('https://github.com/d4rkd4/winnerarkaplan/blob/main/Yeni-projewinner-arka.gif?raw=true');
+        background-image: url('https://i.ibb.co/jkymssM/Yeni-projewinner-arka.gif');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -1175,7 +1175,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-image: url('https://raw.githubusercontent.com/d4rkd4/winnerarkaplan/refs/heads/main/Yeni-proje.gif');
+        background-image: url('https://i.ibb.co/1s3ZkzL/Yeni-proje-1.gif');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -1455,22 +1455,31 @@
     // 2. Tüm "Tekrar Oyna" Butonlarını Seç ve Event Listener Ekle
     const playAgainButtons = document.querySelectorAll("#play-again-btn, #play-again-btn-2");
 
-    playAgainButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            stopAllMusic();
-            // 3. Kazanan Ekranlarını Gizle
-            document.querySelectorAll(".winner-effect, #winner-effect-2").forEach(effect => {
-                effect.style.display = "none";
-            });
-            // 4. Sayfa Stillerini Sıfırla
-            document.querySelectorAll("body > *:not(.winner-effect):not(#winner-effect-2)").forEach(element => {
-                element.style.filter = "none";
-                element.style.pointerEvents = "auto";
-                element.style.opacity = "1";
-                element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
-            });
+playAgainButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        stopAllMusic();
+
+        // 3. Kazanan Ekranlarını Gizle
+        document.querySelectorAll(".winner-effect, #winner-effect-2").forEach(effect => {
+            effect.style.display = "none";
+        });
+
+        // 4. Sayfa Stillerini Sıfırla
+        document.querySelectorAll("body > *:not(.winner-effect):not(#winner-effect-2)").forEach(element => {
+            element.style.filter = "none";
+            element.style.pointerEvents = "auto";
+            element.style.opacity = "1";
+            element.style.transition = "opacity 0.5s ease, filter 0.5s ease";
+        });
+
+        // Kapat butonları olay dinleyicisini yeniden ekleyin
+        const closeGameBtns = document.querySelectorAll("#close-game-btn, #close-game-btn-2");
+        closeGameBtns.forEach(closeBtn => {
+            closeBtn.removeEventListener("click", closeGame); // Önce eski event'leri temizle
+            closeBtn.addEventListener("click", closeGame);    // Sonra yenisini ekle
         });
     });
+});
 </script>
 </div>
 
